@@ -1,3 +1,5 @@
+pkg load control;
+
 % Double Pendulum Parameters (Tentative:  There are two pendulum setups, each with different parameters.  I'm not sure which these go to.)
 % This script is for balancing only the long rod.
 
@@ -115,4 +117,5 @@ rank_ctrb = rank(ctrb(A,B))
 original_poles = eig(A) %poles for our system
 T=0.01
 disc_sys = c2d(cont_sys, T)
-[num, den] = ss2tf(disc_sys)
+H = tf(disc_sys)
+%[num, den] = tf(disc_sys)
