@@ -322,6 +322,10 @@ outputs = {'x'; 'phi'};
 % Maybe B should be (B-L*D)*Nbar, but D is zero, so in this case it's the same
 sys_est_only = ss(A-L*C,B*Nbar-L*D,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
 sys_est_only_d = c2d(sys_est_only, T, 'zoh');
+% Alt form
+% See: http://cats-fs.rpi.edu/~wenj/ECSE444F01/discreteobserver.pdf
+sys_est_alt = ss(A+L*(C-D*K)-B*K,L,-K,0);
+sys_est_alt_d = c2d(sys_est_alt, T, 'zoh');
 
 if true
     % We have 4 state variables, and need the current and past values
@@ -331,7 +335,8 @@ if true
     % The states we want to plot
     N = 400;
     output = zeros(N, 2);
-    estoutput = zeros(N, 2);
+    estoutput = zeros(2, 1);
+    estoutputhistory = zeros(N, 2);
 
     % Constant input command
     r = 0.2;
@@ -340,18 +345,20 @@ if true
     for i = 1:N
         % Our control law
         input(i) = r*Nbar - K*state(:,1);
-        %input(i) = r*Nbar - K*state(:,1);
+        %input(i) = r*Nbar - K*eststate(:,1);
 
         % Estimation
         % Same as actual, but with the additional L*y term at the end for
         % correction that we'll call F here
-        %F = L*C*[state(1,1) eststate(2,1) state(3,1) eststate(4,1)]';
-        %F = L*C*[state(1,1) 0 state(3,1) 0]';
-        F = L*C*state(:,1);
-        %F = L*C*eststate(:,1);
-        %F = 0;
+        y = [state(1,1) state(3,1)]'; % Use only the measured part of the state
+        F = L*(y-estoutput);
+        %F = L*C*state(:,1); % Also produces the same result using the entire state
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*input(i) + F;
-        estoutput(i,:) = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*input(i);
+        estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*input(i);
+
+        %eststate(:,1) = sys_est_alt_d.a*eststate(:,2) + sys_est_alt_d.b*y + (B-L*D)*r*Nbar;
+        %estoutput = [eststate(1,2) eststate(3,2)]';
+        %estoutput = sys_est_alt_d.c*eststate(:,2) + r*Nbar;
 
         % Simulate actual system
         state(:,1) = sys_d.a*state(:,2) + sys_d.b*input(i);
@@ -360,6 +367,9 @@ if true
         % Save the new states in the old state
         eststate(:,2) = eststate(:,1);
         state(:,2) = state(:,1);
+
+        % Save so we can plot
+        estoutputhistory(i,:) = estoutput';
     end
 
     figure;
@@ -369,7 +379,7 @@ if true
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
     title('actual state - without lsim');
     figure;
-    [AX,H1,H2] = plotyy(t,estoutput(:,1),t,estoutput(:,2),'plot');
+    [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
     title('state estimates - without lsim');
