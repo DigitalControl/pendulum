@@ -19,6 +19,7 @@ try
     % Reset the board, then try connecting
     disp('Set the cart in the middle, pendulum down and stationary.')
     disp('Then click the "PROG" reset button on the FPGA board')
+    disp('Finally, rotate pendulum CCW to vertical.')
     disp('');
     input('Press Enter to continue.');
 
@@ -36,6 +37,8 @@ try
     u = zeros(3);
     y = zeros(3);
     input = 0;
+    estoutput = zeros(2,1);
+    control_position = 0;
 
     while true
         % Read encoder values
@@ -48,11 +51,15 @@ try
         motor_shaft_angle = rdata(3);
         knob_angle = rdata(4);
 
+        % Set input
         %r = rdata(4)*50;
         r = 0.2;
-        F = L*C*[motor_shaft_angle*rd eststate(2,1) long_pend_angle eststate(4,1)]';
-        eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*input + F;
-        estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*input;
+
+        % Estimation
+        y = [motor_shaft_angle*rd; long_pend_angle];
+        uvec = [control_position; y-estoutput];
+        eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
+        estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
         eststate(:,2) = eststate(:,1);
         control_position = r*Nbar - K*eststate(:,1);
 
@@ -67,13 +74,13 @@ try
         %pwm = (30000 * sin(6.28*8*double(c)/min(cnt,1000))) - rdata(1);
 
         % TF from control_position to PWM
-        u(1) = control_position;
-        y(1) = a1*y(2) + a2*y(3) + b0*u(1) + b1*u(2) + b2*u(3); % compute y(k).
-        pwm = y(1);
-        u(3) = u(2);
-        u(2) = u(1);
-        y(3) = y(2);
-        y(2) = y(1);
+        %u(1) = control_position;
+        %y(1) = a1*y(2) + a2*y(3) + b0*u(1) + b1*u(2) + b2*u(3); % compute y(k).
+        %pwm = y(1);
+        %u(3) = u(2);
+        %u(2) = u(1);
+        %y(3) = y(2);
+        %y(2) = y(1);
 
         %pwm = rdata(4)*50;
         pwm = control_position;

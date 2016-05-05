@@ -86,6 +86,18 @@ b2 = 2*a2*J2;               % Nms/rad    Viscous friction of pendulum 2 (rotatio
 scale = [rd*2*pi/4096  2*pi/4096 -0.05/250];
 
 %
+% TF from cart position to PWM value
+%
+s = tf('s');
+inductance = 0.01; % H, a complete guess, no idea... see if it works
+H = (kt/rd)*(s*Jd+b1)/(s^2*Jd*inductance + s*(Jd*R+b1*inductance) + (b1*R+kt^2));
+sysmotor = ss(H);
+A1 = sysmotor.a;
+B1 = sysmotor.b;
+C1 = sysmotor.c;
+D1 = sysmotor.d;
+
+%
 % System modeling
 %
 % http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=SystemModeling
@@ -99,21 +111,31 @@ l = d1/2;                   % Length of pendulum
 
 p = I*(M+m)+M*m*l^2; %denominator for the A and B matrices
 
-A = [0      1              0           0;
+A2 = [0      1              0           0;
      0 -(I+m*l^2)*b/p  (m^2*g*l^2)/p   0;
      0      0              0           1;
      0 -(m*l*b)/p       m*g*l*(M+m)/p  0];
-B = [     0;
+B2 = [     0;
      (I+m*l^2)/p;
           0;
         m*l/p];
-C = [1 0 0 0;
+C2 = [1 0 0 0;
      0 0 1 0];
-D = [0;
+D2 = [0;
      0];
 
-states = {'x' 'x_dot' 'phi' 'phi_dot'};
-inputs = {'u'};
+%states = {'x' 'x_dot' 'phi' 'phi_dot'};
+%inputs = {'u'};
+%outputs = {'x'; 'phi'};
+%sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
+
+A = [A1 zeros(2,4); [B1*C1; zeros(2,2)] A2];
+B = [B1; B2*D1];
+C = [D2*C1 C2];
+D = D2*D1;
+
+states = {'theta_dot' 'i' 'x' 'x_dot' 'phi' 'phi_dot'};
+inputs = {'v'};
 outputs = {'x'; 'phi'};
 sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
 
@@ -183,10 +205,6 @@ Bc = [B];
 Cc = [C];
 Dc = [D];
 
-states = {'x' 'x_dot' 'phi' 'phi_dot'};
-inputs = {'r'};
-outputs = {'x'; 'phi'};
-
 sys_cl = ss(Ac,Bc,Cc,Dc,'statename',states,'inputname',inputs,'outputname',outputs);
 
 t = 0:0.01:5;
@@ -204,7 +222,8 @@ end
 % Correcting the cart position error. Now the cart actually ends up at 0.2
 % meters as we were commanding it.
 %
-Cn = [1 0 0 0];
+%Cn = [1 0 0 0];
+Cn = [0 0 1 0 0 0];
 sys_ss = ss(A,B,Cn,0);
 Nbar = rscale(sys_ss,K);
 
@@ -234,7 +253,8 @@ end
 %
 poles = eig(Ac);
 
-P = [-20 -21 -22 -23];
+%P = [-20 -21 -22 -23];
+P = [-20 -21 -22 -23 -24 -25];
 L = place(A',C',P)';
 
 %
@@ -247,11 +267,8 @@ Bce = [B*Nbar;
 Cce = [Cc zeros(size(Cc))];
 Dce = [0;0];
 
-states = {'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4'};
-inputs = {'r'};
-outputs = {'x'; 'phi'};
-
-sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states,'inputname',inputs,'outputname',outputs);
+states_est = {'theta' 'i' 'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4' 'e5' 'e6'};
+sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outputname',outputs);
 
 t = 0:0.01:5;
 r = 0.2*ones(size(t));
@@ -285,13 +302,6 @@ if false
     %input = r*Nbar + K*state(1:4,2);
 
     for i = 1:N
-        % We measure two of these states
-        %state(1,2) = cartpos
-        %state(3,2) = pendangle
-
-        %input(i) = input(i) - K*state(1:4,2);
-        %input(i) = L*(state(1:4,2) - state(5:8,2));
-
         state(:,1) = sys_est_d.a*state(:,2) + sys_est_d.b*input(i);
 
         % Save for plot
@@ -315,22 +325,15 @@ end
 % closer to what will actually run on the pendulum
 %
 
-% To get discretized: xbar(k+1) = (A-L*C)*xbar(k) + (B-L*D)*u + L*y
-states = {'x' 'x_dot' 'phi' 'phi_dot'};
-inputs = {'r'};
-outputs = {'x'; 'phi'};
-% Maybe B should be (B-L*D)*Nbar, but D is zero, so in this case it's the same
-sys_est_only = ss(A-L*C,B*Nbar-L*D,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
+% To get discretized
+sys_est_only = ss(A, [B L], C, [D [0;0] [0;0]]);
 sys_est_only_d = c2d(sys_est_only, T, 'zoh');
-% Alt form
-% See: http://cats-fs.rpi.edu/~wenj/ECSE444F01/discreteobserver.pdf
-sys_est_alt = ss(A+L*(C-D*K)-B*K,L,-K,0);
-sys_est_alt_d = c2d(sys_est_alt, T, 'zoh');
 
-if false
+%if plotAll
+if true
     % We have 4 state variables, and need the current and past values
-    state = zeros(4, 2);
-    eststate = zeros(4, 2);
+    state = zeros(6, 2);
+    eststate = zeros(6, 2);
 
     % The states we want to plot
     N = 400;
@@ -344,21 +347,13 @@ if false
 
     for i = 1:N
         % Our control law
-        input(i) = r*Nbar - K*state(:,1);
-        %input(i) = r*Nbar - K*eststate(:,1);
+        input(i) = r*Nbar - K*eststate(:,1);
 
         % Estimation
-        % Same as actual, but with the additional L*y term at the end for
-        % correction that we'll call F here
-        y = [state(1,1) state(3,1)]'; % Use only the measured part of the state
-        F = L*(y-estoutput);
-        %F = L*C*state(:,1); % Also produces the same result using the entire state
-        eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*input(i) + F;
-        estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*input(i);
-
-        %eststate(:,1) = sys_est_alt_d.a*eststate(:,2) + sys_est_alt_d.b*y + (B-L*D)*r*Nbar;
-        %estoutput = [eststate(1,2) eststate(3,2)]';
-        %estoutput = sys_est_alt_d.c*eststate(:,2) + r*Nbar;
+        y = [state(3,1); state(5,1)]; % Use only the measured part of the state
+        uvec = [input(i); y-estoutput];
+        eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
+        estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
 
         % Simulate actual system
         state(:,1) = sys_d.a*state(:,2) + sys_d.b*input(i);
@@ -372,115 +367,15 @@ if false
         estoutputhistory(i,:) = estoutput';
     end
 
-    figure;
+    %figure;
     t = 1:N;
-    [AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
-    set(get(AX(1),'Ylabel'),'String','cart position (m)');
-    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('actual state - without lsim');
+    %[AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
+    %set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    %set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    %title('actual state - without lsim');
     figure;
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
     title('state estimates - without lsim');
 end
-
-
-%
-% TF from cart position to PWM value
-%
-s = tf('s');
-inductance = 0.01; % H, a complete guess, no idea... see if it works
-H = (kt/rd)*(s*Jd+b1)/(s^2*Jd*inductance + s*(Jd*R+b1*inductance) + (b1*R+kt^2));
-Hd = c2d(H, T, 'zoh');
-% But, we really want the inverse, from F to V
-% Note: this probably doesn't work... causes error if we c2d 1/H
-Hd = 1/Hd;
-[num, den] = tfdata(Hd);
-num = cell2mat(num);
-den = cell2mat(den);
-b0 = num(1);
-b1 = num(2);
-b2 = num(3);
-a0 = 0;
-a1 = den(1);
-a2 = den(2);
-
-%x(1) =
-%x_dot(1) =
-%phi(1) =
-%phi_dot(1) =
-
-%e_x
-%e_x_dot
-%e_phi
-%e_phi_dot
-
-
-%H = tf(sys_d);
-
-% Transfer function 'H' from input 'r' to output ...
-%
-%     6.312e-05 z^3 - 6.361e-05 z^2 - 6.212e-05 z + 6.262e-05
-% x:  -------------------------------------------------------
-%          z^4 - 3.976 z^3 + 5.929 z^2 - 3.93 z + 0.9766
-%
-%       -0.0001674 z^3 + 0.0001687 z^2 + 0.0001648 z - 0.0001661
-% phi:  --------------------------------------------------------
-%            z^4 - 3.976 z^3 + 5.929 z^2 - 3.93 z + 0.9766
-%
-%
-% Converting these to the difference equations:
-%
-%    H_x(z) = X(z)/R(z)
-% => X(z)(z^4 - 3.976 z^3 + 5.929 z^2 - 3.93 z + 0.9766) =
-%    R(z)(6.312e-05 z^3 - 6.361e-05 z^2 - 6.212e-05 z + 6.262e-05)
-% => x(k+4) - 3.976*x(k+3) + 5.929*x(k+2) - 3.93*x(k+1) + 0.9766*x(k) =
-%    6.312e-5*r(k+3) - 6.361e-5*r(k+2) - 6.212e-5*r(k+1) + 6.262e-5*r(k)
-% => x(k+4) = 3.976*x(k+3) - 5.929*x(k+2) + 3.93*x(k+1) - 0.9766*x(k) +
-%    6.312e-5*r(k+3) - 6.361e-5*r(k+2) - 6.212e-5*r(k+1) + 6.262e-5*r(k)
-% => x(k) = 3.976*x(k-1) - 5.929*x(k-2) + 3.93*x(k-3) - 0.9766*x(k-4) +
-%    6.312e-5*r(k-1) - 6.361e-5*r(k-2) - 6.212e-5*r(k-3) + 6.262e-5*r(k-4)
-%
-%    H_phi(z) = P(z)/R(z) where P(z) and p(k) are for Phi
-% => p(k) = 3.976*p(k-1) - 5.929*p(k-2) + 3.93*p(k-3) - 0.9766*p(k-4) +
-%    -0.0001674*r(k-1) + 0.0001687*r(k-2) + 0.0001648*r(k-3) - 0.0001661*r(k-4)
-%
-%
-% So, we get:
-%  x(k) = 3.976*x(k-1) - 5.929*x(k-2) + 3.93*x(k-3) - 0.9766*x(k-4) +
-%    6.312e-5*r(k-1) - 6.361e-5*r(k-2) - 6.212e-5*r(k-3) + 6.262e-5*r(k-4)
-%  p(k) = 3.976*p(k-1) - 5.929*p(k-2) + 3.93*p(k-3) - 0.9766*p(k-4) +
-%    -0.0001674*r(k-1) + 0.0001687*r(k-2) + 0.0001648*r(k-3) - 0.0001661*r(k-4)
-%
-
-%
-% Using method from pages 49-50 of the textbook:
-% http://www.me.unm.edu/~starr/teaching/me581/textbook.pdf
-%
-%u=zeros(3);
-%y=zeros(3);
-%u(0) = adc_in(); % Read input u(k).
-%y(0) = a1*y(1) + a2*y(2) + b0*u(0) + b1*u(1) + b2*u(2); % compute y(k).
-%dac_out(y(0)); % Write output y(k) to D/A converter.
-
-%k = zeros(5);
-%p = zeros(5);
-%r = 0.0*ones(5); % Command cart to the middle, later use knob input
-
-% Read initial values
-
-% TODO I think this is how I come up with the estimates of the states, but then
-% I also need to be doing something like this to come up with the new control
-% outputs. I just need to look at the two discrete state-spaces and write out the
-% difference equations from those.
-
-% Compute new estimates
-%x(1) =   3.976*x(2) -     5.929*x(3) +      3.93*x(4) -    0.9766*x(5) + \
-%	  6.312e-5*r(2) -  6.361e-5*r(3) -  6.212e-5*r(4) +  6.262e-5*r(5);
-%p(1) =   3.976*p(2) -     5.929*p(3) +      3.93*p(4) -    0.9766*p(5) + \
-%	-0.0001674*r(2) + 0.0001687*r(3) + 0.0001648*r(4) - 0.0001661*r(5);
-
-% Propagate variables backwards for next sample
-%x(5) = x(4); x(4) = x(3); x(3) = x(2); x(2) = x(1);
-%p(5) = p(4); p(4) = p(3); p(3) = p(2); p(2) = p(1);
