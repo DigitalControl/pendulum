@@ -5,12 +5,15 @@ close all;
 clear all;
 pkg load control;
 
+% Whether to create plots
+plotAll = false;
+
 %
 % Pendulum model, the longer rod
 %
 
 % Sample rate / control frequency (Hz)
-f=1000;
+f = 100;
 T = 1/f;
 Maxpos = 0.25;              % Max carriage travel +- 0.25 m
 Maxangle = 0.175;           % Max rod angle -- 10 deg
@@ -188,12 +191,14 @@ sys_cl = ss(Ac,Bc,Cc,Dc,'statename',states,'inputname',inputs,'outputname',outpu
 
 t = 0:0.01:5;
 r = 0.2*ones(size(t));
-figure;
-[y,t,x]=lsim(sys_cl,r,t);
-[AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
-set(get(AX(1),'Ylabel'),'String','cart position (m)');
-set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-title('Step Response with LQR Control');
+if plotAll
+    figure;
+    [y,t,x]=lsim(sys_cl,r,t);
+    [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('Step Response with LQR Control');
+end
 
 %
 % Correcting the cart position error. Now the cart actually ends up at 0.2
@@ -207,12 +212,14 @@ sys_cl = ss(Ac,Bc*Nbar,Cc,Dc,'statename',states,'inputname',inputs,'outputname',
 
 t = 0:0.01:5;
 r =0.2*ones(size(t));
-figure;
-[y,t,x]=lsim(sys_cl,r,t);
-[AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
-set(get(AX(1),'Ylabel'),'String','cart position (m)');
-set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-title('Step Response with Precompensation and LQR Control');
+if plotAll
+    figure;
+    [y,t,x]=lsim(sys_cl,r,t);
+    [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('Step Response with Precompensation and LQR Control');
+end
 
 %
 % Designing observer/estimator
@@ -248,18 +255,159 @@ sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states,'inputname',inputs,'outputnam
 
 t = 0:0.01:5;
 r = 0.2*ones(size(t));
-figure;
-[y,t,x]=lsim(sys_est_cl,r,t);
-[AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
-set(get(AX(1),'Ylabel'),'String','cart position (m)');
-set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-title('Step Response with Observer-Based State-Feedback Control');
+if plotAll
+    figure;
+    [y,t,x]=lsim(sys_est_cl,r,t);
+    [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('Step Response with Observer-Based State-Feedback Control');
+end
 
 %
-% The results of all this magic
+% Performing the simulation without using lsim
 %
-sys_d = c2d(sys_est_cl, T, 'zoh');
-H = tf(sys_d);
+sys_est_d = c2d(sys_est_cl, T, 'zoh');
+
+% This is slow and not really needed... just a proof of concept
+if false
+    % We have 8 state variables, and need the current and past values
+    % Variables: x xdot phi phidot e1 e2 e3 e4
+    state = zeros(8, 2);
+
+    % The states we want to plot
+    N = 2000;
+    output = zeros(N, 2);
+
+    % Constant input command of zero
+    r = 0.2
+    input = r*ones(N);
+    %input = r*Nbar + K*state(1:4,2);
+
+    for i = 1:N
+        % We measure two of these states
+        %state(1,2) = cartpos
+        %state(3,2) = pendangle
+
+        %input(i) = input(i) - K*state(1:4,2);
+        %input(i) = L*(state(1:4,2) - state(5:8,2));
+
+        state(:,1) = sys_est_d.a*state(:,2) + sys_est_d.b*input(i);
+
+        % Save for plot
+        output(i,:) = sys_est_d.c*state(:,2) + sys_est_d.d*input(i);
+
+        % New values are now the old values
+        state(:,2) = state(:,1);
+    end
+
+    figure;
+    plot(output);
+    t = 1:N;
+    [AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('without lsim');
+end
+
+%
+% Simulating the plant separately from our control and esimation, getting
+% closer to what will actually run on the pendulum
+%
+
+% To get discretized: xbar(k+1) = (A-L*C)*xbar(k) + (B-L*D)*u + L*y
+states = {'x' 'x_dot' 'phi' 'phi_dot'};
+inputs = {'r'};
+outputs = {'x'; 'phi'};
+% Maybe B should be (B-L*D)*Nbar, but D is zero, so in this case it's the same
+sys_est_only = ss(A-L*C,B*Nbar-L*D,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
+sys_est_only_d = c2d(sys_est_only, T, 'zoh');
+
+if true
+    % We have 4 state variables, and need the current and past values
+    state = zeros(4, 2);
+    eststate = zeros(4, 2);
+
+    % The states we want to plot
+    N = 400;
+    output = zeros(N, 2);
+    estoutput = zeros(N, 2);
+
+    % Constant input command
+    r = 0.2;
+    input = zeros(N);
+
+    for i = 1:N
+        % Our control law
+        input(i) = r*Nbar - K*state(:,1);
+        %input(i) = r*Nbar - K*state(:,1);
+
+        % Estimation
+        % Same as actual, but with the additional L*y term at the end for
+        % correction that we'll call F here
+        %F = L*C*[state(1,1) eststate(2,1) state(3,1) eststate(4,1)]';
+        %F = L*C*[state(1,1) 0 state(3,1) 0]';
+        F = L*C*state(:,1);
+        %F = L*C*eststate(:,1);
+        %F = 0;
+        eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*input(i) + F;
+        estoutput(i,:) = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*input(i);
+
+        % Simulate actual system
+        state(:,1) = sys_d.a*state(:,2) + sys_d.b*input(i);
+        output(i,:) = sys_d.c*state(:,2) + sys_d.d*input(i);
+
+        % Save the new states in the old state
+        eststate(:,2) = eststate(:,1);
+        state(:,2) = state(:,1);
+    end
+
+    figure;
+    t = 1:N;
+    [AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('actual state - without lsim');
+    figure;
+    [AX,H1,H2] = plotyy(t,estoutput(:,1),t,estoutput(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('state estimates - without lsim');
+end
+
+
+%
+% TF from cart position to PWM value
+%
+s = tf('s');
+inductance = 0.01; % H, a complete guess, no idea... see if it works
+H = (kt/rd)*(s*Jd+b1)/(s^2*Jd*inductance + s*(Jd*R+b1*inductance) + (b1*R+kt^2));
+Hd = c2d(H, T, 'zoh');
+% But, we really want the inverse, from F to V
+% Note: this probably doesn't work... causes error if we c2d 1/H
+Hd = 1/Hd;
+[num, den] = tfdata(Hd);
+num = cell2mat(num);
+den = cell2mat(den);
+b0 = num(1);
+b1 = num(2);
+b2 = num(3);
+a0 = 0;
+a1 = den(1);
+a2 = den(2);
+
+%x(1) =
+%x_dot(1) =
+%phi(1) =
+%phi_dot(1) =
+
+%e_x
+%e_x_dot
+%e_phi
+%e_phi_dot
+
+
+%H = tf(sys_d);
 
 % Transfer function 'H' from input 'r' to output ...
 %
@@ -300,15 +448,15 @@ H = tf(sys_d);
 % Using method from pages 49-50 of the textbook:
 % http://www.me.unm.edu/~starr/teaching/me581/textbook.pdf
 %
-u=zeros(3);
-y=zeros(3);
-u(0) = adc_in(); % Read input u(k).
-y(0) = a1*y(1) + a2*y(2) + b0*u(0) + b1*u(1) + b2*u(2); % compute y(k).
-dac_out(y(0)); % Write output y(k) to D/A converter.
+%u=zeros(3);
+%y=zeros(3);
+%u(0) = adc_in(); % Read input u(k).
+%y(0) = a1*y(1) + a2*y(2) + b0*u(0) + b1*u(1) + b2*u(2); % compute y(k).
+%dac_out(y(0)); % Write output y(k) to D/A converter.
 
-k = zeros(5);
-p = zeros(5);
-r = 0.0*ones(5); % Command cart to the middle, later use knob input
+%k = zeros(5);
+%p = zeros(5);
+%r = 0.0*ones(5); % Command cart to the middle, later use knob input
 
 % Read initial values
 
@@ -318,11 +466,11 @@ r = 0.0*ones(5); % Command cart to the middle, later use knob input
 % difference equations from those.
 
 % Compute new estimates
-x(1) =   3.976*x(2) -     5.929*x(3) +      3.93*x(4) -    0.9766*x(5) +
-	  6.312e-5*r(2) -  6.361e-5*r(3) -  6.212e-5*r(4) +  6.262e-5*r(5)
-p(1) =   3.976*p(2) -     5.929*p(3) +      3.93*p(4) -    0.9766*p(5) +
-	-0.0001674*r(2) + 0.0001687*r(3) + 0.0001648*r(4) - 0.0001661*r(5)
+%x(1) =   3.976*x(2) -     5.929*x(3) +      3.93*x(4) -    0.9766*x(5) + \
+%	  6.312e-5*r(2) -  6.361e-5*r(3) -  6.212e-5*r(4) +  6.262e-5*r(5);
+%p(1) =   3.976*p(2) -     5.929*p(3) +      3.93*p(4) -    0.9766*p(5) + \
+%	-0.0001674*r(2) + 0.0001687*r(3) + 0.0001648*r(4) - 0.0001661*r(5);
 
 % Propagate variables backwards for next sample
-x(5) = x(4); x(4) = x(3); x(3) = x(2); x(2) = x(1);
-p(5) = p(4); p(4) = p(3); p(3) = p(2); p(2) = p(1);
+%x(5) = x(4); x(4) = x(3); x(3) = x(2); x(2) = x(1);
+%p(5) = p(4); p(4) = p(3); p(3) = p(2); p(2) = p(1);
