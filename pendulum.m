@@ -327,7 +327,7 @@ sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 sys_est_alt = ss(A+L*(C-D*K)-B*K,L,-K,0);
 sys_est_alt_d = c2d(sys_est_alt, T, 'zoh');
 
-if true
+if false
     % We have 4 state variables, and need the current and past values
     state = zeros(4, 2);
     eststate = zeros(4, 2);
