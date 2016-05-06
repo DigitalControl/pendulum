@@ -38,7 +38,10 @@ try
     y = zeros(3);
     input = 0;
     estoutput = zeros(2,1);
-    control_position = 0;
+    control_output = 0;
+
+    % Plot output
+    estoutputhistory = zeros(1,2);
 
     while true
         % Read encoder values
@@ -46,22 +49,22 @@ try
         % [long_pend_angle, short_pend_angle, motor_shaft_angle, knob_angle]
         % Pendulum and motor shaft angles are 4096 counts/rev
         rdata = ctrlbox_recv();
-        long_pend_angle = rdata(1);
-        short_pend_angle = rdata(2);
-        motor_shaft_angle = rdata(3);
+        long_pend_angle = rdata(1)*2*pi/4096+pi;
+        short_pend_angle = rdata(2)*2*pi/4096+pi;
+        motor_shaft_angle = -rdata(3)*2*pi/4096;
         knob_angle = rdata(4);
 
         % Set input
         %r = rdata(4)*50;
-        r = 0.2;
+        r = 0.0;
 
         % Estimation
         y = [motor_shaft_angle*rd; long_pend_angle];
-        uvec = [control_position; y-estoutput];
+        uvec = [control_output; y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
         eststate(:,2) = eststate(:,1);
-        control_position = r*Nbar - K*eststate(:,1);
+        control_output = r*Nbar - K*eststate(:,1);
 
         % Pwm values are +/-32767 for full scale motor voltage.
         % A positive pwm value causes the carriage to move in +X direction.
@@ -73,19 +76,8 @@ try
         % Example control law pwm generation
         %pwm = (30000 * sin(6.28*8*double(c)/min(cnt,1000))) - rdata(1);
 
-        % TF from control_position to PWM
-        %u(1) = control_position;
-        %y(1) = a1*y(2) + a2*y(3) + b0*u(1) + b1*u(2) + b2*u(3); % compute y(k).
-        %pwm = y(1);
-        %u(3) = u(2);
-        %u(2) = u(1);
-        %y(3) = y(2);
-        %y(2) = y(1);
-
-        %pwm = rdata(4)*50;
-        pwm = control_position;
-
         % Write pwm values and enable motor
+        pwm = control_output*5000; % maybe 2000
         ctrlbox_send(pwm, 1, 0);
 
         % Force matlab to check for interrupts and flush event queue
@@ -95,6 +87,7 @@ try
         % Save data
         printf('Long: %f, Short: %f, Motor: %f, Knob: %f, PWM: %f\n',
             long_pend_angle, short_pend_angle, motor_shaft_angle, knob_angle, pwm);
+        estoutputhistory = [estoutputhistory;estoutput'];
     end
     drawnow;
 catch
@@ -105,3 +98,11 @@ end
 
 % disable motor and disconnect
 ctrlbox_shutdown();
+
+% Plot estimated states
+t = 0:size(estoutputhistory,1)-1;
+figure;
+[AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
+set(get(AX(1),'Ylabel'),'String','cart position (m)');
+set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+title('state estimates - without lsim');

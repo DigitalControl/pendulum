@@ -1,12 +1,12 @@
 %
 % Control the inverted pendulum
 %
-close all;
-clear all;
+%close all;
+%clear all;
 pkg load control;
 
 % Whether to create plots
-plotAll = false;
+plotAll = true;
 
 %
 % Pendulum model, the longer rod
@@ -89,7 +89,7 @@ scale = [rd*2*pi/4096  2*pi/4096 -0.05/250];
 % TF from cart position to PWM value
 %
 s = tf('s');
-inductance = 0.01; % H, a complete guess, no idea... see if it works
+inductance = 0; % H, negligible
 H = (kt/rd)*(s*Jd+b1)/(s^2*Jd*inductance + s*(Jd*R+b1*inductance) + (b1*R+kt^2));
 sysmotor = ss(H);
 A1 = sysmotor.a;
@@ -108,6 +108,9 @@ b = b;                      % Friction
 I = J1;                     % Inertia of pendulum
 g = 9.81;                   % m/s^2     Gravitational constant
 l = d1/2;                   % Length of pendulum
+K = kt;                     % Motor constants
+r = rd;                     % Radius of motor
+R = R;                      % Resistance
 
 p = I*(M+m)+M*m*l^2; %denominator for the A and B matrices
 
@@ -129,12 +132,28 @@ D2 = [0;
 %outputs = {'x'; 'phi'};
 %sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
 
-A = [A1 zeros(2,4); [B1*C1; zeros(2,2)] A2];
-B = [B1; B2*D1];
-C = [D2*C1 C2];
-D = D2*D1;
+%A = [A1 zeros(2,4); [B1*C1; zeros(2,2)] A2];
+%B = [B1; B2*D1];
+%C = [D2*C1 C2];
+%D = D2*D1;
 
-states = {'theta_dot' 'i' 'x' 'x_dot' 'phi' 'phi_dot'};
+% Combining motor and pendulum equations
+p = (M+m)*(I+m*l^2)/(m*l)-m*l; %denominator for the A and B matrices
+A = [0  1                                     0                            0;
+     0  (I+m*l^2)/(m*l)*(-(b+K^2/(R*r^2))/p)  (I+m*l^2)/(m*l)*(M+m)*g/p-g  0;
+     0  0                                     0                            1;
+     0  -(b+K^2/(R*r^2))/p                    (M+m)*g/p                    0];
+B = [0;
+     (I+m*l^2)/(m*l)*(K/(R*r)/p);
+     0;
+     K/(R*r)/p];
+C = [1 0 0 0;
+     0 0 1 0];
+D = [0;
+     0];
+
+
+states = {'x' 'x_dot' 'phi' 'phi_dot'};
 inputs = {'v'};
 outputs = {'x'; 'phi'};
 sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
@@ -194,8 +213,8 @@ R = 1;
 
 % Try 3, better
 Q = C'*C;
-Q(1,1) = 2000;
-Q(3,3) = 500;
+Q(1,1) = 10000;
+Q(3,3) = 1000;
 R = 1;
 
 K = lqr(A,B,Q,R);
@@ -222,8 +241,7 @@ end
 % Correcting the cart position error. Now the cart actually ends up at 0.2
 % meters as we were commanding it.
 %
-%Cn = [1 0 0 0];
-Cn = [0 0 1 0 0 0];
+Cn = [1 0 0 0];
 sys_ss = ss(A,B,Cn,0);
 Nbar = rscale(sys_ss,K);
 
@@ -253,8 +271,7 @@ end
 %
 poles = eig(Ac);
 
-%P = [-20 -21 -22 -23];
-P = [-20 -21 -22 -23 -24 -25];
+P = [-20 -21 -22 -23];
 L = place(A',C',P)';
 
 %
@@ -267,7 +284,7 @@ Bce = [B*Nbar;
 Cce = [Cc zeros(size(Cc))];
 Dce = [0;0];
 
-states_est = {'theta' 'i' 'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4' 'e5' 'e6'};
+states_est = {'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4'};
 sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outputname',outputs);
 
 t = 0:0.01:5;
@@ -329,11 +346,11 @@ end
 sys_est_only = ss(A, [B L], C, [D [0;0] [0;0]]);
 sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 
-%if plotAll
-if true
+if plotAll
+%if true
     % We have 4 state variables, and need the current and past values
-    state = zeros(6, 2);
-    eststate = zeros(6, 2);
+    state = zeros(4, 2);
+    eststate = zeros(4, 2);
 
     % The states we want to plot
     N = 400;
@@ -350,7 +367,7 @@ if true
         input(i) = r*Nbar - K*eststate(:,1);
 
         % Estimation
-        y = [state(3,1); state(5,1)]; % Use only the measured part of the state
+        y = [state(1,1); state(3,1)]; % Use only the measured part of the state
         uvec = [input(i); y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
