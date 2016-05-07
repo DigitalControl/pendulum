@@ -66,7 +66,7 @@ try
         rdata = ctrlbox_recv();
         long_pend_angle = rdata(1)*2*pi/4096+pi;
         short_pend_angle = rdata(2)*2*pi/4096+pi;
-        motor_shaft_angle = -rdata(3)*2*pi/4096;
+        motor_shaft_angle = rdata(3)*2*pi/4096;
         motor_position = motor_shaft_angle*rd;
         knob_angle = rdata(4);
 
@@ -99,7 +99,7 @@ try
         control_output = r*Nbar - K*eststate(:,1);
 
         % Write pwm values and enable motor
-        pwm = control_output*5000; % maybe 2000
+        pwm = -control_output*2000; % maybe 2000
         ctrlbox_send(pwm, 1, 0);
 
         % Force matlab to check for interrupts and flush event queue

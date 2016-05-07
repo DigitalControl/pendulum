@@ -13,7 +13,7 @@ plotAll = false;
 %
 
 % Sample rate / control frequency (Hz)
-f = 100;
+f = 300;
 T = 1/f;
 Maxpos = 0.25;              % Max carriage travel +- 0.25 m
 Maxangle = 0.175;           % Max rod angle -- 10 deg
@@ -24,7 +24,7 @@ g = 9.81;                   % m/s^2     Gravitational constant
 
 % SYSTEM PARAMETERS
 % Measured Mechanical Parameters
-d1 = -0.323;                % m         Length of pendulum 1 (long)
+d1 = 0.323;                % m         Length of pendulum 1 (long)
 d2 = 0.079;                 % m         Length of pendulum 2 (short)
 %mp1 = 0.0208;              % kg        Mass of pendulum 1
 mp1 = 0.0318;
@@ -157,6 +157,7 @@ states = {'x' 'x_dot' 'phi' 'phi_dot'};
 inputs = {'v'};
 outputs = {'x'; 'phi'};
 sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
+%sys_ss = ss(A2,B2,C2,D2,'statename',states,'inputname',inputs,'outputname',outputs);
 
 % Poles for our system
 original_poles = eig(A);
@@ -223,8 +224,8 @@ R = 1;
 Q = C'*C;
 %Q(1,1) = 1e9;
 %Q(3,3) = 1e9;
-Q(1,1) = 10000;
-Q(3,3) = 1000;
+Q(1,1) = 5000;
+Q(3,3) = 100;
 R = 1;
 
 K = lqr(A,B,Q,R);
@@ -236,9 +237,9 @@ Dc = [D];
 
 sys_cl = ss(Ac,Bc,Cc,Dc,'statename',states,'inputname',inputs,'outputname',outputs);
 
-t = 0:0.01:5;
+t = 0:0.01:4;
 r = 0.2*ones(size(t));
-if plotAll && false
+if plotAll
     figure;
     [y,t,x]=lsim(sys_cl,r,t);
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
@@ -257,7 +258,6 @@ Nbar = rscale(sys_ss,K);
 
 sys_cl = ss(Ac,Bc*Nbar,Cc,Dc,'statename',states,'inputname',inputs,'outputname',outputs);
 
-t = 0:0.01:5;
 r =0.2*ones(size(t));
 if plotAll
     figure;
@@ -288,7 +288,7 @@ end
 %
 poles = eig(Ac);
 
-P = [-30 -31 -32 -33];
+P = [-20 -21 -22 -23];
 L = place(A',C',P)';
 
 %
@@ -304,9 +304,8 @@ Dce = [0;0];
 states_est = {'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4'};
 sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outputname',outputs);
 
-t = 0:0.01:5;
 r = 0.2*ones(size(t));
-if plotAll && false
+if plotAll
     figure;
     [y,t,x]=lsim(sys_est_cl,r,t);
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
@@ -363,14 +362,14 @@ end
 sys_est_only = ss(A, [B L], C, [D [0;0] [0;0]]);
 sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 
-%if plotAll
-if false
+if plotAll
+%if false
     % We have 4 state variables, and need the current and past values
     state = zeros(4, 2);
     eststate = zeros(4, 2);
 
     % The states we want to plot
-    N = 400;
+    N = 4*f;
     output = zeros(N, 2);
     estoutput = zeros(2, 1);
     estoutputhistory = zeros(N, 2);
@@ -401,8 +400,8 @@ if false
         estoutputhistory(i,:) = estoutput';
     end
 
+    t = 0:T:(size(estoutputhistory,1)-1)/f;
     %figure;
-    t = 1:N;
     %[AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
     %set(get(AX(1),'Ylabel'),'String','cart position (m)');
     %set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
