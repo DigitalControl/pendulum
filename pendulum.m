@@ -6,7 +6,7 @@
 pkg load control;
 
 % Whether to create plots
-plotAll = true;
+plotAll = false;
 
 %
 % Pendulum model, the longer rod
@@ -192,6 +192,14 @@ end
 %  -0.04895 + 5.15645i
 %  -0.04895 - 5.15645i
 %
+%
+% With V -> x,phi model:
+%
+%    0.00000 + 0.00000i
+%   -9.77403 + 0.00000i
+%   -0.04054 + 5.12175i
+%   -0.04054 - 5.12175i
+%
 % which are way out of the unit circle.
 %
 poles = eig(A);
@@ -213,6 +221,8 @@ R = 1;
 
 % Try 3, better
 Q = C'*C;
+%Q(1,1) = 1e9;
+%Q(3,3) = 1e9;
 Q(1,1) = 10000;
 Q(3,3) = 1000;
 R = 1;
@@ -228,7 +238,7 @@ sys_cl = ss(Ac,Bc,Cc,Dc,'statename',states,'inputname',inputs,'outputname',outpu
 
 t = 0:0.01:5;
 r = 0.2*ones(size(t));
-if plotAll
+if plotAll && false
     figure;
     [y,t,x]=lsim(sys_cl,r,t);
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
@@ -269,9 +279,16 @@ end
 %   -1.7891 +  3.5523i
 %   -1.7891 -  3.5523
 %
+% With new model:
+%
+%    -11.8992 + 10.2206i
+%    -11.8992 - 10.2206i
+%    -1.5386  +  4.2382i
+%    -1.5386  -  4.2382i
+%
 poles = eig(Ac);
 
-P = [-20 -21 -22 -23];
+P = [-30 -31 -32 -33];
 L = place(A',C',P)';
 
 %
@@ -289,7 +306,7 @@ sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outpu
 
 t = 0:0.01:5;
 r = 0.2*ones(size(t));
-if plotAll
+if plotAll && false
     figure;
     [y,t,x]=lsim(sys_est_cl,r,t);
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
@@ -346,8 +363,8 @@ end
 sys_est_only = ss(A, [B L], C, [D [0;0] [0;0]]);
 sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 
-if plotAll
-%if true
+%if plotAll
+if false
     % We have 4 state variables, and need the current and past values
     state = zeros(4, 2);
     eststate = zeros(4, 2);
