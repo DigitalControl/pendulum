@@ -99,7 +99,16 @@ try
         control_output = r*Nbar - K*eststate(:,1);
 
         % Write pwm values and enable motor
-        pwm = -control_output*2000; % maybe 2000
+        %
+        % Properly put between the +/- bounds of the PWM output.
+        %
+        % Scale properly, or at least in a way that appears to work.
+        % Experimentally determined 2000 to work, which is close to 32768/18
+        % (or 32768/20?) which came from past years' code, probably because 18
+        % or 20 is the max voltage, so we're converting so the DAC will output
+        % the desired voltage.
+        %Maxvoltage = 18
+        pwm = min(max(-control_output*32768/Maxvoltage,-32767),32767);
         ctrlbox_send(pwm, 1, 0);
 
         % Force matlab to check for interrupts and flush event queue
