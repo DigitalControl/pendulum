@@ -47,13 +47,13 @@ try
 
     % Only run for a certain time
     cnt = 0;
-    maxTime = 10; % seconds
+    maxTime = 300; % seconds
     maxCnt = maxTime*f;
 
-    % Let's get rid of the first bit of data
+    % Let's get rid of the first bit of data so that it doesn't instantly error
+    % saying the angle is too great
     for n = 1:10
         rdata = ctrlbox_recv();
-        disp(rdata);
     end
 
     %while true
@@ -98,6 +98,12 @@ try
         eststate(:,2) = eststate(:,1);
         control_output = r*Nbar - K*eststate(:,1);
 
+        % Test, use measurements in control even though we have a full-order observer
+        %control_output = r*Nbar - K*[y(1); eststate(2,1); y(2); eststate(4,1)];
+
+        % From book:
+        %control_output = r*Nbar - K*(eststate(:,1) - [1;0;0;0]*r);
+
         % Write pwm values and enable motor
         %
         % Properly put between the +/- bounds of the PWM output.
@@ -107,7 +113,6 @@ try
         % (or 32768/20?) which came from past years' code, probably because 18
         % or 20 is the max voltage, so we're converting so the DAC will output
         % the desired voltage.
-        %Maxvoltage = 18
         pwm = min(max(-control_output*32768/Maxvoltage,-32767),32767);
         ctrlbox_send(pwm, 1, 0);
 
@@ -132,9 +137,6 @@ catch
     disp(lasterror.message);
 end
 
-% disable motor and disconnect
-ctrlbox_shutdown();
-
 % Plot estimated states
 t = 0:T:(size(estoutputhistory,1)-1)/f;
 figure;
@@ -147,3 +149,6 @@ figure;
 set(get(AX(1),'Ylabel'),'String','measured cart position (m)');
 set(get(AX(2),'Ylabel'),'String','measured pendulum angle (radians)');
 title('Measured values');
+
+% disable motor and disconnect
+ctrlbox_shutdown();

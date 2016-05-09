@@ -2,7 +2,7 @@
 % Control the inverted pendulum
 %
 %close all;
-%clear all;
+clear all;
 pkg load control;
 
 % Whether to create plots
@@ -224,11 +224,10 @@ R = 1;
 Q = C'*C;
 %Q(1,1) = 1e9;
 %Q(3,3) = 1e9;
-%Q(1,1) = 5000;
-%Q(3,3) = 100;
-% From Andrew Roth?
-Q(1,1) = 48000;
-Q(3,3) = 100;
+%Q(1,1) = 2000;
+%Q(3,3) = 200;
+Q(1,1) = 10000;
+Q(3,3) = 200;
 R = 1;
 
 K = lqr(A,B,Q,R);
@@ -291,7 +290,8 @@ end
 %
 poles = eig(Ac);
 
-P = [-50 -51 -52 -53];
+%P = [-50 -51 -52 -53];
+P = [-30 -31 -32 -33];
 L = place(A',C',P)';
 
 %
@@ -384,6 +384,8 @@ if plotAll
     for i = 1:N
         % Our control law
         input(i) = r*Nbar - K*eststate(:,1);
+        %input(i) = r*Nbar - K*(eststate(:,1) - [1;0;0;0]*r);
+        %input(i) = r*Nbar - K*[state(1,1); eststate(2,1); state(3,1); eststate(4,1)];
 
         % Estimation
         y = [state(1,1); state(3,1)]; % Use only the measured part of the state

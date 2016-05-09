@@ -32,4 +32,13 @@ There's a _tcpdemo_ script that'll make the motor move back and forth and plot
 the data it received back over the network connection.
 
 ### Pendulum Control
-_yet to be implemented_
+Run in simulation:
+
+    octave
+    >> pendulum
+
+Run on the pendulum:
+
+    octave
+    >> pendulum_run
+
