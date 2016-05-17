@@ -88,6 +88,12 @@ scale = [rd*2*pi/4096  2*pi/4096 -0.05/250];
 % Additional variables
 l1 = d1/2;
 l2 = d2/2;
+bc = b;
+Km = kt;
+
+% Fiddle with these values...
+Ks = 1;
+bm = 1;
 
 %
 % State space equations with the spring
@@ -96,44 +102,14 @@ l2 = d2/2;
 % Denominator
 p = (Mc*l1^2*l2^2*mp1*mp2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2);
 A = [
-    % xd
     0 1 0 0 0 0 0 0;
-    % xdd
-     -(-Ks*l1^2*l2^2*mp1*mp2-J1*Ks*l2^2*mp2-J2*Ks*l1^2*mp1-J1*J2*Ks)/p
-     -(bc*l1^2*l2^2*mp1*mp2+J1*bc*l2^2*mp2+J2*bc*l1^2*mp1+J1*J2*bc)/p
-     -(-g*l1^2*l2^2*mp1^2*mp2-J2*g*l1^2*mp1^2)/p
-     0
-     -(-g*l1^2*l2^2*mp1*mp2^2-J1*g*l2^2*mp2^2)/p
-     0
-     -(Ks*l1^2*l2^2*mp1*mp2*rd+J1*Ks*l2^2*mp2*rd+J2*Ks*l1^2*mp1*rd+J1*J2*Ks*rd)/p
-     0;
-    % theta1d
+    -(-Ks*l1^2*l2^2*mp1*mp2-J1*Ks*l2^2*mp2-J2*Ks*l1^2*mp1-J1*J2*Ks)/p -(bc*l1^2*l2^2*mp1*mp2+J1*bc*l2^2*mp2+J2*bc*l1^2*mp1+J1*J2*bc)/p -(-g*l1^2*l2^2*mp1^2*mp2-J2*g*l1^2*mp1^2)/p 0 -(-g*l1^2*l2^2*mp1*mp2^2-J1*g*l2^2*mp2^2)/p 0 -(Ks*l1^2*l2^2*mp1*mp2*rd+J1*Ks*l2^2*mp2*rd+J2*Ks*l1^2*mp1*rd+J1*J2*Ks*rd)/p 0;
     0 0 0 1 0 0 0 0;
-    % theta1dd
-    -(-Ks*l2^2*mp2-J2*Ks)*l1*mp1/p
-    -(bc*l2^2*mp2+J2*bc)*l1*mp1/p
-    -(-Mc*g*l2^2*mp2-g*l2^2*mp1*mp2-J2*Mc*g-J2*g*mp1-J2*g*mp2)*l1*mp1/p
-    0
-    +g*l2^2*mp2^2*l1*mp1/p
-    0
-    -(Ks*l2^2*mp2*rd+J2*Ks*rd)*l1*mp1/p
-    0;
-    % theta2d
+    -(-Ks*l2^2*mp2-J2*Ks)*l1*mp1/p -(bc*l2^2*mp2+J2*bc)*l1*mp1/p -(-Mc*g*l2^2*mp2-g*l2^2*mp1*mp2-J2*Mc*g-J2*g*mp1-J2*g*mp2)*l1*mp1/p 0 +g*l2^2*mp2^2*l1*mp1/p 0 -(Ks*l2^2*mp2*rd+J2*Ks*rd)*l1*mp1/p 0;
     0 0 0 0 0 1 0 0;
-    % theta2dd
-    +mp2*l2*(-Ks*l1^2*mp1-J1*Ks)/p
-    +mp2*l2*(bc*l1^2*mp1+J1*bc)/p
-    -mp2*l2*g*l1^2*mp1^2/p
-    0
-    +mp2*l2*(-Mc*g*l1^2*mp1-g*l1^2*mp1*mp2-J1*Mc*g-J1*g*mp1-J1*g*mp2)/p
-    0
-    +mp2*l2*(Ks*l1^2*mp1*rd+J1*Ks*rd)/p
-    0;
-    % thetamd
+    +mp2*l2*(-Ks*l1^2*mp1-J1*Ks)/p +mp2*l2*(bc*l1^2*mp1+J1*bc)/p -mp2*l2*g*l1^2*mp1^2/p 0 +mp2*l2*(-Mc*g*l1^2*mp1-g*l1^2*mp1*mp2-J1*Mc*g-J1*g*mp1-J1*g*mp2)/p 0 +mp2*l2*(Ks*l1^2*mp1*rd+J1*Ks*rd)/p 0;
     0 0 0 0 0 0 0 1;
-    % thetamdd
-    0 0 0 0 0 0 0 -(Km^2+R*bm)/(Jd*R)
-    ];
+    0 0 0 0 0 0 0 -(Km^2+R*bm)/(Jd*R) ];
 B = [0;
      0;
      0;
@@ -168,12 +144,12 @@ ob = obsv(sys_d);
 controllability = rank(co);
 observability = rank(ob);
 
-if controllability == 4
+if controllability == 8
 	disp('System is controllable. Yay!')
 else
 	disp('System is not controllable. This is bad.')
 end
-if observability == 4
+if observability == 8
 	disp('System is observable. Yay!')
 else
 	disp('System is not observable. This is bad.')
