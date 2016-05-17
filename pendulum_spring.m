@@ -6,7 +6,7 @@ clear all;
 pkg load control;
 
 % Whether to create plots
-plotAll = false;
+plotAll = true;
 
 %
 % Pendulum model, the longer rod
@@ -99,40 +99,40 @@ A = [
     % xd
     0 1 0 0 0 0 0 0;
     % xdd
-     -(-Ks*l1^2*l2^2*mp1*mp2-J1*Ks*l2^2*mp2-J2*Ks*l1^2*mp1-J1*J2*Ks)*x/p
-     -(bc*l1^2*l2^2*mp1*mp2+J1*bc*l2^2*mp2+J2*bc*l1^2*mp1+J1*J2*bc)*xd/p
-     -(-g*l1^2*l2^2*mp1^2*mp2-J2*g*l1^2*mp1^2)*theta1/p
+     -(-Ks*l1^2*l2^2*mp1*mp2-J1*Ks*l2^2*mp2-J2*Ks*l1^2*mp1-J1*J2*Ks)/p
+     -(bc*l1^2*l2^2*mp1*mp2+J1*bc*l2^2*mp2+J2*bc*l1^2*mp1+J1*J2*bc)/p
+     -(-g*l1^2*l2^2*mp1^2*mp2-J2*g*l1^2*mp1^2)/p
      0
-     -(-g*l1^2*l2^2*mp1*mp2^2-J1*g*l2^2*mp2^2)*theta2/p
+     -(-g*l1^2*l2^2*mp1*mp2^2-J1*g*l2^2*mp2^2)/p
      0
-     -(Ks*l1^2*l2^2*mp1*mp2*rd+J1*Ks*l2^2*mp2*rd+J2*Ks*l1^2*mp1*rd+J1*J2*Ks*rd)*thetam/p
+     -(Ks*l1^2*l2^2*mp1*mp2*rd+J1*Ks*l2^2*mp2*rd+J2*Ks*l1^2*mp1*rd+J1*J2*Ks*rd)/p
      0;
     % theta1d
     0 0 0 1 0 0 0 0;
     % theta1dd
-    -(-Ks*l2^2*mp2-J2*Ks)*l1*mp1*x/p
-    -(bc*l2^2*mp2+J2*bc)*l1*mp1*xd/p
-    -(-Mc*g*l2^2*mp2-g*l2^2*mp1*mp2-J2*Mc*g-J2*g*mp1-J2*g*mp2)*l1*mp1*theta1/p
+    -(-Ks*l2^2*mp2-J2*Ks)*l1*mp1/p
+    -(bc*l2^2*mp2+J2*bc)*l1*mp1/p
+    -(-Mc*g*l2^2*mp2-g*l2^2*mp1*mp2-J2*Mc*g-J2*g*mp1-J2*g*mp2)*l1*mp1/p
     0
-    +g*l2^2*mp2^2*l1*mp1*theta2/p
+    +g*l2^2*mp2^2*l1*mp1/p
     0
-    -(Ks*l2^2*mp2*rd+J2*Ks*rd)*l1*mp1*thetam/p
+    -(Ks*l2^2*mp2*rd+J2*Ks*rd)*l1*mp1/p
     0;
     % theta2d
     0 0 0 0 0 1 0 0;
     % theta2dd
-    +mp2*l2*(-Ks*l1^2*mp1-J1*Ks)*x/p
-    +mp2*l2*(bc*l1^2*mp1+J1*bc)*xd/p
-    -mp2*l2*g*l1^2*mp1^2*theta1/p
+    +mp2*l2*(-Ks*l1^2*mp1-J1*Ks)/p
+    +mp2*l2*(bc*l1^2*mp1+J1*bc)/p
+    -mp2*l2*g*l1^2*mp1^2/p
     0
-    +mp2*l2*(-Mc*g*l1^2*mp1-g*l1^2*mp1*mp2-J1*Mc*g-J1*g*mp1-J1*g*mp2)*theta2/p
+    +mp2*l2*(-Mc*g*l1^2*mp1-g*l1^2*mp1*mp2-J1*Mc*g-J1*g*mp1-J1*g*mp2)/p
     0
-    +mp2*l2*(Ks*l1^2*mp1*rd+J1*Ks*rd)*thetam/p
+    +mp2*l2*(Ks*l1^2*mp1*rd+J1*Ks*rd)/p
     0;
     % thetamd
     0 0 0 0 0 0 0 1;
     % thetamdd
-    0 0 0 0 0 0 0 -(Km^2+R*bm)*thetamd/(Jd*R)
+    0 0 0 0 0 0 0 -(Km^2+R*bm)/(Jd*R)
     ];
 B = [0;
      0;
@@ -141,92 +141,11 @@ B = [0;
      0;
      0;
      0;
-     Km*V/(Jd*R)];
+     Km/(Jd*R)];
 C = [1 0 0 0 0 0 0 0;
      0 0 1 0 0 0 0 0];
 D = [0;
      0];
-
-xd =
-    +0*x
-    +1*xd
-    +0*theta1
-    +0*theta1d
-    +0*theta2
-    +0*theta2d
-    +0*thetam
-    +0*thetamd;
-
-xdd =
-      -(-Ks*l1^2*l2^2*mp1*mp2-J1*Ks*l2^2*mp2-J2*Ks*l1^2*mp1-J1*J2*Ks)*x/p
-      -(bc*l1^2*l2^2*mp1*mp2+J1*bc*l2^2*mp2+J2*bc*l1^2*mp1+J1*J2*bc)*xd/p
-      -(-g*l1^2*l2^2*mp1^2*mp2-J2*g*l1^2*mp1^2)*theta1/p
-      +0
-      -(-g*l1^2*l2^2*mp1*mp2^2-J1*g*l2^2*mp2^2)*theta2/p
-      +0
-      -(Ks*l1^2*l2^2*mp1*mp2*rd+J1*Ks*l2^2*mp2*rd+J2*Ks*l1^2*mp1*rd+J1*J2*Ks*rd)*thetam/p
-      +0;
-
-theta1d =
-    +0*x
-    +0*xd
-    +0*theta1
-    +1*theta1d
-    +0*theta2
-    +0*theta2d
-    +0*thetam
-    +0*thetamd;
-
-theta1dd =
-    -(-Ks*l2^2*mp2-J2*Ks)*l1*mp1*x/p
-    -(bc*l2^2*mp2+J2*bc)*l1*mp1*xd/p
-    -(-Mc*g*l2^2*mp2-g*l2^2*mp1*mp2-J2*Mc*g-J2*g*mp1-J2*g*mp2)*l1*mp1*theta1/p
-    +0
-    +g*l2^2*mp2^2*l1*mp1*theta2/p
-    +0
-    -(Ks*l2^2*mp2*rd+J2*Ks*rd)*l1*mp1*thetam/p
-    +0;
-
-theta2d =
-    +0*x
-    +0*xd
-    +0*theta1
-    +0*theta1d
-    +0*theta2
-    +1*theta2d
-    +0*thetam
-    +0*thetamd;
-
-theta2dd =
-    +mp2*l2*(-Ks*l1^2*mp1-J1*Ks)*x/p
-    +mp2*l2*(bc*l1^2*mp1+J1*bc)*xd/p
-    -mp2*l2*g*l1^2*mp1^2*theta1/p
-    +0
-    +mp2*l2*(-Mc*g*l1^2*mp1-g*l1^2*mp1*mp2-J1*Mc*g-J1*g*mp1-J1*g*mp2)*theta2/p
-    +0
-    +mp2*l2*(Ks*l1^2*mp1*rd+J1*Ks*rd)*thetam/p
-    +0;
-
-thetamd =
-    +0*x
-    +0*xd
-    +0*theta1
-    +0*theta1d
-    +0*theta2
-    +0*theta2d
-    +0*thetam
-    +1*thetamd;
-
-thetamdd =
-    +0*x
-    +0*xd
-    +0*theta1
-    +0*theta1d
-    +0*theta2
-    +0*theta2d
-    +0*thetam
-    -(Km^2+R*bm)*thetamd/(Jd*R)
-    +Km*V/(Jd*R);
 
 states = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta2_dot' 'thetam' 'thetam_dot'};
 inputs = {'v'};
@@ -313,7 +232,7 @@ end
 % Correcting the cart position error. Now the cart actually ends up at 0.2
 % meters as we were commanding it.
 %
-Cn = [1 0 0 0];
+Cn = [1 0 0 0 0 0 0 0];
 sys_ss = ss(A,B,Cn,0);
 Nbar = rscale(sys_ss,K);
 
@@ -335,22 +254,9 @@ end
 % Our slowest pole's real value is at -1.7891. Let's try placing our
 % estimator's poles at -20.
 %
-%  -10.0491 + 10.4058i
-%  -10.0491 - 10.4058i
-%   -1.7891 +  3.5523i
-%   -1.7891 -  3.5523
-%
-% With new model:
-%
-%    -11.8992 + 10.2206i
-%    -11.8992 - 10.2206i
-%    -1.5386  +  4.2382i
-%    -1.5386  -  4.2382i
-%
 poles = eig(Ac);
 
-%P = [-50 -51 -52 -53];
-P = [-30 -31 -32 -33];
+P = [-30 -31 -32 -33 -34 -35 -36 -37];
 L = place(A',C',P)';
 
 %
@@ -363,7 +269,8 @@ Bce = [B*Nbar;
 Cce = [Cc zeros(size(Cc))];
 Dce = [0;0];
 
-states_est = {'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4'};
+states_est = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta2_dot' 'thetam'
+    'thetam_dot' 'e1' 'e2' 'e3' 'e4' 'e5' 'e6' 'e7' 'e8'};
 sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outputname',outputs);
 
 r = 0.2*ones(size(t));
@@ -388,8 +295,8 @@ sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 if plotAll
 %if false
     % We have 4 state variables, and need the current and past values
-    state = zeros(4, 2);
-    eststate = zeros(4, 2);
+    state = zeros(8, 2);
+    eststate = zeros(8, 2);
 
     % The states we want to plot
     N = 4*f;
