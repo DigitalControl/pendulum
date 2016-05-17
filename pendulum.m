@@ -30,7 +30,7 @@ d2 = 0.079;                 % m         Length of pendulum 2 (short)
 mp1 = 0.0318;
 %mp2 = 0.0050;              % kg        Mass of pendulum 2
 mp2 = 0.0085;
-%m=.5;
+%m=0.8; % Makes state estimates better for some reason
 m = 0.3163;                 % kg        Mass of carriage
 rd = 0.0254/2;              % m         Drive pulley radius
 md = 0.0375;                % kg        Mass of drive pulley (cylinder)
@@ -107,7 +107,7 @@ m = mp1;                    % Mass of pendulum 1
 b = b;                      % Friction
 I = J1;                     % Inertia of pendulum
 g = 9.81;                   % m/s^2     Gravitational constant
-l = d1/2;                   % Length of pendulum
+l = d1;                     % Length of pendulum
 K = kt;                     % Motor constants
 r = rd;                     % Radius of motor
 R = R;                      % Resistance
@@ -226,9 +226,13 @@ Q = C'*C;
 %Q(3,3) = 1e9;
 %Q(1,1) = 2000;
 %Q(3,3) = 200;
-Q(1,1) = 10000;
-Q(3,3) = 200;
-R = 1;
+%Q(1,1) = 10000;
+%Q(3,3) = 200;
+%Q(1,1) = 48000;
+%Q(3,3) = 100;
+Q(1,1) = 1000;
+Q(3,3) = 100;
+R = 0.1;
 
 K = lqr(A,B,Q,R);
 
@@ -387,6 +391,9 @@ if plotAll
         %input(i) = r*Nbar - K*(eststate(:,1) - [1;0;0;0]*r);
         %input(i) = r*Nbar - K*[state(1,1); eststate(2,1); state(3,1); eststate(4,1)];
 
+        % Max out at +/- Maxvoltage
+        input(i) = min(max(input(i),-Maxvoltage),Maxvoltage);
+
         % Estimation
         y = [state(1,1); state(3,1)]; % Use only the measured part of the state
         uvec = [input(i); y-estoutput];
@@ -416,4 +423,11 @@ if plotAll
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
     title('state estimates - without lsim');
+
+    % TODO plot the input, make sure it's not > 20 V
+    % TODO cap at +/- 20 V
+    figure;
+    plot(t,estoutputhistory(:,1),'-r',
+         t,estoutputhistory(:,2),'-b',
+         t,input,'-g');
 end
