@@ -18,7 +18,7 @@ ctrlbox;
 disp('');
 disp('');
 
-saveData = false;
+saveData = true;
 
 try
     % Reset the board, then try connecting
@@ -66,8 +66,11 @@ try
         % Pendulum and motor shaft angles are 4096 counts/rev
         rdata = ctrlbox_recv();
         long_pend_angle = rdata(1)*2*pi/4096+pi;
-        %short_pend_angle = rdata(2)*2*pi/4096+pi;
-        short_pend_angle = rdata(2)*2*pi/4096;
+        if bothPendulums
+            short_pend_angle = rdata(2)*2*pi/4096+pi; % Do both pendulums
+        else
+            short_pend_angle = rdata(2)*2*pi/4096; % Smaller pendulum just hanging down
+        end
         motor_shaft_angle = rdata(3)*2*pi/4096;
         motor_position = motor_shaft_angle*rd^2; % TODO why rd^2?
         knob_angle = rdata(4);

@@ -8,6 +8,10 @@ pkg load control;
 % Whether to create plots
 plotAll = false;
 
+% Whether to have the smaller pendulum balance as well or just hang down
+% false is hanging down, true is balance it up as well as the long one
+bothPendulums = true;
+
 %
 % Pendulum model, the longer rod
 %
@@ -95,31 +99,59 @@ l2 = d2/2;
 Km = kt;
 bc = 1; % not given, so guess
 
-% Denominators p1, p2
-p1 = (R*rd^2*(Mc*l1^2*l2^2*mp1*mp2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2));
-p2 = (Mc*l1^2*l2^2*mp1*mp2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2);
+if bothPendulums
+    % Denominators p1, p2
+    p1 = (R*rd^2*(Mc*l1^2*l2^2*mp1*mp2+2*l1^2*l2^2*mp1*mp2^2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+2*J1*l2^2*mp2^2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2));
+    p2 = (Mc*l1^2*l2^2*mp1*mp2+2*l1^2*l2^2*mp1*mp2^2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+2*J1*l2^2*mp2^2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2);
 
-A = [
-    % xd
-    0 1 0 0 0 0;
-    % xdd
-    0 -(R*bc*l1^2*l2^2*mp1*mp2*rd^2+J1*R*bc*l2^2*mp2*rd^2+J2*R*bc*l1^2*mp1*rd^2+Km^2*l1^2*l2^2*mp1*mp2+J1*J2*R*bc*rd^2+J1*Km^2*l2^2*mp2+J2*Km^2*l1^2*mp1+J1*J2*Km^2)/p1 -(-R*g*l1^2*l2^2*mp1^2*mp2*rd^2-J2*R*g*l1^2*mp1^2*rd^2)/p1 0 -(-R*g*l1^2*l2^2*mp1*mp2^2*rd^2-J1*R*g*l2^2*mp2^2*rd^2)/p1 0;
-    % theta1d
-    0 0 0 1 0 0;
-    % theta1dd
-    0 -(R*bc*l2^2*mp2*rd^2+J2*R*bc*rd^2+Km^2*l2^2*mp2+J2*Km^2)*l1*mp1/p1 -(-Mc*R*g*l2^2*mp2*rd^2-R*g*l2^2*mp1*mp2*rd^2-J2*Mc*R*g*rd^2-J2*R*g*mp1*rd^2-J2*R*g*mp2*rd^2)*l1*mp1/p1 0 +g*l2^2*mp2^2*l1*mp1/p2 0;
-    % theta2d
-    0 0 0 0 0 1;
-    % theta2dd
-    0 +mp2*l2*(R*bc*l1^2*mp1*rd^2+J1*R*bc*rd^2+Km^2*l1^2*mp1+J1*Km^2)/p1 -mp2*l2*g*l1^2*mp1^2/p2 0 +mp2*l2*(-Mc*R*g*l1^2*mp1*rd^2-R*g*l1^2*mp1*mp2*rd^2-J1*Mc*R*g*rd^2-J1*R*g*mp1*rd^2-J1*R*g*mp2*rd^2)/p1 0;
-    ];
-B = [0;
-    -(-Km*l1^2*l2^2*mp1*mp2*rd-J1*Km*l2^2*mp2*rd-J2*Km*l1^2*mp1*rd-J1*J2*Km*rd)/p1;
-     0;
-    -(-Km*l2^2*mp2*rd-J2*Km*rd)*l1*mp1/p1;
-     0;
-     mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)/p1;
-     ];
+    A = [
+        % xd
+        0 1 0 0 0 0;
+        % xdd
+        0 -(R*bc*l1^2*l2^2*mp1*mp2*rd^2+J1*R*bc*l2^2*mp2*rd^2+J2*R*bc*l1^2*mp1*rd^2+Km^2*l1^2*l2^2*mp1*mp2+J1*J2*R*bc*rd^2+J1*Km^2*l2^2*mp2+J2*Km^2*l1^2*mp1+J1*J2*Km^2)/p1 -(-R*g*l1^2*l2^2*mp1^2*mp2*rd^2-J2*R*g*l1^2*mp1^2*rd^2)/p1 0 -(R*g*l1^2*l2^2*mp1*mp2^2*rd^2+J1*R*g*l2^2*mp2^2*rd^2)/p1 0;
+        % theta1d
+        0 0 0 1 0 0;
+        % theta1dd
+        0 -(R*bc*l2^2*mp2*rd^2+J2*R*bc*rd^2+Km^2*l2^2*mp2+J2*Km^2)*l1*mp1/p1 -(-Mc*R*g*l2^2*mp2*rd^2-R*g*l2^2*mp1*mp2*rd^2-2*R*g*l2^2*mp2^2*rd^2-J2*Mc*R*g*rd^2-J2*R*g*mp1*rd^2-J2*R*g*mp2*rd^2)*l1*mp1/p1 0 -g*l2^2*mp2^2*l1*mp1/p1 0;
+        % theta2d
+        0 0 0 0 0 1;
+        % theta2dd
+        0 -mp2*l2*(R*bc*l1^2*mp1*rd^2+J1*R*bc*rd^2+Km^2*l1^2*mp1+J1*Km^2)/p1 +mp2*l2*g*l1^2*mp1^2/p2 0 -mp2*l2*(-Mc*R*g*l1^2*mp1*rd^2-R*g*l1^2*mp1*mp2*rd^2-J1*Mc*R*g*rd^2-J1*R*g*mp1*rd^2-J1*R*g*mp2*rd^2)/p1 0;
+        ];
+    B = [0;
+         -(-Km*l1^2*l2^2*mp1*mp2*rd-J1*Km*l2^2*mp2*rd-J2*Km*l1^2*mp1*rd-J1*J2*Km*rd)/p1;
+         0;
+         -(-Km*l2^2*mp2*rd-J2*Km*rd)*l1*mp1/p1;
+         0;
+         -mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)/p1;
+         ];
+else
+    % Denominators p1, p2
+    p1 = (R*rd^2*(Mc*l1^2*l2^2*mp1*mp2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2));
+    p2 = (Mc*l1^2*l2^2*mp1*mp2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2);
+
+    A = [
+        % xd
+        0 1 0 0 0 0;
+        % xdd
+        0 -(R*bc*l1^2*l2^2*mp1*mp2*rd^2+J1*R*bc*l2^2*mp2*rd^2+J2*R*bc*l1^2*mp1*rd^2+Km^2*l1^2*l2^2*mp1*mp2+J1*J2*R*bc*rd^2+J1*Km^2*l2^2*mp2+J2*Km^2*l1^2*mp1+J1*J2*Km^2)/p1 -(-R*g*l1^2*l2^2*mp1^2*mp2*rd^2-J2*R*g*l1^2*mp1^2*rd^2)/p1 0 -(-R*g*l1^2*l2^2*mp1*mp2^2*rd^2-J1*R*g*l2^2*mp2^2*rd^2)/p1 0;
+        % theta1d
+        0 0 0 1 0 0;
+        % theta1dd
+        0 -(R*bc*l2^2*mp2*rd^2+J2*R*bc*rd^2+Km^2*l2^2*mp2+J2*Km^2)*l1*mp1/p1 -(-Mc*R*g*l2^2*mp2*rd^2-R*g*l2^2*mp1*mp2*rd^2-J2*Mc*R*g*rd^2-J2*R*g*mp1*rd^2-J2*R*g*mp2*rd^2)*l1*mp1/p1 0 +g*l2^2*mp2^2*l1*mp1/p2 0;
+        % theta2d
+        0 0 0 0 0 1;
+        % theta2dd
+        0 +mp2*l2*(R*bc*l1^2*mp1*rd^2+J1*R*bc*rd^2+Km^2*l1^2*mp1+J1*Km^2)/p1 -mp2*l2*g*l1^2*mp1^2/p2 0 +mp2*l2*(-Mc*R*g*l1^2*mp1*rd^2-R*g*l1^2*mp1*mp2*rd^2-J1*Mc*R*g*rd^2-J1*R*g*mp1*rd^2-J1*R*g*mp2*rd^2)/p1 0;
+        ];
+    B = [0;
+        -(-Km*l1^2*l2^2*mp1*mp2*rd-J1*Km*l2^2*mp2*rd-J2*Km*l1^2*mp1*rd-J1*J2*Km*rd)/p1;
+         0;
+        -(-Km*l2^2*mp2*rd-J2*Km*rd)*l1*mp1/p1;
+         0;
+         mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)/p1;
+         ];
+end
 C = [1 0 0 0 0 0;
      0 0 1 0 0 0;
      0 0 0 0 1 0;
@@ -180,10 +212,17 @@ Q = C'*C;
 %    ];
 %R = 0.8;
 
-Q(1,1) = 1000;
-Q(3,3) = 100000;
-Q(5,5) = 1000;
-R = 0.1;
+if bothPendulums
+    Q(1,1) = 100;
+    Q(3,3) = 10000;
+    Q(5,5) = 100000;
+    R = 0.01;
+else
+    Q(1,1) = 1000;
+    Q(3,3) = 100000;
+    Q(5,5) = 1000;
+    R = 0.1;
+end
 
 K = lqr(A,B,Q,R);
 
