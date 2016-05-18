@@ -168,17 +168,22 @@ poles = eig(A);
 % Create a controller with LQR and simulate it
 % http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=ControlStateSpace
 %
-%Q = C'*C;
+Q = C'*C;
 %Q(1,1) = 500;
 %Q(3,3) = 1000;
-Q = [ 100000 0 0 0 0 0;
-      0 0 0 0 0 0;
-      0 0 1000 0 0 0;
-      0 0 0 0 0 0;
-      0 0 0 0 5000 0;
-      0 0 0 0 0 0;
-    ];
-R = 0.8;
+%Q = [ 100000 0 0 0 0 0;
+%      0 0 0 0 0 0;
+%      0 0 1000 0 0 0;
+%      0 0 0 0 0 0;
+%      0 0 0 0 5000 0;
+%      0 0 0 0 0 0;
+%    ];
+%R = 0.8;
+
+Q(1,1) = 1000;
+Q(3,3) = 100000;
+Q(5,5) = 1000;
+R = 0.1;
 
 K = lqr(A,B,Q,R);
 

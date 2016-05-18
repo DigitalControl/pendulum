@@ -69,7 +69,7 @@ try
         %short_pend_angle = rdata(2)*2*pi/4096+pi;
         short_pend_angle = rdata(2)*2*pi/4096;
         motor_shaft_angle = rdata(3)*2*pi/4096;
-        motor_position = motor_shaft_angle*rd^2;
+        motor_position = motor_shaft_angle*rd^2; % TODO why rd^2?
         knob_angle = rdata(4);
 
         % Checks for safety
