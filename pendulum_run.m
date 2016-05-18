@@ -5,7 +5,8 @@
 close all;
 
 % load values from pendulum.m
-pendulum;
+%pendulum;
+pendulum_6th;
 
 % Load Octave packages we'll be using
 % Note: must do this below loading pendulum.m, since it clears everything
