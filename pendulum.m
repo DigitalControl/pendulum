@@ -13,7 +13,7 @@ plotAll = false;
 %
 
 % Sample rate / control frequency (Hz)
-f = 300;
+f = 200;
 T = 1/f;
 Maxpos = 0.25;              % Max carriage travel +- 0.25 m
 Maxangle = 0.175;           % Max rod angle -- 10 deg
@@ -231,7 +231,7 @@ Q = C'*C;
 %Q(1,1) = 48000;
 %Q(3,3) = 100;
 Q(1,1) = 1000;
-Q(3,3) = 100;
+Q(3,3) = 100000;
 R = 0.1;
 
 K = lqr(A,B,Q,R);
