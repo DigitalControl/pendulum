@@ -90,6 +90,10 @@ scale = [rd*2*pi/4096  2*pi/4096 -0.05/250];
 %
 % Combining motor and two pendulum equations
 %
+l1 = d1/2;
+l2 = d2/2;
+Km = kt;
+bc = 1; % not given, so guess
 
 % Denominators p1, p2
 p1 = (R*rd^2*(Mc*l1^2*l2^2*mp1*mp2+J1*Mc*l2^2*mp2+J1*l2^2*mp1*mp2+J2*Mc*l1^2*mp1+J2*l1^2*mp1*mp2+J1*J2*Mc+J1*J2*mp1+J1*J2*mp2));
@@ -108,12 +112,14 @@ A = [
     0 0 0 0 0 1;
     % theta2dd
     0 +mp2*l2*(R*bc*l1^2*mp1*rd^2+J1*R*bc*rd^2+Km^2*l1^2*mp1+J1*Km^2)/p1 -mp2*l2*g*l1^2*mp1^2/p2 0 +mp2*l2*(-Mc*R*g*l1^2*mp1*rd^2-R*g*l1^2*mp1*mp2*rd^2-J1*Mc*R*g*rd^2-J1*R*g*mp1*rd^2-J1*R*g*mp2*rd^2)/p1 0;
+    ];
 B = [0;
     -(-Km*l1^2*l2^2*mp1*mp2*rd-J1*Km*l2^2*mp2*rd-J2*Km*l1^2*mp1*rd-J1*J2*Km*rd)/p1;
      0;
     -(-Km*l2^2*mp2*rd-J2*Km*rd)*l1*mp1/p1;
      0;
-     mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)/p1];
+     mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)/p1;
+     ];
 C = [1 0 0 0 0 0;
      0 0 1 0 0 0];
 D = [0;
@@ -139,12 +145,12 @@ ob = obsv(sys_d);
 controllability = rank(co);
 observability = rank(ob);
 
-if controllability == 4
+if controllability == 6
 	disp('System is controllable. Yay!')
 else
 	disp('System is not controllable. This is bad.')
 end
-if observability == 4
+if observability == 6
 	disp('System is observable. Yay!')
 else
 	disp('System is not observable. This is bad.')
@@ -187,7 +193,7 @@ end
 % Correcting the cart position error. Now the cart actually ends up at 0.2
 % meters as we were commanding it.
 %
-Cn = [1 0 0 0];
+Cn = [1 0 0 0 0 0];
 sys_ss = ss(A,B,Cn,0);
 Nbar = rscale(sys_ss,K);
 
@@ -208,7 +214,8 @@ end
 %
 poles = eig(Ac);
 
-P = [-30 -31 -32 -33 -34 -35];
+%P = [-30 -31 -32 -33 -34 -35];
+P = [-2 -3 -4 -5 -6 -7];
 L = place(A',C',P)';
 
 %
@@ -221,7 +228,7 @@ Bce = [B*Nbar;
 Cce = [Cc zeros(size(Cc))];
 Dce = [0;0];
 
-states_est = {'x' 'x_dot' 'phi' 'phi_dot' 'e1' 'e2' 'e3' 'e4'};
+states_est = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta1_dot' 'e1' 'e2' 'e3' 'e4' 'e5' 'e6'};
 sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outputname',outputs);
 
 r = 0.2*ones(size(t));
@@ -296,12 +303,12 @@ if plotAll
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('state estimates - without lsim');
+    title('State Estimates - without lsim');
 
-    % TODO plot the input, make sure it's not > 20 V
-    % TODO cap at +/- 20 V
+    % Plot the input, make sure it's not > Maxvoltage
     figure;
     plot(t,estoutputhistory(:,1),'-r',
          t,estoutputhistory(:,2),'-b',
          t,input,'-g');
+    title('Voltage Output');
 end
