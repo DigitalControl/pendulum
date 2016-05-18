@@ -119,38 +119,6 @@ C = [1 0 0 0 0 0;
 D = [0;
      0];
 
-
-xd = 0 1 0 0 0 0
-
-xdd =
-0
--(R*bc*l1^2*l2^2*mp1*mp2*rd^2+J1*R*bc*l2^2*mp2*rd^2+J2*R*bc*l1^2*mp1*rd^2+Km^2*l1^2*l2^2*mp1*mp2+J1*J2*R*bc*rd^2+J1*Km^2*l2^2*mp2+J2*Km^2*l1^2*mp1+J1*J2*Km^2)/p1
--(-R*g*l1^2*l2^2*mp1^2*mp2*rd^2-J2*R*g*l1^2*mp1^2*rd^2)*theta1/p1
-0
--(-R*g*l1^2*l2^2*mp1*mp2^2*rd^2-J1*R*g*l2^2*mp2^2*rd^2)*theta2/p1
-0
--(-Km*l1^2*l2^2*mp1*mp2*rd-J1*Km*l2^2*mp2*rd-J2*Km*l1^2*mp1*rd-J1*J2*Km*rd)*V/p1
-
-theta1d = 0 0 0 1 0 0
-theta1dd =
-0
--(R*bc*l2^2*mp2*rd^2+J2*R*bc*rd^2+Km^2*l2^2*mp2+J2*Km^2)*l1*mp1*xd/p1
--(-Mc*R*g*l2^2*mp2*rd^2-R*g*l2^2*mp1*mp2*rd^2-J2*Mc*R*g*rd^2-J2*R*g*mp1*rd^2-J2*R*g*mp2*rd^2)*l1*mp1*theta1/p1
-0
-+g*l2^2*mp2^2*l1*mp1*theta2/p2
-0
--(-Km*l2^2*mp2*rd-J2*Km*rd)*l1*mp1*V/p1
-
-theta2d = 0 0 0 0 0 1
-theta2dd =
-0
-+mp2*l2*(R*bc*l1^2*mp1*rd^2+J1*R*bc*rd^2+Km^2*l1^2*mp1+J1*Km^2)*xd/p1
--mp2*l2*g*l1^2*mp1^2*theta1/p2
-0
-+mp2*l2*(-Mc*R*g*l1^2*mp1*rd^2-R*g*l1^2*mp1*mp2*rd^2-J1*Mc*R*g*rd^2-J1*R*g*mp1*rd^2-J1*R*g*mp2*rd^2)*theta2/p1
-0
-mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)*V/p1
-
 states = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta1_dot'};
 inputs = {'v'};
 outputs = {'x'; 'phi'};
