@@ -5,8 +5,8 @@
 close all;
 
 % load values from pendulum.m
-pendulum;
-%pendulum_6th;
+%pendulum;
+pendulum_6th;
 
 % Load Octave packages we'll be using
 % Note: must do this below loading pendulum.m, since it clears everything
@@ -44,7 +44,7 @@ try
     control_output = 0;
 
     % Plot output
-    estoutputhistory = zeros(1,size(C,1)+2);
+    estoutputhistory = zeros(1,size(C,1)+3);
 
     % Only run for a certain time
     cnt = 0;
@@ -97,7 +97,7 @@ try
         r = 0.0;
 
         % Estimation
-        y = [motor_position; long_pend_angle];
+        y = [motor_position; long_pend_angle; short_pend_angle];
         uvec = [control_output; y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;

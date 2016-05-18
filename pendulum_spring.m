@@ -292,7 +292,7 @@ if plotAll
 
     % Constant input command
     r = 0.2;
-    input = zeros(N);
+    input = zeros(N,1);
 
     for i = 1:N
         % Our control law

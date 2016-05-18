@@ -13,7 +13,7 @@ plotAll = false;
 %
 
 % Sample rate / control frequency (Hz)
-f = 300;
+f = 200;
 T = 1/f;
 Maxpos = 0.25;              % Max carriage travel +- 0.25 m
 Maxangle = 0.175;           % Max rod angle -- 10 deg
@@ -121,13 +121,17 @@ B = [0;
      mp2*l2*(-Km*l1^2*mp1*rd-J1*Km*rd)/p1;
      ];
 C = [1 0 0 0 0 0;
-     0 0 1 0 0 0];
+     0 0 1 0 0 0;
+     0 0 0 0 1 0;
+    ];
 D = [0;
-     0];
+     0;
+     0;
+    ];
 
-states = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta1_dot'};
+states = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta2_dot'};
 inputs = {'v'};
-outputs = {'x'; 'phi'};
+outputs = {'x'; 'theta1'; 'theta2'};
 sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
 
 % Poles for our system
@@ -164,10 +168,17 @@ poles = eig(A);
 % Create a controller with LQR and simulate it
 % http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=ControlStateSpace
 %
-Q = C'*C;
-Q(1,1) = 1000;
-Q(3,3) = 100;
-R = 0.1;
+%Q = C'*C;
+%Q(1,1) = 500;
+%Q(3,3) = 1000;
+Q = [ 100000 0 0 0 0 0;
+      0 0 0 0 0 0;
+      0 0 1000 0 0 0;
+      0 0 0 0 0 0;
+      0 0 0 0 5000 0;
+      0 0 0 0 0 0;
+    ];
+R = 0.8;
 
 K = lqr(A,B,Q,R);
 
@@ -214,8 +225,10 @@ end
 %
 poles = eig(Ac);
 
-%P = [-30 -31 -32 -33 -34 -35];
-P = [-2 -3 -4 -5 -6 -7];
+%P = [-50 -51 -52 -53 -54 -55];
+%P = [-40 -41 -42 -43 -44 -45];
+P = [-30 -31 -32 -33 -34 -35];
+%P = [-2 -3 -4 -5 -6 -7];
 L = place(A',C',P)';
 
 %
@@ -226,7 +239,7 @@ Ace = [(A-B*K) (B*K);
 Bce = [B*Nbar;
        zeros(size(B))];
 Cce = [Cc zeros(size(Cc))];
-Dce = [0;0];
+Dce = [0;0;0];
 
 states_est = {'x' 'x_dot' 'theta1' 'theta1_dot' 'theta2' 'theta1_dot' 'e1' 'e2' 'e3' 'e4' 'e5' 'e6'};
 sys_est_cl = ss(Ace,Bce,Cce,Dce,'statename',states_est,'inputname',inputs,'outputname',outputs);
@@ -247,24 +260,24 @@ end
 %
 
 % To get discretized
-sys_est_only = ss(A, [B L], C, [D [0;0] [0;0]]);
+sys_est_only = ss(A, [B L], C, [D [0;0;0] [0;0;0] [0;0;0]]);
 sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 
 if plotAll
 %if false
     % We have 4 state variables, and need the current and past values
-    state = zeros(6, 2);
-    eststate = zeros(6, 2);
+    state = zeros(size(A,1), 2);
+    eststate = zeros(size(A,1), 2);
 
     % The states we want to plot
     N = 4*f;
-    output = zeros(N, 2);
-    estoutput = zeros(2, 1);
-    estoutputhistory = zeros(N, 2);
+    output = zeros(N, size(C,1));
+    estoutput = zeros(size(C,1), 1);
+    estoutputhistory = zeros(N, size(C,1));
 
     % Constant input command
     r = 0.2;
-    input = zeros(N);
+    input = zeros(N,1);
 
     for i = 1:N
         % Our control law
@@ -276,7 +289,7 @@ if plotAll
         input(i) = min(max(input(i),-Maxvoltage),Maxvoltage);
 
         % Estimation
-        y = [state(1,1); state(3,1)]; % Use only the measured part of the state
+        y = [state(1,1); state(3,1); state(5,1)]; % Use only the measured part of the state
         uvec = [input(i); y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
