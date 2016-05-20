@@ -5,8 +5,11 @@
 clear all;
 pkg load control;
 
+% Import UFIR functions
+ufir;
+
 % Whether to create plots
-plotAll = false;
+plotAll = true;
 
 %
 % Pendulum model, the longer rod
@@ -372,18 +375,23 @@ sys_est_only_d = c2d(sys_est_only, T, 'zoh');
 if plotAll
 %if false
     % We have 4 state variables, and need the current and past values
-    state = zeros(4, 2);
-    eststate = zeros(4, 2);
+    state = zeros(size(A,1), 2);
+    eststate = zeros(size(A,1), 2);
 
     % The states we want to plot
     N = 4*f;
     output = zeros(N, 2);
-    estoutput = zeros(2, 1);
-    estoutputhistory = zeros(N, 2);
+    estoutput = zeros(size(C,1), 1);
+    estoutputhistory = zeros(N, size(C,1));
+    firoutputhistory = zeros(N, size(A,1));
 
     % Constant input command
     r = 0.2;
     input = zeros(N,1);
+
+    % UFIR filter init
+    UFIR_N = 30;
+    Y = zeros(size(C,1),UFIR_N);
 
     for i = 1:N
         % Our control law
@@ -396,9 +404,20 @@ if plotAll
 
         % Estimation
         y = [state(1,1); state(3,1)]; % Use only the measured part of the state
+        y = y+diag([1e-3 1e-6])*stdnormal_rnd(size(y)); % Add Gaussian noise to our measurements
         uvec = [input(i); y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
+
+        % UFIR Estimation
+        if i < UFIR_N
+            Y(:,i) = y;
+        elseif i == UFIR_N
+            Y(:,i) = y;
+            [xhat,F] = ufir_init(sys_d.a,sys_d.c,Y,UFIR_N);
+        else
+            [xhat,F] = ufir_update(sys_d.a,sys_d.c,y,xhat,F);
+        end
 
         % Simulate actual system
         state(:,1) = sys_d.a*state(:,2) + sys_d.b*input(i);
@@ -410,22 +429,32 @@ if plotAll
 
         % Save so we can plot
         estoutputhistory(i,:) = estoutput';
+        if i > UFIR_N
+            firoutputhistory(i,:) = xhat';
+        end
     end
 
     t = 0:T:(size(estoutputhistory,1)-1)/f;
+
     %figure;
     %[AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
     %set(get(AX(1),'Ylabel'),'String','cart position (m)');
     %set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    %title('actual state - without lsim');
+    %title('Actual State - without lsim');
+
     figure;
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('state estimates - without lsim');
+    title('State Estimates - without lsim');
 
-    % TODO plot the input, make sure it's not > 20 V
-    % TODO cap at +/- 20 V
+    figure;
+    [AX,H1,H2] = plotyy(t,firoutputhistory(:,1),t,firoutputhistory(:,3),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('UFIR State Estimates - without lsim');
+
+    % Plot the input, make sure it's not > Maxvoltage
     figure;
     plot(t,estoutputhistory(:,1),'-r',
          t,estoutputhistory(:,2),'-b',
