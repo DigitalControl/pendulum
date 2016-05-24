@@ -23,9 +23,11 @@ On Arch Linux, you can install from the AUR, e.g.:
 
     spinach -i octave-control octave-sockets
 
-or, in Octave:
+or, in Octave, download the [control](http://octave.sourceforge.net/control/)
+and [sockets](http://octave.sourceforge.net/sockets/) packages and then
+install them:
 
-    pkg install control sockets
+    pkg install control-3.0.0.tar.gz sockets-1.2.0.tar.gz
 
 #### Testing Pendulum Connnection
 There's a _tcpdemo_ script that'll make the motor move back and forth and plot
