@@ -1,12 +1,19 @@
+% Nathan Zimmerly
+% ENGR 454 - Digital Control Systems
+% Project 2 - Inverted Pendulum
+% May 22, 2016
+
+% Based on Garrett Wilson's Code
+
 %
 % Control the inverted pendulum
 %
 %close all;
 clear all;
-pkg load control;
+%pkg load control;
 
 % Import UFIR functions
-ufir;
+%ufir;
 
 % Whether to create plots
 plotAll = false;
@@ -14,7 +21,7 @@ plotAll = false;
 %
 % Pendulum model, the longer rod
 %
-
+%% Parameters
 % Sample rate / control frequency (Hz)
 f = 200;
 T = 1/f;
@@ -100,8 +107,8 @@ B1 = sysmotor.b;
 C1 = sysmotor.c;
 D1 = sysmotor.d;
 
-%
-% System modeling
+
+%% System modeling
 %
 % http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=SystemModeling
 %
@@ -117,7 +124,7 @@ R = R;                      % Resistance
 
 p = I*(M+m)+M*m*l^2; %denominator for the A and B matrices
 
-A2 = [0      1              0           0;
+A2 = [0      1              0          0;
      0 -(I+m*l^2)*b/p  (m^2*g*l^2)/p   0;
      0      0              0           1;
      0 -(m*l*b)/p       m*g*l*(M+m)/p  0];
@@ -128,19 +135,23 @@ B2 = [     0;
 C2 = [1 0 0 0;
      0 0 1 0];
 D2 = [0;
-     0];
+      0];
 
 %states = {'x' 'x_dot' 'phi' 'phi_dot'};
 %inputs = {'u'};
 %outputs = {'x'; 'phi'};
-%sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
+%sys_ss = ss(A2,B2,C2,D2,'statename',states,'inputname',inputs,'outputname',outputs)
+%sys_tf = tf(sys_ss)
 
+% end from ctms
+
+% What is this?
 %A = [A1 zeros(2,4); [B1*C1; zeros(2,2)] A2];
 %B = [B1; B2*D1];
 %C = [D2*C1 C2];
 %D = D2*D1;
 
-% Combining motor and pendulum equations
+% Combining motor and pendulum equations for a v input
 p = (M+m)*(I+m*l^2)/(m*l)-m*l; %denominator for the A and B matrices
 A = [0  1                                     0                            0;
      0  (I+m*l^2)/(m*l)*(-(b+K^2/(R*r^2))/p)  (I+m*l^2)/(m*l)*(M+m)*g/p-g  0;
@@ -162,12 +173,15 @@ outputs = {'x'; 'phi'};
 sys_ss = ss(A,B,C,D,'statename',states,'inputname',inputs,'outputname',outputs);
 %sys_ss = ss(A2,B2,C2,D2,'statename',states,'inputname',inputs,'outputname',outputs);
 
+% Now we have the SS from voltage to x and phi!!!!
+
+%% Check poles
 % Poles for our system
 original_poles = eig(A);
+% One positive so it is unstable
 
-%
+
 % Discretize
-%
 sys_d = c2d(sys_ss, T, 'zoh');
 %H = tf(sys_d);
 
@@ -175,8 +189,8 @@ sys_d = c2d(sys_ss, T, 'zoh');
 co = ctrb(sys_d);
 ob = obsv(sys_d);
 
-controllability = rank(co);
-observability = rank(ob);
+controllability = rank(co); % should be 4
+observability = rank(ob);   % should be 4
 
 if controllability == 4
 	disp('System is controllable. Yay!')
@@ -208,11 +222,15 @@ end
 %
 poles = eig(A);
 
-%
+%% LQR Time!
 % Create a controller with LQR and simulate it
 % http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=ControlStateSpace
 %
 
+% This is supposed to be a good starting point - equal weight on both
+% only change non 0 values of Q
+% R = control effort???
+% Q(1,1) = the weight of the carts position, (3,3) = pendulums angle
 % Try 1, cart flies away and the settling time is high (from example)
 Q = C'*C;
 R = 1;
@@ -237,7 +255,7 @@ Q(1,1) = 1000;
 Q(3,3) = 100000;
 R = 0.1;
 
-K = lqr(A,B,Q,R);
+K = lqr(A,B,Q,R);       % LQR!!!
 
 Ac = [(A-B*K)];
 Bc = [B];
@@ -255,6 +273,29 @@ if plotAll
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
     title('Step Response with LQR Control');
+end
+% Poles are now good!
+
+
+%% Precompensator Implementation
+% Correcting the cart position error. Now the cart actually ends up at 0.2
+% meters as we were commanding it.
+%
+Cn = [1 0 0 0];     % Only for cart position
+sys_ss = ss(A,B,Cn,0);
+Nbar = rscale(sys_ss,K);        % eliminates ss_error to a step input
+
+sys_cl = ss(Ac,Bc*Nbar,Cc,Dc,'statename',states,'inputname',inputs,'outputname',outputs);
+
+r =0.2*ones(size(t));
+if plotAll
+    figure;
+    % x = state trajectories
+    [y,t,x]=lsim(sys_cl,r,t);
+    [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('Step Response with Precompensation and LQR Control');
 end
 
 %
@@ -277,8 +318,8 @@ if plotAll
     title('Step Response with Precompensation and LQR Control');
 end
 
-%
-% Designing observer/estimator
+
+%% Designing observer/estimator
 %
 % Our slowest pole's real value is at -1.7891. Let's try placing our
 % estimator's poles at -20.
@@ -295,15 +336,15 @@ end
 %    -1.5386  +  4.2382i
 %    -1.5386  -  4.2382i
 %
-poles = eig(Ac);
+poles = eig(Ac);        % controller poles
 
 %P = [-50 -51 -52 -53];
-P = [-30 -31 -32 -33];
-L = place(A',C',P)';
+P = [-30 -31 -32 -33];  % placing estimator poles
+L = place(A',C',P)';    % "^"
 
 %
 %
-%
+% Combine state-feedback controller with the state estimator
 Ace = [(A-B*K) (B*K);
        zeros(size(A)) (A-L*C)];
 Bce = [B*Nbar;
@@ -364,7 +405,7 @@ if false
 end
 
 %
-% Simulating the plant separately from our control and esimation, getting
+% Simulating the plant separately from our control and estimation, getting
 % closer to what will actually run on the pendulum
 %
 
@@ -390,8 +431,8 @@ if plotAll
     input = zeros(N,1);
 
     % UFIR filter init
-    UFIR_N = 30;
-    Y = zeros(size(C,1),UFIR_N);
+    %UFIR_N = 30;
+    %Y = zeros(size(C,1),UFIR_N);
 
     for i = 1:N
         % Our control law
@@ -404,12 +445,13 @@ if plotAll
 
         % Estimation
         y = [state(1,1); state(3,1)]; % Use only the measured part of the state
-        y = y+diag([1e-3 1e-6])*stdnormal_rnd(size(y)); % Add Gaussian noise to our measurements
+        %y = y+diag([1e-3 1e-6])*stdnormal_rnd(size(y)); % Add Gaussian noise to our measurements
         uvec = [input(i); y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
 
-        % UFIR Estimation
+        %{ 
+        UFIR Estimation
         if i < UFIR_N
             Y(:,i) = y;
         elseif i == UFIR_N
@@ -418,6 +460,7 @@ if plotAll
         else
             [xhat,F] = ufir_update(sys_d.a,sys_d.c,y,xhat,F);
         end
+        %}
 
         % Simulate actual system
         state(:,1) = sys_d.a*state(:,2) + sys_d.b*input(i);
@@ -429,9 +472,9 @@ if plotAll
 
         % Save so we can plot
         estoutputhistory(i,:) = estoutput';
-        if i > UFIR_N
-            firoutputhistory(i,:) = xhat';
-        end
+%         if i > UFIR_N
+%             firoutputhistory(i,:) = xhat';
+%         end
     end
 
     t = 0:T:(size(estoutputhistory,1)-1)/f;
@@ -456,7 +499,5 @@ if plotAll
 
     % Plot the input, make sure it's not > Maxvoltage
     figure;
-    plot(t,estoutputhistory(:,1),'-r',
-         t,estoutputhistory(:,2),'-b',
-         t,input,'-g');
+    plot(t,estoutputhistory(:,1),'-r', t,estoutputhistory(:,2),'-b',t,input,'-g');
 end
