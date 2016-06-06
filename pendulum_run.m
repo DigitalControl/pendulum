@@ -5,7 +5,7 @@
 close all;
 
 % load values from pendulum.m
-pendulum;
+ENGR454_pendulum4th;
 %pendulum_6th;
 
 % Load Octave packages we'll be using

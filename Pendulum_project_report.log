@@ -1,0 +1,2054 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.5.18)  6 JUN 2016 15:26
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Pendulum_project_report.tex
+(./Pendulum_project_report.tex
+LaTeX2e <2016/03/31>
+Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/10 v2.15b AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen104
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 199.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 297.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 394.
+LaTeX Info: Redefining \dots on input line 397.
+LaTeX Info: Redefining \cdots on input line 518.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks15
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2739.
+LaTeX Info: Redefining \] on input line 2740.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
+Package ifvtex Info: VTeX not detected.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
+)
+\Gm@cnth=\count99
+\Gm@cntv=\count100
+\c@Gm@tempcnt=\count101
+\Gm@bindingoffset=\dimen112
+\Gm@wd@mp=\dimen113
+\Gm@odd@mp=\dimen114
+\Gm@even@mp=\dimen115
+\Gm@layoutwidth=\dimen116
+\Gm@layoutheight=\dimen117
+\Gm@layouthoffset=\dimen118
+\Gm@layoutvoffset=\dimen119
+\Gm@dimlist=\toks20
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg
+File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 95.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count102
+))
+\Gin@req@height=\dimen120
+\Gin@req@width=\dimen121
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count103
+\float@exts=\toks21
+\float@box=\box28
+\@float@everytoks=\toks22
+\@floatcapt=\box29
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/was/gensymb.sty
+Package: gensymb 2003/07/02 v1.0 (WaS)
+)
+(./Pendulum_project_report.aux
+
+LaTeX Warning: Label `eqn3' multiply defined.
+
+)
+\openout1 = `Pendulum_project_report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
+LaTeX Font Info:    ... okay on input line 23.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(90.3375pt, 433.62001pt, 90.3375pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=433.62001pt
+* \textheight=650.43001pt
+* \oddsidemargin=18.0675pt
+* \evensidemargin=18.0675pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count104
+\scratchdimen=\dimen122
+\scratchbox=\box30
+\nofMPsegments=\count105
+\nofMParguments=\count106
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count107
+\MPscratchDim=\dimen123
+\MPnumerator=\count108
+\makeMPintoPDFobject=\count109
+\everyMPtoPDFconversion=\toks24
+) (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+LaTeX Info: Redefining \celsius on input line 23.
+Package gensymb Info: Faking symbols for \degree and \celsius on input line 23.
+
+
+
+Package gensymb Warning: Not defining \perthousand.
+
+LaTeX Info: Redefining \ohm on input line 23.
+Package gensymb Info: Using \Omega for \ohm on input line 23.
+
+Package gensymb Warning: Not defining \micro.
+
+[1
+
+{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(./Pendulum_project_report.toc)
+\tf@toc=\write3
+\openout3 = `Pendulum_project_report.toc'.
+
+ [2
+
+]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.37 ...F \ \textrm{ Without Friction Derivation}}
+                                                  
+? r
+OK, entering \nonstopmode...
+! Missing $ inserted.
+<inserted text> 
+                $
+l.37 ...F \ \textrm{ Without Friction Derivation}}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.38 ...with an input of F and an output of \theta
+                                                  .
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.39 
+     
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53 L
+      aplace transforms of equations \ref{eqn1} and \ref{eqn2} gives
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.68 N
+      ext, solving \ref{eqn2l} for x and substituting it into \ref{eqn1l}
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.113 ...qntf1} is the transfer function of \theta
+                                                   / F \ \textrm{without fri...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.114 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.115 ...unction X / \theta \ \textrm{Derivation}}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.115 ...unction X / \theta \ \textrm{Derivation}}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.129 ...2} is the transfer function of X / \theta
+                                                  .
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.130 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.133 ... / F \ \textrm{with Friction Derivation}}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.133 ... / F \ \textrm{with Friction Derivation}}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.135 ...ith an input of F and an output of \theta
+                                                  .
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.136 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+[3]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.147 ...} and \ref{eqn2} except \ref{eqn2} has F_
+                                                  {fric} \ \textrm{added}.
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.148 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+LaTeX Warning: Reference `eqn7' on page 4 undefined on input line 154.
+
+
+LaTeX Warning: Reference `eqn6' on page 4 undefined on input line 154.
+
+
+LaTeX Warning: Reference `eqn5' on page 4 undefined on input line 161.
+
+
+LaTeX Warning: Reference `eqn8' on page 4 undefined on input line 161.
+
+
+LaTeX Warning: Reference `eqn8l' on page 4 undefined on input line 173.
+
+
+LaTeX Warning: Reference `eqn5l' on page 4 undefined on input line 173.
+
+
+LaTeX Warning: Reference `eqn9' on page 4 undefined on input line 190.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.208 \end{multline}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.208 \end{multline}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.208 \end{multline}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.208 \end{multline}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.214 \end{multline}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.214 \end{multline}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.214 \end{multline}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.214 \end{multline}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.220 \end{multline}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.220 \end{multline}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Missing } inserted.
+<inserted text> 
+                }
+l.220 \end{multline}
+                    
+I've put in what seems to be necessary to fix
+the current column of the current alignment.
+Try to go on, since this might almost work.
+
+! Extra }, or forgotten $.
+\frac  #1#2->{\begingroup #1\endgroup \@@over #2}
+                                                 
+l.220 \end{multline}
+                    
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+LaTeX Warning: Reference `eqn9f' on page 4 undefined on input line 222.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.222 ...eqn9f} is the transfer function of \theta
+                                                   / F \ \textrm{with fricti...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.223 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+[4]
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 \\
+        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.230 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Package epstopdf Info: Source file: <1.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 10860 bytes
+(epstopdf)             Output file: <1-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 8412 bytes
+(epstopdf)             Command: <repstopdf --outfile=1-eps-converted-to.pdf 1.e
+ps>
+(epstopdf)             \includegraphics on input line 233.
+Package epstopdf Info: Output file is already uptodate.
+<1-eps-converted-to.pdf, id=25, 498.86375pt x 408.52625pt>
+File: 1-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 1-eps-converted-to.pdf>
+Package pdftex.def Info: 1-eps-converted-to.pdf used on input line 233.
+(pdftex.def)             Requested size: 299.32056pt x 245.11765pt.
+Package epstopdf Info: Source file: <2.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 9857 bytes
+(epstopdf)             Output file: <2-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 7825 bytes
+(epstopdf)             Command: <repstopdf --outfile=2-eps-converted-to.pdf 2.e
+ps>
+(epstopdf)             \includegraphics on input line 239.
+Package epstopdf Info: Output file is already uptodate.
+
+<2-eps-converted-to.pdf, id=26, 496.85625pt x 411.5375pt>
+File: 2-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 2-eps-converted-to.pdf>
+Package pdftex.def Info: 2-eps-converted-to.pdf used on input line 239.
+(pdftex.def)             Requested size: 298.11604pt x 246.92441pt.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.240 ...or a Step Input (\theta_0 = 0$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.240 ...or a Step Input (\theta_0 = 0$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package epstopdf Info: Source file: <3.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 9363 bytes
+(epstopdf)             Output file: <3-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 7735 bytes
+(epstopdf)             Command: <repstopdf --outfile=3-eps-converted-to.pdf 3.e
+ps>
+(epstopdf)             \includegraphics on input line 245.
+Package epstopdf Info: Output file is already uptodate.
+<3-eps-converted-to.pdf, id=27, 494.84875pt x 411.5375pt>
+File: 3-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 3-eps-converted-to.pdf>
+Package pdftex.def Info: 3-eps-converted-to.pdf used on input line 245.
+(pdftex.def)             Requested size: 296.91154pt x 246.92441pt.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.246 ...n Impulse Input (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.246 ...n Impulse Input (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package epstopdf Info: Source file: <4.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 9323 bytes
+(epstopdf)             Output file: <4-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 7381 bytes
+(epstopdf)             Command: <repstopdf --outfile=4-eps-converted-to.pdf 4.e
+ps>
+(epstopdf)             \includegraphics on input line 251.
+Package epstopdf Info: Output file is already uptodate.
+<4-eps-converted-to.pdf, id=28, 502.87875pt x 411.5375pt>
+File: 4-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 4-eps-converted-to.pdf>
+Package pdftex.def Info: 4-eps-converted-to.pdf used on input line 251.
+(pdftex.def)             Requested size: 301.72957pt x 246.92441pt.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.252 ...n Impulse Input (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.252 ...n Impulse Input (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package epstopdf Info: Source file: <5.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 9230 bytes
+(epstopdf)             Output file: <5-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 7073 bytes
+(epstopdf)             Command: <repstopdf --outfile=5-eps-converted-to.pdf 5.e
+ps>
+(epstopdf)             \includegraphics on input line 257.
+Package epstopdf Info: Output file is already uptodate.
+<5-eps-converted-to.pdf, id=29, 499.8675pt x 411.5375pt>
+File: 5-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 5-eps-converted-to.pdf>
+Package pdftex.def Info: 5-eps-converted-to.pdf used on input line 257.
+(pdftex.def)             Requested size: 299.9228pt x 246.92441pt.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.258 ...n Impulse Input (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.258 ...n Impulse Input (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package epstopdf Info: Source file: <6.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 9379 bytes
+(epstopdf)             Output file: <6-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 7925 bytes
+(epstopdf)             Command: <repstopdf --outfile=6-eps-converted-to.pdf 6.e
+ps>
+(epstopdf)             \includegraphics on input line 263.
+Package epstopdf Info: Output file is already uptodate.
+<6-eps-converted-to.pdf, id=30, 494.84875pt x 411.5375pt>
+File: 6-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 6-eps-converted-to.pdf>
+Package pdftex.def Info: 6-eps-converted-to.pdf used on input line 263.
+(pdftex.def)             Requested size: 296.91154pt x 246.92441pt.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.264 ...t with Friction (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.264 ...t with Friction (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+Package epstopdf Info: Source file: <7.eps>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 9252 bytes
+(epstopdf)             Output file: <7-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-05 23:48:06
+(epstopdf)                    size: 7305 bytes
+(epstopdf)             Command: <repstopdf --outfile=7-eps-converted-to.pdf 7.e
+ps>
+(epstopdf)             \includegraphics on input line 269.
+Package epstopdf Info: Output file is already uptodate.
+<7-eps-converted-to.pdf, id=31, 499.8675pt x 411.5375pt>
+File: 7-eps-converted-to.pdf Graphic file (type pdf)
+
+<use 7-eps-converted-to.pdf>
+Package pdftex.def Info: 7-eps-converted-to.pdf used on input line 269.
+(pdftex.def)             Requested size: 299.9228pt x 246.92441pt.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.270 ...t with Friction (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.270 ...t with Friction (\theta_0 = 5$^{\circ}$)}
+                                                  
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+[5 <./1-eps-converted-to.pdf>] [6 <./2-eps-converted-to.pdf> <./3-eps-converted
+-to.pdf>] [7 <./4-eps-converted-to.pdf> <./5-eps-converted-to.pdf>] [8 <./6-eps
+-converted-to.pdf> <./7-eps-converted-to.pdf>]
+<pendulumfbd.png, id=87, 139.2402pt x 146.949pt>
+File: pendulumfbd.png Graphic file (type png)
+ <use pendulumfbd.png>
+Package pdftex.def Info: pendulumfbd.png used on input line 328.
+(pdftex.def)             Requested size: 139.23985pt x 146.94864pt.
+ [9
+
+]
+
+LaTeX Warning: Reference `eqn5' on page 10 undefined on input line 362.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 368--370
+
+ []
+
+
+LaTeX Warning: Reference `sa1' on page 10 undefined on input line 386.
+
+
+LaTeX Warning: Reference `sa2' on page 10 undefined on input line 386.
+
+
+LaTeX Warning: Reference `eqn6' on page 10 undefined on input line 386.
+
+
+LaTeX Warning: Reference `eqn7' on page 10 undefined on input line 407.
+
+
+LaTeX Warning: Reference `eqn8' on page 10 undefined on input line 407.
+
+
+LaTeX Warning: Reference `eqn6b' on page 10 undefined on input line 407.
+
+
+LaTeX Warning: Reference `eqn8' on page 10 undefined on input line 409.
+
+
+LaTeX Warning: Reference `eqn7' on page 10 undefined on input line 409.
+
+
+LaTeX Warning: Reference `eqn9' on page 10 undefined on input line 415.
+
+
+LaTeX Warning: Reference `eqn6b' on page 10 undefined on input line 415.
+
+
+Overfull \hbox (24.13724pt too wide) detected at line 443
+[] \OT1/cmr/m/n/10 = [] [] + [] \OML/cmm/m/it/10 v
+ []
+
+[10 <./pendulumfbd.png (PNG copy)>] [11]
+Underfull \hbox (badness 10000) in paragraph at lines 518--520
+
+ []
+
+<blockd.png, id=99, 230.7822pt x 117.5592pt>
+File: blockd.png Graphic file (type png)
+ <use blockd.png>
+Package pdftex.def Info: blockd.png used on input line 534.
+(pdftex.def)             Requested size: 303.53267pt x 154.61714pt.
+
+<observer_blockd.png, id=100, 205.2468pt x 224.037pt>
+File: observer_blockd.png Graphic file (type png)
+
+<use observer_blockd.png>
+Package pdftex.def Info: observer_blockd.png used on input line 541.
+(pdftex.def)             Requested size: 260.17465pt x 284.03154pt.
+ [12 <./blockd.png (PNG copy)>] [13 <./observer_blockd.png (PNG copy)>]
+
+LaTeX Warning: Reference `eqn6b' on page 14 undefined on input line 600.
+
+
+LaTeX Warning: Reference `eqn9' on page 14 undefined on input line 600.
+
+! Double subscript.
+l.604 (m_p_
+           1 l_1We^2+J_1) \ddot{\theta_1}-m_p_1 g l_1 \theta_1 = m_p_1 l_1 \...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.604 (m_p_1 l_1We^2+J_1) \ddot{\theta_1}-m_p_
+                                              1 g l_1 \theta_1 = m_p_1 l_1 \...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.604 ...dot{\theta_1}-m_p_1 g l_1 \theta_1 = m_p_
+                                                  1 l_1 \ddot{x}
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.609 (m_p_
+           2 l_2^2+J_2) \ddot{\theta_2}+m_p_2 g l_2 \theta_2 = -m_p_2 l_2 \d...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.609 (m_p_2 l_2^2+J_2) \ddot{\theta_2}+m_p_
+                                            2 g l_2 \theta_2 = -m_p_2 l_2 \d...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.609 ...ot{\theta_2}+m_p_2 g l_2 \theta_2 = -m_p_
+                                                  2 l_2 \ddot{x}
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.614 (M_c+m_p_
+               1+m_p_2) \ddot{x}+b_c \dot{x}-m_p_1 l_1 \ddot{\theta_1}+m_p_2...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.614 (M_c+m_p_1+m_p_
+                     2) \ddot{x}+b_c \dot{x}-m_p_1 l_1 \ddot{\theta_1}+m_p_2...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.614 (M_c+m_p_1+m_p_2) \ddot{x}+b_c \dot{x}-m_p_
+                                                 1 l_1 \ddot{\theta_1}+m_p_2...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+l.614 ..._c \dot{x}-m_p_1 l_1 \ddot{\theta_1}+m_p_
+                                                  2 l_2 \ddot{\theta_2} = \f...
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...ddot {x} = (-(R b_c l_1^2 l_2^2 m_p_
+                                                  1 m_p_2 r_d^2+J_1 R b_c l_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...x} = (-(R b_c l_1^2 l_2^2 m_p_1 m_p_
+                                                  2 r_d^2+J_1 R b_c l_2^2 m_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1 m_p_2 r_d^2+J_1 R b_c l_2^2 m_p_
+                                                  2 r_d^2+J_2 R b_c l_1^2 m_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_2 r_d^2+J_2 R b_c l_1^2 m_p_
+                                                  1 r_d^2+K_m^2 l_1^2 l_2^2*...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1 r_d^2+K_m^2 l_1^2 l_2^2*m_p_
+                                                  1 m_p_2+J_1 J_2 R b_c r_d^...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1 r_d^2+K_m^2 l_1^2 l_2^2*m_p_1 m_p_
+                                                  2+J_1 J_2 R b_c r_d^2+\\J_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 R b_c r_d^2+\\J_1 K_m^2 l_2^2 m_p_
+                                                  2+J_2 K_m^2 l_1^2 m_p_1+J_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m^2 l_2^2 m_p_2+J_2 K_m^2 l_1^2 m_p_
+                                                  1+J_1 J_2 K_m^2)/p_1)\dot ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._1)\dot {x} -((-R g l_1^2 l_2^2 m_p_
+                                                  1^2 m_p_2 r_d^2-J_2 R g l_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...{x} -((-R g l_1^2 l_2^2 m_p_1^2 m_p_
+                                                  2 r_d^2-J_2 R g l_1^2 m_p_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1^2 m_p_2 r_d^2-J_2 R g l_1^2 m_p_
+                                                  1^2 r_d^2)/p_1)\theta _1 \...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...)\theta _1 \\-((R g l_1^2 l_2^2 m_p_
+                                                  1 m_p_2^2 r_d^2+J_1 R g l_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...a _1 \\-((R g l_1^2 l_2^2 m_p_1 m_p_
+                                                  2^2 r_d^2+J_1 R g l_2^2 m_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1 m_p_2^2 r_d^2+J_1 R g l_2^2 m_p_
+                                                  2^2 r_d^2)/p_1 \theta _2 -...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._1 \theta _2 -(-K_m l_1^2 l_2^2 m_p_
+                                                  1 m_p_2 r_d-J_1 K_m l_2^2 ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...eta _2 -(-K_m l_1^2 l_2^2 m_p_1 m_p_
+                                                  2 r_d-J_1 K_m l_2^2 m_p_2 ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1 m_p_2 r_d-J_1 K_m l_2^2 m_p_
+                                                  2 r_d-J_2 K_m l_1^2 m_p_1 ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m l_2^2 m_p_2 r_d-J_2 K_m l_1^2 m_p_
+                                                  1 r_d-\\J_1 J_2 K_m r_d) V...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...ddot {x} = (-(R b_c l_1^2 l_2^2 m_p_
+                                                  1 m_p_2 r_d^2+J_1 R b_c l_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...x} = (-(R b_c l_1^2 l_2^2 m_p_1 m_p_
+                                                  2 r_d^2+J_1 R b_c l_2^2 m_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1 m_p_2 r_d^2+J_1 R b_c l_2^2 m_p_
+                                                  2 r_d^2+J_2 R b_c l_1^2 m_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_2 r_d^2+J_2 R b_c l_1^2 m_p_
+                                                  1 r_d^2+K_m^2 l_1^2 l_2^2*...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1 r_d^2+K_m^2 l_1^2 l_2^2*m_p_
+                                                  1 m_p_2+J_1 J_2 R b_c r_d^...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1 r_d^2+K_m^2 l_1^2 l_2^2*m_p_1 m_p_
+                                                  2+J_1 J_2 R b_c r_d^2+\\J_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 R b_c r_d^2+\\J_1 K_m^2 l_2^2 m_p_
+                                                  2+J_2 K_m^2 l_1^2 m_p_1+J_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m^2 l_2^2 m_p_2+J_2 K_m^2 l_1^2 m_p_
+                                                  1+J_1 J_2 K_m^2)/p_1)\dot ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._1)\dot {x} -((-R g l_1^2 l_2^2 m_p_
+                                                  1^2 m_p_2 r_d^2-J_2 R g l_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...{x} -((-R g l_1^2 l_2^2 m_p_1^2 m_p_
+                                                  2 r_d^2-J_2 R g l_1^2 m_p_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1^2 m_p_2 r_d^2-J_2 R g l_1^2 m_p_
+                                                  1^2 r_d^2)/p_1)\theta _1 \...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...)\theta _1 \\-((R g l_1^2 l_2^2 m_p_
+                                                  1 m_p_2^2 r_d^2+J_1 R g l_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...a _1 \\-((R g l_1^2 l_2^2 m_p_1 m_p_
+                                                  2^2 r_d^2+J_1 R g l_2^2 m_...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1 m_p_2^2 r_d^2+J_1 R g l_2^2 m_p_
+                                                  2^2 r_d^2)/p_1 \theta _2 -...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._1 \theta _2 -(-K_m l_1^2 l_2^2 m_p_
+                                                  1 m_p_2 r_d-J_1 K_m l_2^2 ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...eta _2 -(-K_m l_1^2 l_2^2 m_p_1 m_p_
+                                                  2 r_d-J_1 K_m l_2^2 m_p_2 ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1 m_p_2 r_d-J_1 K_m l_2^2 m_p_
+                                                  2 r_d-J_2 K_m l_1^2 m_p_1 ...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m l_2^2 m_p_2 r_d-J_2 K_m l_1^2 m_p_
+                                                  1 r_d-\\J_1 J_2 K_m r_d) V...
+l.621 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+
+! Package amsmath Error: Multiple \label's: label 'eqn6th4' will be lost.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.626 \end{multline*}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Double subscript.
+<argument> ...dot {\theta _1} = -(R b_c l_2^2 m_p_
+                                                  2 r_d^2+J_2 R b_c r_d^2+K_...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2+J_2 R b_c r_d^2+K_m^2*l_2^2*m_p_
+                                                  2+J_2*K_m^2)*l_1*m_p_1\dot...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._m^2*l_2^2*m_p_2+J_2*K_m^2)*l_1*m_p_
+                                                  1\dot {x}/p_1 -\\(-M_c R g...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...\dot {x}/p_1 -\\(-M_c R g l_2^2 m_p_
+                                                  2 r_d^2-R g l_2^2 m_p_1 m_...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...R g l_2^2 m_p_2 r_d^2-R g l_2^2 m_p_
+                                                  1 m_p_2 r_d^2-2 R g l_2^2 ...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_2 r_d^2-R g l_2^2 m_p_1 m_p_
+                                                  2 r_d^2-2 R g l_2^2 m_p_2^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1 m_p_2 r_d^2-2 R g l_2^2 m_p_
+                                                  2^2 r_d^2-J_2 M_c R g r_d^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...r_d^2-J_2 M_c R g r_d^2-J_2 R g m_p_
+                                                  1 r_d^2-J_2 R g m_p_2 r_d^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2-J_2 R g m_p_1 r_d^2-J_2 R g m_p_
+                                                  2 r_d^2) l_1 mp1\theta _1 ...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...a _1 /p_1-\\g l_2^2 m-p_2^2 l_1 m_p_
+                                                  1 \theta _2/p_1-(-K_m l_2^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 \theta _2/p_1-(-K_m l_2^2 m_p_
+                                                  2 r_d-J_2 K_m r_d) l_1 m_p...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._2^2 m_p_2 r_d-J_2 K_m r_d) l_1 m_p_
+                                                  1 V/p_1 
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...dot {\theta _1} = -(R b_c l_2^2 m_p_
+                                                  2 r_d^2+J_2 R b_c r_d^2+K_...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2+J_2 R b_c r_d^2+K_m^2*l_2^2*m_p_
+                                                  2+J_2*K_m^2)*l_1*m_p_1\dot...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._m^2*l_2^2*m_p_2+J_2*K_m^2)*l_1*m_p_
+                                                  1\dot {x}/p_1 -\\(-M_c R g...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...\dot {x}/p_1 -\\(-M_c R g l_2^2 m_p_
+                                                  2 r_d^2-R g l_2^2 m_p_1 m_...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...R g l_2^2 m_p_2 r_d^2-R g l_2^2 m_p_
+                                                  1 m_p_2 r_d^2-2 R g l_2^2 ...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_2 r_d^2-R g l_2^2 m_p_1 m_p_
+                                                  2 r_d^2-2 R g l_2^2 m_p_2^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1 m_p_2 r_d^2-2 R g l_2^2 m_p_
+                                                  2^2 r_d^2-J_2 M_c R g r_d^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...r_d^2-J_2 M_c R g r_d^2-J_2 R g m_p_
+                                                  1 r_d^2-J_2 R g m_p_2 r_d^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2-J_2 R g m_p_1 r_d^2-J_2 R g m_p_
+                                                  2 r_d^2) l_1 mp1\theta _1 ...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+
+Overfull \hbox (4.00224pt too wide) detected at line 626
+ []$[]\OT1/cmr/m/n/10 (\OMS/cmsy/m/n/10 ^^@\OML/cmm/m/it/10 M[]Rgl[]m[][]r[] \O
+MS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 Rgl[]m[][]m[][]r[] \OMS/cmsy/m/n/10 ^^@ \OT
+1/cmr/m/n/10 2\OML/cmm/m/it/10 Rgl[]m[][]r[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it
+/10 J[]M[]Rgr[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 J[]Rgm[][]r[] \OMS/cmsy/m
+/n/10 ^^@ \OML/cmm/m/it/10 J[]Rgm[][]r[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 l[]mp
+\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 ^^R[]=p[]\OMS/cmsy/m/n/10 ^^@$ 
+ []
+
+! Double subscript.
+<argument> ...a _1 /p_1-\\g l_2^2 m-p_2^2 l_1 m_p_
+                                                  1 \theta _2/p_1-(-K_m l_2^...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 \theta _2/p_1-(-K_m l_2^2 m_p_
+                                                  2 r_d-J_2 K_m r_d) l_1 m_p...
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ..._2^2 m_p_2 r_d-J_2 K_m r_d) l_1 m_p_
+                                                  1 V/p_1 
+l.626 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+[14
+
+]
+
+! Package amsmath Error: Multiple \label's: label 'eqn6th5' will be lost.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.631 \end{multline*}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Double subscript.
+<argument> ... {eqn6th6} \ddot {\theta _2} = -m_p_
+                                                  2 l_2 (R b_c l_1^2 m_p_1 r...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...a _2} = -m_p_2 l_2 (R b_c l_1^2 m_p_
+                                                  1 r_d^2+J_1 R b_c r_d^2+K_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2+J_1 R b_c r_d^2+K_m^2 l_1^2 m_p_
+                                                  1+J_1 K_m^2)\dot {x}/p_1 +...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1+J_1 K_m^2)\dot {x}/p_1 +m_p_
+                                                  2 l_2 g l_1^2 m_p_1^2 \the...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...\dot {x}/p_1 +m_p_2 l_2 g l_1^2 m_p_
+                                                  1^2 \theta _1/p_2 - \\m_p_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_1^2 m_p_1^2 \theta _1/p_2 - \\m_p_
+                                                  2 l_2 (-M_c R g l_1^2 m_p_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 - \\m_p_2 l_2 (-M_c R g l_1^2 m_p_
+                                                  1 r_d^2-R g l_1^2 m_p_1 m_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...R g l_1^2 m_p_1 r_d^2-R g l_1^2 m_p_
+                                                  1 m_p_2 r_d^2-J_1 M_c R g ...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1^2 m_p_1 r_d^2-R g l_1^2 m_p_1 m_p_
+                                                  2 r_d^2-J_1 M_c R g r_d^2-...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...r_d^2-J_1 M_c R g r_d^2-J_1 R g m_p_
+                                                  1 r_d^2-J_1 R g m_p_2 r_d^...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2-J_1 R g m_p_1 r_d^2-J_1 R g m_p_
+                                                  2 r_d^2) \theta _2/p_1 + \...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ... m_p_2 r_d^2) \theta _2/p_1 + \\m_p_
+                                                  2 l_2 (-K_m l_1^2 m_p_1 r_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2/p_1 + \\m_p_2 l_2 (-K_m l_1^2 m_p_
+                                                  1 r_d-J_1 K_m r_d)/p_1 
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ... {eqn6th6} \ddot {\theta _2} = -m_p_
+                                                  2 l_2 (R b_c l_1^2 m_p_1 r...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...a _2} = -m_p_2 l_2 (R b_c l_1^2 m_p_
+                                                  1 r_d^2+J_1 R b_c r_d^2+K_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2+J_1 R b_c r_d^2+K_m^2 l_1^2 m_p_
+                                                  1+J_1 K_m^2)\dot {x}/p_1 +...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_1+J_1 K_m^2)\dot {x}/p_1 +m_p_
+                                                  2 l_2 g l_1^2 m_p_1^2 \the...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...\dot {x}/p_1 +m_p_2 l_2 g l_1^2 m_p_
+                                                  1^2 \theta _1/p_2 - \\m_p_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_1^2 m_p_1^2 \theta _1/p_2 - \\m_p_
+                                                  2 l_2 (-M_c R g l_1^2 m_p_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 - \\m_p_2 l_2 (-M_c R g l_1^2 m_p_
+                                                  1 r_d^2-R g l_1^2 m_p_1 m_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...R g l_1^2 m_p_1 r_d^2-R g l_1^2 m_p_
+                                                  1 m_p_2 r_d^2-J_1 M_c R g ...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1^2 m_p_1 r_d^2-R g l_1^2 m_p_1 m_p_
+                                                  2 r_d^2-J_1 M_c R g r_d^2-...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...r_d^2-J_1 M_c R g r_d^2-J_1 R g m_p_
+                                                  1 r_d^2-J_1 R g m_p_2 r_d^...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...d^2-J_1 R g m_p_1 r_d^2-J_1 R g m_p_
+                                                  2 r_d^2) \theta _2/p_1 + \...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ... m_p_2 r_d^2) \theta _2/p_1 + \\m_p_
+                                                  2 l_2 (-K_m l_1^2 m_p_1 r_...
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2/p_1 + \\m_p_2 l_2 (-K_m l_1^2 m_p_
+                                                  1 r_d-J_1 K_m r_d)/p_1 
+l.631 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+
+! Package amsmath Error: Multiple \label's: label 'eqn6th6' will be lost.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.638 \end{multline*}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Double subscript.
+<argument> ...p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_p_
+                                                  1 m_p_2+2 l_1^2 l_2^2 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...(R r_d^2 (M_c l_1^2 l_2^2 m_p_1 m_p_
+                                                  2+2 l_1^2 l_2^2 m_p_1 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_
+                                                  1 m_p_2^2+J_1 M_c l_2^2 m_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_1 m_p_
+                                                  2^2+J_1 M_c l_2^2 m_p_2+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_1 m_p_2^2+J_1 M_c l_2^2 m_p_
+                                                  2+J_1 l_2^2 m_p_1 m_p_2+\\...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_1 M_c l_2^2 m_p_2+J_1 l_2^2 m_p_
+                                                  1 m_p_2+\\2_J_1 l_2^2 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_2^2 m_p_2+J_1 l_2^2 m_p_1 m_p_
+                                                  2+\\2_J_1 l_2^2 m_p_2^2+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_2+J_1 l_2^2 m_p_1 m_p_2+\\2_J_
+                                                  1 l_2^2 m_p_2^2+J_2 M_c l_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+\\2_J_1 l_2^2 m_p_
+                                                  2^2+J_2 M_c l_1^2 m_p_1+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...J_1 l_2^2 m_p_2^2+J_2 M_c l_1^2 m_p_
+                                                  1+J_2 l_1^2 m_p_1 m_p_2+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_2 M_c l_1^2 m_p_1+J_2 l_1^2 m_p_
+                                                  1 m_p_2+J_1 J_2 M_c+J_1 J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_1^2 m_p_1+J_2 l_1^2 m_p_1 m_p_
+                                                  2+J_1 J_2 M_c+J_1 J_2 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+J_1 J_2 M_c+J_1 J_2 m_p_
+                                                  1+J_1 J_2 m_p_2)) 
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1 J_2 M_c+J_1 J_2 m_p_1+J_1 J_2 m_p_
+                                                  2)) 
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_p_
+                                                  1 m_p_2+2 l_1^2 l_2^2 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...(R r_d^2 (M_c l_1^2 l_2^2 m_p_1 m_p_
+                                                  2+2 l_1^2 l_2^2 m_p_1 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_
+                                                  1 m_p_2^2+J_1 M_c l_2^2 m_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_1 m_p_
+                                                  2^2+J_1 M_c l_2^2 m_p_2+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_1 m_p_2^2+J_1 M_c l_2^2 m_p_
+                                                  2+J_1 l_2^2 m_p_1 m_p_2+\\...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_1 M_c l_2^2 m_p_2+J_1 l_2^2 m_p_
+                                                  1 m_p_2+\\2_J_1 l_2^2 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_2^2 m_p_2+J_1 l_2^2 m_p_1 m_p_
+                                                  2+\\2_J_1 l_2^2 m_p_2^2+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2 m_p_2+J_1 l_2^2 m_p_1 m_p_2+\\2_J_
+                                                  1 l_2^2 m_p_2^2+J_2 M_c l_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+\\2_J_1 l_2^2 m_p_
+                                                  2^2+J_2 M_c l_1^2 m_p_1+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...J_1 l_2^2 m_p_2^2+J_2 M_c l_1^2 m_p_
+                                                  1+J_2 l_1^2 m_p_1 m_p_2+J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_2 M_c l_1^2 m_p_1+J_2 l_1^2 m_p_
+                                                  1 m_p_2+J_1 J_2 M_c+J_1 J_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_1^2 m_p_1+J_2 l_1^2 m_p_1 m_p_
+                                                  2+J_1 J_2 M_c+J_1 J_2 m_p_...
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+J_1 J_2 M_c+J_1 J_2 m_p_
+                                                  1+J_1 J_2 m_p_2)) 
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1 J_2 M_c+J_1 J_2 m_p_1+J_1 J_2 m_p_
+                                                  2)) 
+l.638 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+
+! Package amsmath Error: Multiple \label's: label 'p1' will be lost.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.645 \end{multline*}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Double subscript.
+<argument> ...bel {p2} p_2 = (M_c l_1^2 l_2^2 m_p_
+                                                  1 m_p_2+2 l_1^2 l_2^2 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2} p_2 = (M_c l_1^2 l_2^2 m_p_1 m_p_
+                                                  2+2 l_1^2 l_2^2 m_p_1 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_
+                                                  1 m_p_2^2+J_1+M_c l_2^2 m_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_1 m_p_
+                                                  2^2+J_1+M_c l_2^2 m_p_2+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_1 m_p_2^2+J_1+M_c l_2^2 m_p_
+                                                  2+J_1 l_2^2 m_p_1 m_p_2+\\...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_1+M_c l_2^2 m_p_2+J_1 l_2^2 m_p_
+                                                  1 m_p_2+\\2 J_1 l_2^2 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_2^2 m_p_2+J_1 l_2^2 m_p_1 m_p_
+                                                  2+\\2 J_1 l_2^2 m_p_2^2+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+\\2 J_1 l_2^2 m_p_
+                                                  2^2+J_2 M_c l_1^2 m_p_1+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...J_1 l_2^2 m_p_2^2+J_2 M_c l_1^2 m_p_
+                                                  1+J_2 l_1^2 m_p_1 m_p_2+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_2 M_c l_1^2 m_p_1+J_2 l_1^2 m_p_
+                                                  1 m_p_2+J_1 J_2 M_c+J_1 J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_1^2 m_p_1+J_2 l_1^2 m_p_1 m_p_
+                                                  2+J_1 J_2 M_c+J_1 J_2 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+J_1 J_2 M_c+J_1 J_2 m_p_
+                                                  1+J_1 J_2 m_p_2) 
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1 J_2 M_c+J_1 J_2 m_p_1+J_1 J_2 m_p_
+                                                  2) 
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...bel {p2} p_2 = (M_c l_1^2 l_2^2 m_p_
+                                                  1 m_p_2+2 l_1^2 l_2^2 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2} p_2 = (M_c l_1^2 l_2^2 m_p_1 m_p_
+                                                  2+2 l_1^2 l_2^2 m_p_1 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_
+                                                  1 m_p_2^2+J_1+M_c l_2^2 m_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_1 m_p_
+                                                  2^2+J_1+M_c l_2^2 m_p_2+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2^2 m_p_1 m_p_2^2+J_1+M_c l_2^2 m_p_
+                                                  2+J_1 l_2^2 m_p_1 m_p_2+\\...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_1+M_c l_2^2 m_p_2+J_1 l_2^2 m_p_
+                                                  1 m_p_2+\\2 J_1 l_2^2 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_2^2 m_p_2+J_1 l_2^2 m_p_1 m_p_
+                                                  2+\\2 J_1 l_2^2 m_p_2^2+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...l_2^2 m_p_1 m_p_2+\\2 J_1 l_2^2 m_p_
+                                                  2^2+J_2 M_c l_1^2 m_p_1+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...J_1 l_2^2 m_p_2^2+J_2 M_c l_1^2 m_p_
+                                                  1+J_2 l_1^2 m_p_1 m_p_2+J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...2+J_2 M_c l_1^2 m_p_1+J_2 l_1^2 m_p_
+                                                  1 m_p_2+J_1 J_2 M_c+J_1 J_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...M_c l_1^2 m_p_1+J_2 l_1^2 m_p_1 m_p_
+                                                  2+J_1 J_2 M_c+J_1 J_2 m_p_...
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...m_p_1 m_p_2+J_1 J_2 M_c+J_1 J_2 m_p_
+                                                  1+J_1 J_2 m_p_2) 
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+! Double subscript.
+<argument> ...1 J_2 M_c+J_1 J_2 m_p_1+J_1 J_2 m_p_
+                                                  2) 
+l.645 \end{multline*}
+                     
+I treat `x_1_2' essentially like `x_1{}_2'.
+
+[15] (./Pendulum_project_report.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 2810 strings out of 493027
+ 38780 string characters out of 6134069
+ 116717 words of memory out of 5000000
+ 6295 multiletter control sequences out of 15000+600000
+ 9644 words of font info for 35 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 38i,8n,23p,1085b,230s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on Pendulum_project_report.pdf (15 pages, 241107 bytes).
+PDF statistics:
+ 157 PDF objects out of 1000 (max. 8388607)
+ 108 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
+

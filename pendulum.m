@@ -9,7 +9,7 @@ pkg load control;
 ufir;
 
 % Whether to create plots
-plotAll = false;
+plotAll = true;
 
 %
 % Pendulum model, the longer rod
