@@ -1,1 +1,6 @@
 octave-workspace
+*.gz
+*.aux
+*.log
+*.out
+*.toc
