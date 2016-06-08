@@ -100,7 +100,8 @@ scale = [rd*2*pi/4096  2*pi/4096 -0.05/250];
 l1 = d1/2;
 l2 = d2/2;
 Km = kt;
-bc = 1; % not given, so guess
+bc = b;
+bm = 1; % not given, so guess, but not used... so it doesn't really matter
 
 if bothPendulums
     % Denominators p1, p2
