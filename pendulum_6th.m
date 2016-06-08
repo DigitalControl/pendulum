@@ -5,6 +5,9 @@
 clear all;
 pkg load control;
 
+% Import UFIR functions
+ufir;
+
 % Whether to create plots
 plotAll = false;
 
@@ -244,7 +247,8 @@ if plotAll
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('Step Response with LQR Control');
+    title('6th Order Step Response with LQR Control');
+    print -dpng '6th_Order_Step_Response_with_LQR_Control.png'
 end
 
 %
@@ -264,7 +268,8 @@ if plotAll
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('Step Response with Precompensation and LQR Control');
+    title('6th Order Step Response with Precompensation and LQR Control');
+    print -dpng '6th_Order_Step_Response_with_Precompensation_and_LQR_Control.png'
 end
 
 %
@@ -298,7 +303,47 @@ if plotAll
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('Step Response with Observer-Based State-Feedback Control');
+    title('6th Order Step Response with Observer-Based State-Feedback Control');
+    print -dpng '6th_Order_Step_Response_with_Observer-Based_State-Feedback_Control.png'
+end
+
+%
+% Performing the simulation without using lsim
+%
+sys_est_d = c2d(sys_est_cl, T, 'zoh');
+
+% This is slow and not really needed... just a proof of concept
+if plotAll
+%if false
+    % State variables, the current and past values
+    state = zeros(size(A,1)*2, 2);
+
+    % The states we want to plot
+    N = 4*f;
+    output = zeros(N, size(C,1));
+
+    % Constant input command of zero
+    r = 0.2
+    input = r*ones(N);
+
+    for i = 1:N
+        state(:,1) = sys_est_d.a*state(:,2) + sys_est_d.b*input(i);
+
+        % Save for plot
+        output(i,:) = sys_est_d.c*state(:,2) + sys_est_d.d*input(i);
+
+        % New values are now the old values
+        state(:,2) = state(:,1);
+    end
+
+    figure;
+    plot(output);
+    t = 0:T:(size(output,1)-1)/f;
+    [AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('6th Order All States Measured - Discrete');
+    print -dpng '6th_Order_All_States_Measured_Discrete.png'
 end
 
 %
@@ -326,6 +371,10 @@ if plotAll
     r = 0.2;
     input = zeros(N,1);
 
+    % UFIR filter init
+    UFIR_N = 30;
+    Y = zeros(size(C,1),UFIR_N);
+
     for i = 1:N
         % Our control law
         input(i) = r*Nbar - K*eststate(:,1);
@@ -337,10 +386,20 @@ if plotAll
 
         % Estimation
         y = [state(1,1); state(3,1); state(5,1)]; % Use only the measured part of the state
-        y = y+diag([1e-3 1e-6])*stdnormal_rnd(size(y)); % Add Gaussian noise to our measurements
+        y = y+diag([1e-3 1e-6 1e-6])*stdnormal_rnd(size(y)); % Add Gaussian noise to our measurements
         uvec = [input(i); y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
+
+        % UFIR Estimation
+        if i < UFIR_N
+            Y(:,i) = y;
+        elseif i == UFIR_N
+            Y(:,i) = y;
+            [xhat,F] = ufir_init(sys_d.a,sys_d.c,Y,UFIR_N);
+        else
+            [xhat,F] = ufir_update(sys_d.a,sys_d.c,y,xhat,F);
+        end
 
         % Simulate actual system
         state(:,1) = sys_d.a*state(:,2) + sys_d.b*input(i);
@@ -352,6 +411,9 @@ if plotAll
 
         % Save so we can plot
         estoutputhistory(i,:) = estoutput';
+        if i > UFIR_N
+            firoutputhistory(i,:) = xhat';
+        end
     end
 
     t = 0:T:(size(estoutputhistory,1)-1)/f;
@@ -366,12 +428,21 @@ if plotAll
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('State Estimates - without lsim');
+    title('6th Order State Estimates - Discrete');
+    print -dpng '6th_Order_State_Esimates_Discrete.png'
+
+    figure;
+    [AX,H1,H2] = plotyy(t,firoutputhistory(:,1),t,firoutputhistory(:,3),'plot');
+    set(get(AX(1),'Ylabel'),'String','cart position (m)');
+    set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
+    title('6th Order UFIR State Estimates - Discrete');
+    print -dpng '6th_Order_UFIR_State_Estimates_Discrete.png'
 
     % Plot the input, make sure it's not > Maxvoltage
     figure;
     plot(t,estoutputhistory(:,1),'-r',
          t,estoutputhistory(:,2),'-b',
          t,input,'-g');
-    title('Voltage Output');
+    title('6th Order Voltage Output');
+    print -dpng '6th_Order_Voltage_Output.png'
 end

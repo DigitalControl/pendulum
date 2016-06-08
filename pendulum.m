@@ -254,7 +254,8 @@ if plotAll
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('Step Response with LQR Control');
+    title('4th Order Step Response with LQR Control');
+    print -dpng '4th_Order_Step_Response_with_LQR_Control.png'
 end
 
 %
@@ -274,7 +275,8 @@ if plotAll
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('Step Response with Precompensation and LQR Control');
+    title('4th Order Step Response with Precompensation and LQR Control');
+    print -dpng '4th_Order_Step_Response_with_Precompensation_and_LQR_Control.png'
 end
 
 %
@@ -321,7 +323,8 @@ if plotAll
     [AX,H1,H2] = plotyy(t,y(:,1),t,y(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('Step Response with Observer-Based State-Feedback Control');
+    title('4th Order Step Response with Observer-Based State-Feedback Control');
+    print -dpng '4th_Order_Step_Response_with_Observer-Based_State-Feedback_Control.png'
 end
 
 %
@@ -330,19 +333,18 @@ end
 sys_est_d = c2d(sys_est_cl, T, 'zoh');
 
 % This is slow and not really needed... just a proof of concept
-if false
-    % We have 8 state variables, and need the current and past values
-    % Variables: x xdot phi phidot e1 e2 e3 e4
-    state = zeros(8, 2);
+if plotAll
+%if false
+    % State variables, the current and past values
+    state = zeros(size(A,1)*2, 2);
 
     % The states we want to plot
-    N = 2000;
-    output = zeros(N, 2);
+    N = 4*f;
+    output = zeros(N, size(C,1));
 
     % Constant input command of zero
     r = 0.2
     input = r*ones(N);
-    %input = r*Nbar + K*state(1:4,2);
 
     for i = 1:N
         state(:,1) = sys_est_d.a*state(:,2) + sys_est_d.b*input(i);
@@ -356,11 +358,12 @@ if false
 
     figure;
     plot(output);
-    t = 1:N;
+    t = 0:T:(size(output,1)-1)/f;
     [AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('without lsim');
+    title('4th Order All States Measured - Discrete');
+    print -dpng '4th_Order_All_States_Measured_Discrete.png'
 end
 
 %
@@ -446,18 +449,21 @@ if plotAll
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('State Estimates - without lsim');
+    title('4th Order State Estimates - Discrete');
+    print -dpng '4th_Order_State_Esimates_Discrete.png'
 
     figure;
     [AX,H1,H2] = plotyy(t,firoutputhistory(:,1),t,firoutputhistory(:,3),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('UFIR State Estimates - without lsim');
+    title('4th Order UFIR State Estimates - Discrete');
+    print -dpng '4th_Order_UFIR_State_Estimates_Discrete.png'
 
     % Plot the input, make sure it's not > Maxvoltage
     figure;
     plot(t,estoutputhistory(:,1),'-r',
          t,estoutputhistory(:,2),'-b',
          t,input,'-g');
-    title('Voltage Output');
+    title('4th Order Voltage Output');
+    print -dpng '4th_Order_Voltage_Output.png'
 end

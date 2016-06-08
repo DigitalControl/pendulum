@@ -153,13 +153,13 @@ if saveData
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
     title('4th Order Live State Estimates');
-    print -dpng "4th Order Live State Estimate.png"
+    print -dpng "4th_Order_Live_State_Estimates.png"
     figure;
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,3),t,estoutputhistory(:,4),'plot');
     set(get(AX(1),'Ylabel'),'String','measured cart position (m)');
     set(get(AX(2),'Ylabel'),'String','measured pendulum angle (radians)');
     title('4th Order Live Measured values');
-    print -dpng "4th Order Live Measured Values.png"
+    print -dpng "4th_Order_Live_Measured_Values.png"
 end
 
 % disable motor and disconnect

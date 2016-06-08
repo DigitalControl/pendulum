@@ -19,7 +19,7 @@ function [xhat,F] = ufir_init(A,C,Y,UFIR_N)
 
     Csm = zeros(size(C,1)*UFIR_N,size(C,2));
     for i=1:UFIR_N-1
-        Csm(2*i:2*i+1,:) = C*A^(UFIR_N-1-i);
+        Csm(size(C,1)*i:size(C,1)*i+size(C,1)-1,:) = C*A^(UFIR_N-1-i);
     end
 
     Ysm = zeros(size(Y,1)*UFIR_N,1);
