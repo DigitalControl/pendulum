@@ -9,7 +9,7 @@ pkg load control;
 ufir;
 
 % Whether to create plots
-plotAll = true;
+plotAll = false;
 
 %
 % Pendulum model, the longer rod
@@ -20,7 +20,7 @@ f = 200;
 T = 1/f;
 Maxpos = 0.25;              % Max carriage travel +- 0.25 m
 Maxangle = 0.175;           % Max rod angle -- 10 deg
-Maxvoltage = 20;            % Max motor voltage, V
+Maxvoltage = 30;            % Max motor voltage, V
 pstart = 0.005;             % Carriage position starting limit, m
 astart = 1*pi/180;          % Angle starting limit, rad
 g = 9.81;                   % m/s^2     Gravitational constant
@@ -233,8 +233,8 @@ Q = C'*C;
 %Q(3,3) = 200;
 %Q(1,1) = 48000;
 %Q(3,3) = 100;
-Q(1,1) = 1000;
-Q(3,3) = 100000;
+Q(1,1) = 3000;
+Q(3,3) = 500000;
 R = 0.1;
 
 K = lqr(A,B,Q,R);
@@ -380,7 +380,7 @@ if plotAll
 
     % The states we want to plot
     N = 4*f;
-    output = zeros(N, 2);
+    output = zeros(N, size(C,1));
     estoutput = zeros(size(C,1), 1);
     estoutputhistory = zeros(N, size(C,1));
     firoutputhistory = zeros(N, size(A,1));
@@ -459,4 +459,5 @@ if plotAll
     plot(t,estoutputhistory(:,1),'-r',
          t,estoutputhistory(:,2),'-b',
          t,input,'-g');
+    title('Voltage Output');
 end

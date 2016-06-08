@@ -5,7 +5,6 @@
 close all;
 
 % load values from pendulum.m
-%pendulum;
 pendulum_6th;
 
 % Load Octave packages we'll be using
@@ -48,7 +47,7 @@ try
 
     % Only run for a certain time
     cnt = 0;
-    maxTime = 300; % seconds
+    maxTime = 20; % seconds
     maxCnt = maxTime*f;
 
     % Let's get rid of the first bit of data so that it doesn't instantly error
@@ -72,13 +71,14 @@ try
             short_pend_angle = rdata(2)*2*pi/4096; % Smaller pendulum just hanging down
         end
         motor_shaft_angle = rdata(3)*2*pi/4096;
-        motor_position = motor_shaft_angle*rd^2; % TODO why rd^2?
+        %motor_position = motor_shaft_angle*rd^2; % TODO why rd^2?
+        motor_position = motor_shaft_angle*rd;
         knob_angle = rdata(4);
 
         % Checks for safety
         if cnt == 0 && (
             abs(motor_position) > pstart || ...
-            %abs(short_pend_angle) > astart || ...
+            abs(short_pend_angle) > astart || ...
             abs(long_pend_angle) > astart)
            printf('Exiting. Invalid starting position or angle. ');
            printf('Motor position: %f, Long Pendulum angle: %f, Short Pendulum angle: %f\n',
@@ -96,7 +96,7 @@ try
         end
 
         % Set input
-        %r = rdata(4)*50;
+        %r = knob_angle/1000;
         r = 0.0;
 
         % Estimation
@@ -155,12 +155,14 @@ if saveData
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('State estimates');
+    title('6th Order Live State Estimates');
+    print -dpng "6th Order Live State Estimates.png"
     figure;
-    [AX,H1,H2] = plotyy(t,estoutputhistory(:,3),t,estoutputhistory(:,4),'plot');
+    [AX,H1,H2] = plotyy(t,estoutputhistory(:,4),t,estoutputhistory(:,5),'plot');
     set(get(AX(1),'Ylabel'),'String','measured cart position (m)');
     set(get(AX(2),'Ylabel'),'String','measured pendulum angle (radians)');
-    title('Measured values');
+    title('6th Order Live Measured values');
+    print -dpng "6th Order Live Measured Values.png"
 end
 
 % disable motor and disconnect

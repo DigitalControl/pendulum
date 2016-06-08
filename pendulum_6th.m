@@ -10,7 +10,7 @@ plotAll = false;
 
 % Whether to have the smaller pendulum balance as well or just hang down
 % false is hanging down, true is balance it up as well as the long one
-bothPendulums = true;
+bothPendulums = false;
 
 %
 % Pendulum model, the longer rod
@@ -21,7 +21,7 @@ f = 200;
 T = 1/f;
 Maxpos = 0.25;              % Max carriage travel +- 0.25 m
 Maxangle = 0.175;           % Max rod angle -- 10 deg
-Maxvoltage = 20;            % Max motor voltage, V
+Maxvoltage = 30;            % Max motor voltage, V
 pstart = 0.005;             % Carriage position starting limit, m
 astart = 1*pi/180;          % Angle starting limit, rad
 g = 9.81;                   % m/s^2     Gravitational constant
@@ -213,14 +213,17 @@ Q = C'*C;
 %R = 0.8;
 
 if bothPendulums
+    %Q(1,1) = 100;
+    %Q(3,3) = 10000;
+    %Q(5,5) = 100000;
     Q(1,1) = 100;
-    Q(3,3) = 10000;
-    Q(5,5) = 100000;
-    R = 0.01;
+    Q(3,3) = 50000;
+    Q(5,5) = 500000;
+    R = 0.1;
 else
-    Q(1,1) = 1000;
-    Q(3,3) = 100000;
-    Q(5,5) = 1000;
+    Q(1,1) = 3000;
+    Q(3,3) = 500000;
+    Q(5,5) = 10;
     R = 0.1;
 end
 
@@ -334,6 +337,7 @@ if plotAll
 
         % Estimation
         y = [state(1,1); state(3,1); state(5,1)]; % Use only the measured part of the state
+        y = y+diag([1e-3 1e-6])*stdnormal_rnd(size(y)); % Add Gaussian noise to our measurements
         uvec = [input(i); y-estoutput];
         eststate(:,1) = sys_est_only_d.a*eststate(:,2) + sys_est_only_d.b*uvec;
         estoutput = sys_est_only_d.c*eststate(:,2) + sys_est_only_d.d*uvec;
@@ -351,11 +355,13 @@ if plotAll
     end
 
     t = 0:T:(size(estoutputhistory,1)-1)/f;
+
     %figure;
     %[AX,H1,H2] = plotyy(t,output(:,1),t,output(:,2),'plot');
     %set(get(AX(1),'Ylabel'),'String','cart position (m)');
     %set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    %title('actual state - without lsim');
+    %title('Actual State - without lsim');
+
     figure;
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');

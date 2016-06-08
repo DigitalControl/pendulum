@@ -5,8 +5,8 @@
 close all;
 
 % load values from pendulum.m
-ENGR454_pendulum4th;
-%pendulum_6th;
+pendulum;
+%ENGR454_pendulum4th;
 
 % Load Octave packages we'll be using
 % Note: must do this below loading pendulum.m, since it clears everything
@@ -18,7 +18,7 @@ ctrlbox;
 disp('');
 disp('');
 
-saveData = false;
+saveData = true;
 
 try
     % Reset the board, then try connecting
@@ -44,11 +44,11 @@ try
     control_output = 0;
 
     % Plot output
-    estoutputhistory = zeros(1,size(C,1)+2);
+    estoutputhistory = zeros(1,size(C,1)+3);
 
     % Only run for a certain time
     cnt = 0;
-    maxTime = 300; % seconds
+    maxTime = 20; % seconds
     maxCnt = maxTime*f;
 
     % Let's get rid of the first bit of data so that it doesn't instantly error
@@ -66,16 +66,16 @@ try
         % Pendulum and motor shaft angles are 4096 counts/rev
         rdata = ctrlbox_recv();
         long_pend_angle = rdata(1)*2*pi/4096+pi;
-        %short_pend_angle = rdata(2)*2*pi/4096+pi;
         short_pend_angle = rdata(2)*2*pi/4096;
         motor_shaft_angle = rdata(3)*2*pi/4096;
-        motor_position = motor_shaft_angle*rd^2; % TODO why rd^2?
+        %motor_position = motor_shaft_angle*rd^2; % TODO why rd^2?
+        motor_position = motor_shaft_angle*rd;
         knob_angle = rdata(4);
 
         % Checks for safety
         if cnt == 0 && (
             abs(motor_position) > pstart || ...
-            %abs(short_pend_angle) > astart || ...
+            abs(short_pend_angle) > astart || ...
             abs(long_pend_angle) > astart)
            printf('Exiting. Invalid starting position or angle. ');
            printf('Motor position: %f, Long Pendulum angle: %f, Short Pendulum angle: %f\n',
@@ -93,7 +93,7 @@ try
         end
 
         % Set input
-        %r = rdata(4)*50;
+        %r = knob_angle/1000;
         r = 0.0;
 
         % Estimation
@@ -152,12 +152,14 @@ if saveData
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,1),t,estoutputhistory(:,2),'plot');
     set(get(AX(1),'Ylabel'),'String','cart position (m)');
     set(get(AX(2),'Ylabel'),'String','pendulum angle (radians)');
-    title('State estimates');
+    title('4th Order Live State Estimates');
+    print -dpng "4th Order Live State Estimate.png"
     figure;
     [AX,H1,H2] = plotyy(t,estoutputhistory(:,3),t,estoutputhistory(:,4),'plot');
     set(get(AX(1),'Ylabel'),'String','measured cart position (m)');
     set(get(AX(2),'Ylabel'),'String','measured pendulum angle (radians)');
-    title('Measured values');
+    title('4th Order Live Measured values');
+    print -dpng "4th Order Live Measured Values.png"
 end
 
 % disable motor and disconnect
