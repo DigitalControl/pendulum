@@ -34,8 +34,8 @@ ENGR 352}
 \pagebreak
 
 \section{PID Controller}
-\subsection{Transfer Function of \theta / F \ \textrm{ Without Friction Derivation}}
-Below is the derivation of the transfer function with an input of F and an output of \theta.
+\subsection{Transfer Function of $\theta$ / F Without Friction Derivation}
+Below is the derivation of the transfer function with an input of F and an output of $\theta$.
 
 
 \begin{equation} 
@@ -49,9 +49,8 @@ Below is the derivation of the transfer function with an input of F and an outpu
 \ddot \theta(m y_c) + \ddot x(M+m) = F
 \end{equation}
 
-\\
+%\\
 Laplace transforms of equations \ref{eqn1} and \ref{eqn2} gives
-
 
 \begin{equation} 
 \label{eqn1l}
@@ -64,7 +63,7 @@ Laplace transforms of equations \ref{eqn1} and \ref{eqn2} gives
 \theta (m y_c) s^2+ X (M+m) s^2= F
 \end{equation}
 
-\\
+%\\
 Next, solving \ref{eqn2l} for x and substituting it into \ref{eqn1l}
 
 \begin{equation}  
@@ -110,9 +109,9 @@ Simplifying \ref{eqn3} leads to
 \frac{\theta}{F} = \frac{-m y_c}{[(I+m y_c^2)(M+m) - (m y_c)^2]s^2 + b (M+m) s - m g y_c (M+m)}
 \end{equation}
 
-Equation \ref{eqntf1} is the transfer function of \theta / F \ \textrm{without friction}.
+Equation \ref{eqntf1} is the transfer function of $\theta$ / F without friction.
 
-\subsection{Transfer Function X / \theta \ \textrm{Derivation}}
+\subsection{Transfer Function X / $\theta$ Derivation}
 
 Using \ref{eqn1l}
 
@@ -126,13 +125,13 @@ X (m y_c) s^2 = -\theta [(I+m y_c^2) s^2+b s - m g y_c] = 0
 \frac{X}{\theta} = \frac{-[(I+m y_c^2) s^2+b s - m g y_c]}{(m y_c) s^2} 
 \end{equation}
 
-Equation \ref{eqntf2} is the transfer function of X / \theta.
+Equation \ref{eqntf2} is the transfer function of X / $\theta$.
 
 
 
-\subsection{Transfer Function of \theta / F \ \textrm{with Friction Derivation}}
+\subsection{Transfer Function of $\theta$ / F with Friction Derivation}
 
-Below is the derivation of the transfer function with an input of F and an output of \theta.
+Below is the derivation of the transfer function with an input of F and an output of $\theta$.
 
 \begin{equation} 
 \label{eqn5}
@@ -144,7 +143,7 @@ Below is the derivation of the transfer function with an input of F and an outpu
 \ddot \theta(m y_c) + \ddot x(M+m) = F+ F_{fric}
 \end{equation}
 
-These equations are equivalent to \ref{eqn1} and \ref{eqn2} except \ref{eqn2} has F_{fric} \ \textrm{added}.
+These equations are equivalent to \ref{eqn1} and \ref{eqn2} except \ref{eqn2} has $F_{fric}$ added.
 
 \begin{equation}
 \label{eqn7}
@@ -203,30 +202,30 @@ Solving \ref{eqn9} for the transfer function
 
 \begin{multline} 
 \label{eqn9d}
-\frac{\theta}{F} = \frac{-m y_c s^2}{ [(I+m y_c^2) s^2 ((M+m) s^2 + b_{cart} s) - (m y_c)^2 s^4 + b s ((M+m) s^2 + b_{cart} s) \\
-- m g y_c ((M+m) s^2 + b_{cart} s)]}
+\frac{\theta}{F} = (-m y_c s^2)/((I+m y_c^2) s^2 ((M+m) s^2 + b_{cart} s) - (m y_c)^2 s^4 + b s ((M+m) s^2 + b_{cart} s) \\
+- m g y_c ((M+m) s^2 + b_{cart} s))
 \end{multline}
 
 \begin{multline} 
 \label{eqn9e}
-\frac{\theta}{F} = \frac{-m y_c s^2}{ [(I+m y_c^2) s^2 ((M+m) s^2 + b_{cart} s) - (m y_c)^2 s^4 + b s ((M+m) s^2 + b_{cart} s) \\
-- m g y_c ((M+m) s^2 + b_{cart} s)]}
+\frac{\theta}{F} = (-m y_c s^2)/((I+m y_c^2) s^2 ((M+m) s^2 + b_{cart} s) - (m y_c)^2 s^4 + b s ((M+m) s^2 + b_{cart} s) \\
+- m g y_c ((M+m) s^2 + b_{cart} s))
 \end{multline}
 
 \begin{multline} 
 \label{eqn9f}
-\frac{\theta}{F} = \frac{-m y_c s}{s^3(m M y_c^2 + I m + I M) + s^2(b m + b M + I b_{cart} + m b_{cart} y_c^2) + s(b b_{cart} \\
-- g m^2  y_c - g m M y_c) - g m b_{cart} y_c}
+\frac{\theta}{F} = (-m y_c s)/(s^3(m M y_c^2 + I m + I M) + s^2(b m + b M + I b_{cart} + m b_{cart} y_c^2) + s(b b_{cart} \\
+- g m^2  y_c - g m M y_c) - g m b_{cart} y_c)
 \end{multline}
 
-Equation \ref{eqn9f} is the transfer function of \theta / F \ \textrm{with friction}.
+Equation \ref{eqn9f} is the transfer function of $\theta$ / F with friction.
 
 %\clearpage
 
 
 \subsection{Figures}
-\\ 
-\\
+%\\ 
+%\\
 
 \begin{figure}[!htb]
     \centering
@@ -237,37 +236,37 @@ Equation \ref{eqn9f} is the transfer function of \theta / F \ \textrm{with frict
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.6]{2}
-    \caption{Angle Response for a Step Input (\theta_0 = 0$^{\circ}$)}
+    \caption{Angle Response for a Step Input ($\theta_0$ = 0$^{\circ}$)}
 \end{figure} 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.6]{3}
-    \caption{Angle Response for an Impulse Input (\theta_0 = 5$^{\circ}$)}
+    \caption{Angle Response for an Impulse Input ($\theta_0$ = 5$^{\circ}$)}
 \end{figure} 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.6]{4}
-    \caption{Force Response of an Impulse Input (\theta_0 = 5$^{\circ}$)}
+    \caption{Force Response of an Impulse Input ($\theta_0$ = 5$^{\circ}$)}
 \end{figure} 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.6]{5}
-    \caption{Position Response of an Impulse Input (\theta_0 = 5$^{\circ}$)}
+    \caption{Position Response of an Impulse Input ($\theta_0$ = 5$^{\circ}$)}
 \end{figure} 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.6]{6}
-    \caption{Angle Response of an Impulse Input with Friction (\theta_0 = 5$^{\circ}$)}
+    \caption{Angle Response of an Impulse Input with Friction ($\theta_0$ = 5$^{\circ}$)}
 \end{figure} 
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.6]{7}
-    \caption{Position Response of an Impulse Input with Friction (\theta_0 = 5$^{\circ}$)}
+    \caption{Position Response of an Impulse Input with Friction ($\theta_0$ = 5$^{\circ}$)}
 \end{figure} 
 
 \FloatBarrier
@@ -365,7 +364,7 @@ Combining \ref{eqn4} and \ref{eqn5} leads to
 (I+m l^2)\ddot{\phi} + m g lsin(\phi) = -m l \ddot{x} cos(\phi)
 \end{equation}
 
-Small angle approximations. $\theta$ \textrm{ replaces } $\phi$ \textrm{ so that the angle } $\theta$ \textrm{ = 0} $\degree$ \textrm{ is straight up}.
+Small angle approximations. $\theta$ replaces $\phi$ so that the angle $\theta$ = 0 $\degree$ is straight up.
 \\
 
 \begin{equation} 
@@ -601,47 +600,47 @@ We derived the equations almost exactly like the fourth order equations, the onl
 
 \begin{equation} 
 \label{eqn6th1}
-(m_p_1 l_1We^2+J_1) \ddot{\theta_1}-m_p_1 g l_1 \theta_1 = m_p_1 l_1 \ddot{x}
+(m_{p1} l_1We^2+J_1) \ddot{\theta_1}-m_{p1} g l_1 \theta_1 = m_{p1} l_1 \ddot{x}
 \end{equation}
 
 \begin{equation} 
 \label{eqn6th2}
-(m_p_2 l_2^2+J_2) \ddot{\theta_2}+m_p_2 g l_2 \theta_2 = -m_p_2 l_2 \ddot{x}
+(m_{p2} l_2^2+J_2) \ddot{\theta_2}+m_{p2} g l_2 \theta_2 = -m_{p2} l_2 \ddot{x}
 \end{equation}
 
 \begin{equation} 
 \label{eqn6th3}
-(M_c+m_p_1+m_p_2) \ddot{x}+b_c \dot{x}-m_p_1 l_1 \ddot{\theta_1}+m_p_2 l_2 \ddot{\theta_2} = \frac{Km V}{R r d}-\frac{Km^2 \dot{x}}{R r d^2}
+(M_c+m_{p1}+m_{p2}) \ddot{x}+b_c \dot{x}-m_{p1} l_1 \ddot{\theta_1}+m_{p2} l_2 \ddot{\theta_2} = \frac{Km V}{R r d}-\frac{Km^2 \dot{x}}{R r d^2}
 \end{equation}
 Any variable with underscore 1 represents the long pendulum and underscore 2 for the short \\ pendulum. All other variables are the same as stated previously. Note that $\theta_2$ is zero when pointing straight down. By solving these equations for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in maple we found
 
-\begin{multline*} 
+\begin{multline} 
 \label{eqn6th4}
-\ddot{x} = (-(R b_c l_1^2 l_2^2 m_p_1 m_p_2 r_d^2+J_1 R b_c l_2^2 m_p_2 r_d^2+J_2 R b_c l_1^2 m_p_1 r_d^2+K_m^2 l_1^2 l_2^2*m_p_1 m_p_2+J_1 J_2 R b_c r_d^2+\\J_1 K_m^2 l_2^2 m_p_2+J_2 K_m^2 l_1^2 m_p_1+J_1 J_2 K_m^2)/p_1)\dot{x} -((-R g l_1^2 l_2^2 m_p_1^2 m_p_2 r_d^2-J_2 R g l_1^2 m_p_1^2 r_d^2)/p_1)\theta_1 \\-((R g l_1^2 l_2^2 m_p_1 m_p_2^2 r_d^2+J_1 R g l_2^2 m_p_2^2 r_d^2)/p_1 \theta_2 -(-K_m l_1^2 l_2^2 m_p_1 m_p_2 r_d-J_1 K_m l_2^2 m_p_2 r_d-J_2 K_m l_1^2 m_p_1 r_d-\\J_1 J_2 K_m r_d) V/p_1
-\end{multline*}
+\ddot{x} = (-(R b_c l_1^2 l_2^2 m_{p1} m_{p2} r_d^2+J_1 R b_c l_2^2 m_{p2} r_d^2+J_2 R b_c l_1^2 m_{p1} r_d^2+K_m^2 l_1^2 l_2^2*m_{p1} m_{p2}+J_1 J_2 R b_c r_d^2+\\J_1 K_m^2 l_2^2 m_{p2}+J_2 K_m^2 l_1^2 m_{p1}+J_1 J_2 K_m^2)/p_1)\dot{x} -((-R g l_1^2 l_2^2 m_{p1}^2 m_{p2} r_d^2-J_2 R g l_1^2 m_{p1}^2 r_d^2)/p_1)\theta_1 \\-((R g l_1^2 l_2^2 m_{p1} m_{p2}^2 r_d^2+J_1 R g l_2^2 m_{p2}^2 r_d^2)/p_1 \theta_2 -(-K_m l_1^2 l_2^2 m_{p1} m_{p2} r_d-J_1 K_m l_2^2 m_{p2} r_d-J_2 K_m l_1^2 m_{p1} r_d-\\J_1 J_2 K_m r_d) V/p_1
+\end{multline}
 
-\begin{multline*} 
+\begin{multline} 
 \label{eqn6th5}
-\ddot{\theta_1} = -(R b_c l_2^2 m_p_2 r_d^2+J_2 R b_c r_d^2+K_m^2*l_2^2*m_p_2+J_2*K_m^2)*l_1*m_p_1\dot{x}/p_1 -\\(-M_c R g l_2^2 m_p_2 r_d^2-R g l_2^2 m_p_1 m_p_2 r_d^2-2 R g l_2^2 m_p_2^2 r_d^2-J_2 M_c R g r_d^2-J_2 R g m_p_1 r_d^2-J_2 R g m_p_2 r_d^2) l_1 mp1\theta_1 /p_1-\\g l_2^2 m-p_2^2 l_1 m_p_1 \theta_2/p_1-(-K_m l_2^2 m_p_2 r_d-J_2 K_m r_d) l_1 m_p_1 V/p_1
-\end{multline*}
+\ddot{\theta_1} = -(R b_c l_2^2 m_{p2} r_d^2+J_2 R b_c r_d^2+K_m^2*l_2^2*m_{p2}+J_2*K_m^2)*l_1*m_{p1} \dot{x}/p_1 -\\(-M_c R g l_2^2 m_{p2} r_d^2-R g l_2^2 m_{p1} m_{p2} r_d^2-2 R g l_2^2 m_{p2}^2 r_d^2-J_2 M_c R g r_d^2-J_2 R g m_{p1} r_d^2-J_2 R g m_{p2} r_d^2) l_1 m_{p1} \theta_1 /p_1-\\g l_2^2 m_{p2}^2 l_1 m_{p1} \theta_2/p_1-(-K_m l_2^2 m_{p2} r_d-J_2 K_m r_d) l_1 m_{p1} V/p_1
+\end{multline}
 
-\begin{multline*} 
+\begin{multline} 
 \label{eqn6th6}
-\ddot{\theta_2} = -m_p_2 l_2 (R b_c l_1^2 m_p_1 r_d^2+J_1 R b_c r_d^2+K_m^2 l_1^2 m_p_1+J_1 K_m^2)\dot{x}/p_1 +m_p_2 l_2 g l_1^2 m_p_1^2 \theta_1/p_2 - \\m_p_2 l_2 (-M_c R g l_1^2 m_p_1 r_d^2-R g l_1^2 m_p_1 m_p_2 r_d^2-J_1 M_c R g r_d^2-J_1 R g m_p_1 r_d^2-J_1 R g m_p_2 r_d^2) \theta_2/p_1 + \\m_p_2 l_2 (-K_m l_1^2 m_p_1 r_d-J_1 K_m r_d)/p_1
-\end{multline*}
+\ddot{\theta_2} = -m_{p2} l_2 (R b_c l_1^2 m_{p1} r_d^2+J_1 R b_c r_d^2+K_m^2 l_1^2 m_{p1}+J_1 K_m^2)\dot{x}/p_1 +m_{p2} l_2 g l_1^2 m{p1}^2 \theta_1/p_2 - \\m_{p2} l_2 (-M_c R g l_1^2 m_{p1} r_d^2-R g l_1^2 m_{p1} m_{p2} r_d^2-J_1 M_c R g r_d^2-J_1 R g m_{p1} r_d^2-J_1 R g m_{p2} r_d^2) \theta_2/p_1 + \\m_{p2} l_2 (-K_m l_1^2 m_{p1} r_d-J_1 K_m r_d)/p_1
+\end{multline}
 
 where 
 
-\begin{multline*} 
+\begin{multline} 
 \label{p1}
-p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_1 m_p_2^2+J_1 M_c l_2^2 m_p_2+J_1 l_2^2 m_p_1 m_p_2+\\2_J_1 l_2^2 m_p_2^2+J_2 M_c l_1^2 m_p_1+J_2 l_1^2 m_p_1 m_p_2+J_1 J_2 M_c+J_1 J_2 m_p_1+J_1 J_2 m_p_2))
-\end{multline*}
+p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_{p1} m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1 M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2}))
+\end{multline}
 
 and 
 
 \begin{multline*} 
 \label{p2}
- p_2 = (M_c l_1^2 l_2^2 m_p_1 m_p_2+2 l_1^2 l_2^2 m_p_1 m_p_2^2+J_1+M_c l_2^2 m_p_2+J_1 l_2^2 m_p_1 m_p_2+\\2 J_1 l_2^2 m_p_2^2+J_2 M_c l_1^2 m_p_1+J_2 l_1^2 m_p_1 m_p_2+J_1 J_2 M_c+J_1 J_2 m_p_1+J_1 J_2 m_p_2)
+ p_2 = (M_c l_1^2 l_2^2 m_{p1}m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1+M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2})
 \end{multline*}
 
 After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order. We are not sure why this is, the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it.
