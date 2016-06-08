@@ -17,7 +17,7 @@ ctrlbox;
 disp('');
 disp('');
 
-saveData = true;
+saveData = false;
 
 try
     % Reset the board, then try connecting
@@ -47,7 +47,7 @@ try
 
     % Only run for a certain time
     cnt = 0;
-    maxTime = 20; % seconds
+    maxTime = 600; % seconds
     maxCnt = maxTime*f;
 
     % Let's get rid of the first bit of data so that it doesn't instantly error
