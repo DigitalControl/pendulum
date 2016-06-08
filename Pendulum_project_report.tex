@@ -481,7 +481,7 @@ R = \begin{bmatrix}
 	\end{bmatrix}
 \end{equation}
  
- If the rank of the observability matrix shown below equals the number of states the system is made up of, then the system is observable. In our case the rank of O eqauls 4 so our system is observable. This means that in any possible situation, the current state of our system can be determined using only the outputs.
+ If the rank of the observability matrix shown below equals the number of states the system is made up of, then the system is observable. In our case the rank of O equals 4 so our system is observable. This means that in any possible situation, the current state of our system can be determined using only the outputs.
  
  \begin{equation} 
 \label{obsv}
@@ -495,7 +495,7 @@ O = \begin{bmatrix}
 \end{equation}
 
 \subsubsection{LQR Controller}
-A linear-quadratic regulator (LQR) weights factors depending on their importance using the nxn Q matrix, while minimizing another factor using the variable R. In our case, the weighted factors were the position of the cart (x) and the angle of the pendulum ($\theta$). Also, the factor that we minimized is the velocity of the cart. A good starting point for Q is C'C evenly weighting the factors. However, we care much more about the pendulum staying vertical than we do the position staying at 0 m. Because of this, after some tests we weighted x at 1000 and $\theta$ at 100,000. leaving the Q matrix below. Also, a good place to start the limiting factor is 1, but we change R = 0.1.
+A linear-quadratic regulator (LQR) weights factors depending on their importance using the n by n Q matrix, while minimizing another factor using the variable R. In our case, the weighted factors were the position of the cart (x) and the angle of the pendulum ($\theta$). Also, the factor that we minimized is the velocity of the cart. A good starting point for Q is C'C evenly weighting the factors. However, we care much more about the pendulum staying vertical than we do the position staying at 0 m. Because of this, after some tests we weighted x at 1000 and $\theta$ at 100,000. leaving the Q matrix below. Also, a good place to start the limiting factor is 1, but we change R = 0.1.
 
  \begin{equation} 
 \label{q}
@@ -525,7 +525,7 @@ At this point, our pendulum seemed to stay up, but the cart would not stay at th
 C_n = [1 0 0 0]
 \end{equation}
  
- By replacing the state space C matrix with C\_n, $\bar{N}$ can be calculated. We used Octave's rscale function to calulate $\bar{N}$. $\bar{N}$ is a scale factor that eliminates the stead-state error of a system to a step input. It should be noted that $\bar{N}$ only works for single input systems, which is why we could use it to only eliminate the steady state error in the carts position. Once $\bar{N}$ is calculated, the state space equation uses the corrected A matrix, B $\bar{N}$, C, and D for the A, B, C, and D matrices respectively.
+ By replacing the state space C matrix with C\_n, $\bar{N}$ can be calculated. We used Octave's rscale function to calulate $\bar{N}$. $\bar{N}$ is a scale factor that eliminates the steady-state error of a system to a step input. It should be noted that $\bar{N}$ only works for single input systems, which is why we could use it to only eliminate the steady state error in the carts position. Once $\bar{N}$ is calculated, the state-space equation uses the corrected A matrix, B $\bar{N}$, C, and D for the A, B, C, and D matrices respectively.
  
  \subsubsection{Adding an Observer-Based Estimator}
  Previous work assumes full-state feedback, which means that x, $\dot{x}$, $\theta$, and $\dot{\theta}$ are all being measure. However, only x and $\theta$ are being measured so we must add observer based control. Below are the previous block diagram, and the updated block diagram with the observer-based estimator.
@@ -593,7 +593,7 @@ e\\
 \end{bmatrix} r
 \end{equation}
 
-This state space model successfully keeps the Pendulum up and the cart centered on the track. However, there is some noise which is not accounted for that causes the pendulum to oscillate more than it should. Also, this model only works with the wrong radius value for the motor. The reason behind this is unknown. 
+This state space model successfully keeps the Pendulum up and the cart centered on the track. However, there is some noise which is not accounted for that causes the pendulum to oscillate more than it should. Also, originally this model only works with the wrong radius value for the motor which we used from a previous model that worked. However, after testing the PWM input into the motor, we discovered the signal ranged from -30V to 30V instead of -20V to 20V like we were told. Once we made this change, the inverted pendulum worked with the correct radius.
 
 \subsection{6th Order}
 Our 6th order equations take account of the angle of the large pendulum and the position of the cart just like the fourth order, but also the position of the second pendulum. We did this to see if it would eliminate some of the extraneous noise we were having which caused our pendulum to oscillate. Also, these equations could be used to make both pendulums stay up. 
@@ -614,7 +614,7 @@ We derived the equations almost exactly like the fourth order equations, the onl
 \label{eqn6th3}
 (M_c+m_{p1}+m_{p2}) \ddot{x}+b_c \dot{x}-m_{p1} l_1 \ddot{\theta_1}+m_{p2} l_2 \ddot{\theta_2} = \frac{Km V}{R r d}-\frac{Km^2 \dot{x}}{R r d^2}
 \end{equation}
-Any variable with underscore 1 represents the long pendulum and underscore 2 for the short \\ pendulum. All other variables are the same as stated previously. Note that $\theta_2$ is zero when pointing straight down. By solving these equations for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in maple we found
+Any variable with underscore 1 represents the long pendulum and underscore 2 the short \\ pendulum. All other variables are the same as stated previously. Note that $\theta_2$ is zero when pointing straight down. By solving these equations for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in maple we found
 
 \begin{multline} 
 \label{eqn6th4}
@@ -645,7 +645,7 @@ and
  p_2 = (M_c l_1^2 l_2^2 m_{p1}m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1+M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2})
 \end{multline*}
 
-After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order. We are not sure why this is, the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it.
+After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order when using the wrong voltage and radius.  We are not sure why this is, the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it. However, the oscillation decreased with this model using the correct values.
 
 \subsection{8th Order}
 We derived 8th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 7 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. 
@@ -725,7 +725,7 @@ Next, Figure \ref{fig:4osmed} and \ref{fig:6osed} show using our discretized est
 \caption{Discrete: All State Estimations}
 \end{figure}
 
-Since we are dealing with a real motor and power supply, there are limits to what voltage we can apply to the motor. Figure \ref{fig:4ovo} and \ref{fig:6ovo} show what voltage is output to the motor from our system in simulation. This will allow us to see if we're driving the motor too hard, which will be visible on this plot as a square wave oscillating between the max and min output voltages.
+Since we are dealing with a real motor and power supply, there are limits to what voltage we can apply to the motor. Figure \ref{fig:4ovo} and \ref{fig:6ovo} show what voltage is output to the motor from our system in simulation. This will allow us to see if we are driving the motor too hard, which will be visible on this plot as a square wave oscillating between the max and min output voltages.
 
 \begin{figure}
 \centering
