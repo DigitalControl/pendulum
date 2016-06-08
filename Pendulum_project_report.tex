@@ -8,6 +8,7 @@
 \usepackage{gensymb}
 \usepackage{subfig}
 \usepackage[space]{grffile}
+\usepackage{hyperref}
 
 \geometry{
 left = 1.25in,
@@ -471,7 +472,7 @@ Now that the state-space equations are found, the poles of the model are equal t
 \end{enumerate}
 Because one of the poles is positive, the system is unstable. We will fix this with a controlled matrix A in the next section.
 
-If the rank of the controllability matrix shown below equals the number of states the system (n) is made up of, then the system is controllable. In our case the rank of R equals 4 so our system is controllable. This means that our system can reach any state.
+If the rank of the controllability matrix shown below equals the number of states the system (n) is made up of, then the system is controllable. In our case the rank of R equals 4 so our system is controllable. This means that with our controller, we can make the system reach any state.
 
 \begin{equation} 
 \label{ctrb}
@@ -481,7 +482,7 @@ R = \begin{bmatrix}
 	\end{bmatrix}
 \end{equation}
  
- If the rank of the observability matrix shown below equals the number of states the system is made up of, then the system is observable. In our case the rank of O equals 4 so our system is observable. This means that in any possible situation, the current state of our system can be determined using only the outputs.
+ If the rank of the observability matrix shown below equals the number of states the system is made up of, then the system is observable. In our case the rank of O equals 4 so our system is observable. This means that in any possible situation, the current state of our system can be determined using only the inputs and outputs.
  
  \begin{equation} 
 \label{obsv}
@@ -516,16 +517,18 @@ A_c=[A-Bk]
 \end{equation}
 
 \subsubsection{Precompensator}
-At this point, our pendulum seemed to stay up, but the cart would not stay at the center. Because of this, we had to add a precompensator to account for steady-state error. Because the cart's position had steady-state error, we chose the C matrix below.
+At this point, with a reference input commanding the pendulum to a certain position, the cart would move somewhere, but not to the desired position. Because of this, we had to add a precompensator to account for this error in position. We chose the C matrix below so that we would be controlling the position with our reference input:
 \\
 
 \begin{equation}
 \label{pcomp}
 \centering
-C_n = [1 0 0 0]
+C_n = \begin{bmatrix}
+1 & 0 & 0 & 0
+\end{bmatrix}
 \end{equation}
  
- By replacing the state space C matrix with C\_n, $\bar{N}$ can be calculated. We used Octave's rscale function to calulate $\bar{N}$. $\bar{N}$ is a scale factor that eliminates the steady-state error of a system to a step input. It should be noted that $\bar{N}$ only works for single input systems, which is why we could use it to only eliminate the steady state error in the carts position. Once $\bar{N}$ is calculated, the state-space equation uses the corrected A matrix, B $\bar{N}$, C, and D for the A, B, C, and D matrices respectively.
+By replacing the state space $C$ matrix with $C_n$, $\bar{N}$ can be calculated. We used the \textit{rscale} function provided by \href{http://ctms.engin.umich.edu/CTMS/index.php?aux=Extras_rscale}{Control Tutorials for Matlab \& Simulink} to calculate $\bar{N}$. $\bar{N}$ is a scale factor that eliminates the steady-state error of a system to a step input. It should be noted that $\bar{N}$ only works for single input systems, which is why we could use it to only eliminate the steady state error in the carts position. Once $\bar{N}$ is calculated, the state-space equation uses the corrected A matrix, B $\bar{N}$, C, and D for the A, B, C, and D matrices respectively.
  
  \subsubsection{Adding an Observer-Based Estimator}
  Previous work assumes full-state feedback, which means that x, $\dot{x}$, $\theta$, and $\dot{\theta}$ are all being measure. However, only x and $\theta$ are being measured so we must add observer based control. Below are the previous block diagram, and the updated block diagram with the observer-based estimator.
@@ -547,7 +550,7 @@ C_n = [1 0 0 0]
 
 \clearpage
 
-The speed of convergence depends on the poles of the estimator. Since we are going to use the estimation before the actual event accurs, we want the estimation to converge must faster. Because of this we want the poles of our estimator to be at least four times faster than the slowest controller pole. If the estimator poles are too fast it can cause error in the measurement, so usually the poles of the estimator should not be more than 10 times larger than the smallest controller pole. Also, the estimator poles should be close together. The current poles of our C matrix are listed below. Placing the estimator poles P at [-30, -31, -32, -33] was found to work after several trials. Note: we did not place all the estimator poles in the same position because the Octave place function used to find L does not support that.
+The speed of convergence depends on the poles of the estimator. Since we are going to use the estimation before the actual event occurs, we want the estimation to converge must faster. Because of this we want the poles of our estimator to be at least four times faster than the slowest controller pole. If the estimator poles are too fast it can cause error in the measurement, so usually the poles of the estimator should not be more than 10 times larger than the smallest controller pole. Also, the estimator poles should be close together. The current poles of our C matrix are listed below. Placing the estimator poles P at [-30, -31, -32, -33] was found to work after several trials. Note: we did not place all the estimator poles in the same position because the Octave \textit{place} function used to find L does not support that.
 \begin{enumerate}
   \item  -50.8860 +50.1382i
   \item -50.8860 -50.1382i
@@ -593,12 +596,12 @@ e\\
 \end{bmatrix} r
 \end{equation}
 
-This state space model successfully keeps the Pendulum up and the cart centered on the track. However, there is some noise which is not accounted for that causes the pendulum to oscillate more than it should. Also, originally this model only works with the wrong radius value for the motor which we used from a previous model that worked. However, after testing the PWM input into the motor, we discovered the signal ranged from -30V to 30V instead of -20V to 20V like we were told. Once we made this change, the inverted pendulum worked with the correct radius.
+This state space model successfully keeps the pendulum up and the cart centered on the track. However, there is some noise which is not accounted for that causes the pendulum to oscillate more than it should. Also, originally this model only works with the wrong radius value for the motor which we used from a previous model that worked. However, after measuring the PWM input provided to the motor, we discovered the signal ranged from -30V to 30V instead of -20V to 20V like we were told. Once we made this change, the inverted pendulum worked with the correct radius.
 
 \subsection{6th Order}
-Our 6th order equations take account of the angle of the large pendulum and the position of the cart just like the fourth order, but also the position of the second pendulum. We did this to see if it would eliminate some of the extraneous noise we were having which caused our pendulum to oscillate. Also, these equations could be used to make both pendulums stay up. 
+Our 6th order system takes account of the angle of the long pendulum and the position of the cart just like the 4th order system, but also the position of the short pendulum. We did this to see if it would eliminate some of the faulty state estimates we were having which caused our pendulum to oscillate. Also, these equations could be used to make both pendulums stay up.
 
-We derived the equations almost exactly like the fourth order equations, the only difference was that there was another pendulum. The equations that we derived which are equivalent to \ref{eqn6b}, \ref{eqn3b}, and \ref{eqn9} are shown below
+We derived the equations almost exactly like the 4th order equations, except that there was another pendulum. The equations that we derived which are equivalent to \ref{eqn6b}, \ref{eqn3b}, and \ref{eqn9} are shown below
 
 \begin{equation} 
 \label{eqn6th1}
@@ -614,7 +617,7 @@ We derived the equations almost exactly like the fourth order equations, the onl
 \label{eqn6th3}
 (M_c+m_{p1}+m_{p2}) \ddot{x}+b_c \dot{x}-m_{p1} l_1 \ddot{\theta_1}+m_{p2} l_2 \ddot{\theta_2} = \frac{Km V}{R r d}-\frac{Km^2 \dot{x}}{R r d^2}
 \end{equation}
-Any variable with underscore 1 represents the long pendulum and underscore 2 the short \\ pendulum. All other variables are the same as stated previously. Note that $\theta_2$ is zero when pointing straight down. By solving these equations for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in maple we found
+Any variable with subscript 1 represents the long pendulum and subscript 2 the short pendulum. All other variables are the same as stated previously. Note that $\theta_2$ is zero when pointing straight down. By solving these equations for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in Maple we found
 
 \begin{multline} 
 \label{eqn6th4}
@@ -645,7 +648,7 @@ and
  p_2 = (M_c l_1^2 l_2^2 m_{p1}m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1+M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2})
 \end{multline*}
 
-After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order when using the wrong voltage and radius.  We are not sure why this is, the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it. However, the oscillation decreased with this model using the correct values.
+After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order when using the wrong voltage and radius. We are not sure why this is -- the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it. However, the oscillation decreased with this model using the correct values.
 
 \subsection{8th Order}
 We derived 8th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 7 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. 
@@ -740,7 +743,7 @@ Since we are dealing with a real motor and power supply, there are limits to wha
 \caption{Discrete: Voltage Output to Motor}
 \end{figure}
 
-We wanted to estimate our states since our full-order observer in our test runs didn't quite match reality. Thus we tried a Kalman-like unbiased FIR filter as shown in Figure 	\ref{fig:4ufir} and \ref{fig:6ufir}.
+We wanted to estimate our states since our full-order observer in our test runs didn't quite match reality. Thus we tried a Kalman-like unbiased FIR filter as shown in Figure \ref{fig:4ufir} and \ref{fig:6ufir}. However, more work is required on this to get correct state estimates.
 
 \begin{figure}
 \centering
@@ -802,11 +805,11 @@ In addition, we found that the program that is generally used to demo the invert
 
 \section{Future Work}
 \begin{itemize}
-\item Fix the UFIR state estimates, resolving why the algorithm depends on $inv(A*F*A')$ which is a problem since all of our $A$ matrices are non-invertible. An alternative is using the Octave package called ALS, which uses a Kalman filter and provides a method of determining the variances. However, in theory the UFIR will outperform the Kalman filter in the majority of cases.
+\item Fix the UFIR state estimates. This requires figuring out why the algorithm depends on $inv(A*F*A')$, which is a problem since all of our $A$ matrices are non-invertible. An alternative is using the Octave package called ALS, which uses a Kalman filter and provides a method to determine the variances. However, in theory, the UFIR will outperform the Kalman filter in the majority of cases; though, it is more computationally intensive.
 \item We could verify that the system parameters we are using are correct. For example, we could measure the velocity of the motor when we spin the motor at a certain velocity by an external force, which would allow us to check the motor's $K$ value.
 \item Instead of verifying system parameters, we could also do system identification to determine all the system parameters by providing white noise as the input and doing a best fit.
-\item While it won't necessarily provide any improvement, it would be fairly simple to take the PID in State-Space form equations to test a PID controller with our existing code.
-\item We could try getting the small pendulum to stay up while the longer one hangs down, or we could work more on getting both pendulums to stay up simultaneously.
+\item While it won't necessarily provide any improvement, it would be fairly simple to take the \href{https://github.com/floft/PIDinStateSpace}{PID in State-Space form} equations to test a PID controller with our existing code.
+\item We could try getting the short pendulum to stay up while the long one hangs down, or we could work more on getting both pendulums to stay up simultaneously.
 \end{itemize}
 
 \end{document}
