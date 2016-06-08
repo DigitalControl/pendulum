@@ -37,10 +37,21 @@ the data it received back over the network connection.
 Run in simulation:
 
     octave
-    >> pendulum
+    >> pendulum            # 4th order, 30 V, correct rd
+    >> pendulum_6th        # 6th order, 30 V, correct rd
+    >> pendulum_wrong      # 4th order, 20 V, wrong rd (rd^2)
+    >> pendulum_spring     # 8th order, not observable or controllable
+
+In these non-_\_run_ files, at the top is a _plotAll_ variable that if set to true will generate all the plots. In the 6th order one, there's also a _bothPendulums_ variable which if set to true will balance both pendulums rather than the long one up and the small one down.
 
 Run on the pendulum:
 
     octave
-    >> pendulum_run
+    >> pendulum_run        # 4th order, 30 V, correct rd
+    >> pendulum_6th_run    # 6th order, 30 V, correct rd
+    >> pendulum_wrong_run  # 4th order, 20 V, wrong rd (rd^2)
 
+In the _\_run_ files, there's a _saveData_ variable which if set to true will save data while the system is running and then stop balancing the pendulum after a certain number of seconds (set by _maxTime_) and generate plots of the measurements and estimates.
+
+### Report
+The report documenting the derivations and results is [Pendulum\_project\_report.pdf](http://github.com/DigitalControl/pendulum/blob/master/Pendulum_project_report.pdf).
