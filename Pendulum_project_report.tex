@@ -6,6 +6,8 @@
 \usepackage{float}
 \usepackage{placeins}
 \usepackage{gensymb}
+\usepackage{subfig}
+\usepackage[space]{grffile}
 
 \geometry{
 left = 1.25in,
@@ -647,6 +649,54 @@ After plugging these equations into state space form and actually running it on 
 
 \subsection{8th Order}
 We derived 6th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 5 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. 
+
+\section{Results}
+
+
+
+\begin{figure}
+\centering
+\subfloat[Estimated]{{
+	\includegraphics[width=0.5\linewidth]{Correct4thOrder_estimated}
+	\label{fig:c4oe}
+}}
+\subfloat[Measured]{{
+	\includegraphics[width=0.5\linewidth]{Correct4thOrder_measured}
+	\label{fig:c4om}
+}}
+\caption{4th Order With 20V Max Voltage}
+\end{figure}
+
+Figure \ref{fig:c4oe} and \ref{fig:c4om} use the voltage level we were given. These graphs have the correct radius for the motor. They show the long pendulum staying inverted for approximately 12 seconds.
+
+\begin{figure}
+\centering
+\subfloat[Estimated]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Live_State_Estimate}
+	\label{fig:c4oe}
+}}
+\subfloat[Measured]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Live_Measured_Values}
+	\label{fig:c4om}
+}}
+\caption{4th Order With 30V Max Voltage}
+\end{figure}
+
+These graphs use the voltage level we measured (30V). The state estimations are far from the actual values we measured.
+\begin{figure}
+\centering
+\subfloat[Estimated]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Live_State_Estimates}
+	\label{fig:c4oe}
+}}
+\subfloat[Measured]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Live_Measured_Values}
+	\label{fig:c4om}
+}}
+\caption{6th Order With 30V Max Voltage}
+\end{figure}
+
+The 6th order system also has bad state estimations compared to our results, but it stayed inverted much better than our 4th order system.
 
 \section{Future Work}
 Future work for this pendulum includes using a UFIR or kalman filter to eliminate error from noise. Currently, the Pendulum works (with the wrong radius value), but it does have some noise causing it to rock back and forth. A kalman filter should help quite efficiently, however error matrices have to be found through tests which is difficult. There is another way to calculate the error matrices through iteration and there is an octave package called ALS which is supposed to help find them. The UFIR method is more complex, making more work for the computer running the program. However, it works significantly than the original kalman filter, unless the error matrices are exact in which case the kalman filter is slightly better. We have spent time trying to get both methods to work without success, however we're fairly certain that if we had more time we could get at least one of the methods to work. Once the UFIR or kalman filter is added successfully, it should not be hard to adapt the code so that both the tall and short pendulums stay up.
