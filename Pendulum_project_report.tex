@@ -648,81 +648,11 @@ and
 After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order. We are not sure why this is, the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it.
 
 \subsection{8th Order}
-We derived 6th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 5 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. 
+We derived 8th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 7 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. 
 
 \section{Results}
 
-
-
-\begin{figure}
-\centering
-\subfloat[Estimated]{{
-	\includegraphics[width=0.5\linewidth]{Correct4thOrder_estimated}
-	\label{fig:c4oe}
-}}
-\subfloat[Measured]{{
-	\includegraphics[width=0.5\linewidth]{Correct4thOrder_measured}
-	\label{fig:c4om}
-}}
-\caption{4th Order With 20V Max Voltage}
-\end{figure}
-
-Figure \ref{fig:c4oe} and \ref{fig:c4om} use the voltage level we were given. These graphs have the correct radius for the motor. They show the long pendulum staying inverted for approximately 12 seconds.
-
-\begin{figure}
-\centering
-\subfloat[Estimated]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_Live_State_Estimates}
-	\label{fig:c6oe}
-}}
-\subfloat[Measured]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_Live_Measured_Values}
-	\label{fig:c6om}
-}}
-\caption{4th Order With 30V Max Voltage}
-\end{figure}
-
-These graphs use the voltage level we measured (30V). The state estimations are far from the actual values we measured.
-\begin{figure}
-\centering
-\subfloat[Estimated]{{
-	\includegraphics[width=0.5\linewidth]{6th_Order_Live_State_Estimates}
-	\label{fig:c6ole}
-}}
-\subfloat[Measured]{{
-	\includegraphics[width=0.5\linewidth]{6th_Order_Live_Measured_Values}
-	\label{fig:c6olm}
-}}
-\caption{6th Order With 30V Max Voltage}
-\end{figure}
-
-The 6th order system also has bad state estimations compared to our results, but it stayed inverted much better than our 4th order system.
-
-\begin{figure}
-\centering
-\subfloat[4th Order]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_State_Esimates_Discrete}
-	\label{fig:4osmed}
-}}
-\subfloat[6th Order]{{
-	\includegraphics[width=0.5\linewidth]{6th_Order_State_Esimates_Discrete}
-	\label{fig:6osed}
-}}
-\caption{Discrete: All State Estimations}
-\end{figure}
-
-\begin{figure}
-\centering
-\subfloat[4th Order]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_All_States_Measured_Discrete}
-	\label{fig:4oasmd}
-}}
-\subfloat[6th Order]{{
-	\includegraphics[width=0.5\linewidth]{6th_Order_All_States_Measured_Discrete}
-	\label{fig:6oasmd}
-}}
-\caption{Discrete: All States Measured}
-\end{figure}
+Figure \ref{fig:4osrwc} and \ref{fig:6osrwc} show the step response to a reference input telling the cart to go to 0.2 meters. You will notice that it doesn't actually go to 0.2 meters. This is fixed by multiplying the reference input by $\bar{N}$. The result is Figure \ref{fig:4osrwpc} and \ref{fig:6osrwpc}, where the cart does go to a position of 0.2 meters. Also note that Figure \ref{fig:6osrwpc} has some higher frequency components that is due to it caring about the short pendulum in addition to the long pendulum.
 
 \begin{figure}
 \centering
@@ -740,19 +670,6 @@ The 6th order system also has bad state estimations compared to our results, but
 \begin{figure}
 \centering
 \subfloat[4th Order]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_Step_Response_with_Observer-Based_State-Feedback_Control}
-	\label{fig:4osrwsfc}
-}}
-\subfloat[6th Order]{{
-	\includegraphics[width=0.5\linewidth]{6th_Order_Step_Response_with_Observer-Based_State-Feedback_Control}
-	\label{fig:6osrwsfc}
-}}
-\caption{Step Response with Observer Based State Feedback Control}
-\end{figure}
-
-\begin{figure}
-\centering
-\subfloat[4th Order]{{
 	\includegraphics[width=0.5\linewidth]{4th_Order_Step_Response_with_Precompensation_and_LQR_Control}
 	\label{fig:4osrwpc}
 }}
@@ -763,18 +680,52 @@ The 6th order system also has bad state estimations compared to our results, but
 \caption{Step Response with Precompensation and LQR Control}
 \end{figure}
 
+However, we don't have sensors for all of the states of these systems. We are only measuring the cart position and the pendulum angles. Figure \ref{fig:4osrwsfc} and \ref{fig:6osrwsfc} show the result when using a full-order observer. It is very close to what happened when using the actual state measurements in simulation.
+
 \begin{figure}
 \centering
 \subfloat[4th Order]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_UFIR_State_Estimates_Discrete}
-	\label{fig:4ufir}
+	\includegraphics[width=0.5\linewidth]{4th_Order_Step_Response_with_Observer-Based_State-Feedback_Control}
+	\label{fig:4osrwsfc}
 }}
 \subfloat[6th Order]{{
-	\includegraphics[width=0.5\linewidth]{6th_Order_UFIR_State_Estimates_Discrete}
-	\label{fig:6ufir}
+	\includegraphics[width=0.5\linewidth]{6th_Order_Step_Response_with_Observer-Based_State-Feedback_Control}
+	\label{fig:6osrwsfc}
 }}
-\caption{Descrete: UFIR State Estimates}
+\caption{Step Response with Observer Based State Feedback Control}
 \end{figure}
+
+When we do this on the inverted pendulum in the real world, we will be doing it digitally, so we need to discretize our system. We are doing this with \textit{c2d} in Octave. To verify that our sampling rate won't cause issues, we can run the simulation on this discrete system. If the sampling rate is too low, the effect will be visible on these plots.
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_All_States_Measured_Discrete}
+	\label{fig:4oasmd}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_All_States_Measured_Discrete}
+	\label{fig:6oasmd}
+}}
+\caption{Discrete: All States Measured}
+\end{figure}
+
+Next, Figure \ref{fig:4osmed} and \ref{fig:6osed} show using our discretized estimator and also adding some Gaussian noise to our measurements to make this more realistic since the actual sensors might not have perfect readings.
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_State_Esimates_Discrete}
+	\label{fig:4osmed}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_State_Esimates_Discrete}
+	\label{fig:6osed}
+}}
+\caption{Discrete: All State Estimations}
+\end{figure}
+
+Since we are dealing with a real motor and power supply, there are limits to what voltage we can apply to the motor. Figure \ref{fig:4ovo} and \ref{fig:6ovo} show what voltage is output to the motor from our system in simulation. This will allow us to see if we're driving the motor too hard, which will be visible on this plot as a square wave oscillating between the max and min output voltages.
 
 \begin{figure}
 \centering
@@ -786,11 +737,76 @@ The 6th order system also has bad state estimations compared to our results, but
 	\includegraphics[width=0.5\linewidth]{6th_Order_Voltage_Output}
 	\label{fig:6ovo}
 }}
-\caption{Descrete: UFIR State Estimates}
+\caption{Discrete: Voltage Output to Motor}
 \end{figure}
 
-\section{Future Work}
-Future work for this pendulum includes using a UFIR or kalman filter to eliminate error from noise. Currently, the Pendulum works (with the wrong radius value), but it does have some noise causing it to rock back and forth. A kalman filter should help quite efficiently, however error matrices have to be found through tests which is difficult. There is another way to calculate the error matrices through iteration and there is an octave package called ALS which is supposed to help find them. The UFIR method is more complex, making more work for the computer running the program. However, it works significantly than the original kalman filter, unless the error matrices are exact in which case the kalman filter is slightly better. We have spent time trying to get both methods to work without success, however we're fairly certain that if we had more time we could get at least one of the methods to work. Once the UFIR or kalman filter is added successfully, it should not be hard to adapt the code so that both the tall and short pendulums stay up.
+We wanted to estimate our states since our full-order observer in our test runs didn't quite match reality. Thus we tried a Kalman-like unbiased FIR filter as shown in Figure 	\ref{fig:4ufir} and \ref{fig:6ufir}.
 
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_UFIR_State_Estimates_Discrete}
+	\label{fig:4ufir}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_UFIR_State_Estimates_Discrete}
+	\label{fig:6ufir}
+}}
+\caption{Discrete: UFIR State Estimates}
+\end{figure}
+
+Figure \ref{fig:c4oe} and \ref{fig:c4om} use the voltage level we were given in the list of system parameters, which was 20 V. These graphs have the correct radius for the motor. They show the long pendulum staying inverted for approximately 12 seconds.
+
+\begin{figure}
+\centering
+\subfloat[Estimated]{{
+	\includegraphics[width=0.5\linewidth]{Correct4thOrder_estimated}
+	\label{fig:c4oe}
+}}
+\subfloat[Measured]{{
+	\includegraphics[width=0.5\linewidth]{Correct4thOrder_measured}
+	\label{fig:c4om}
+}}
+\caption{4th Order With 20V Max Voltage}
+\end{figure}
+
+Figure \ref{fig:c6oe}, \ref{fig:c6om}, \ref{fig:c6ole}, and \ref{fig:c6olm} use the voltage level we measured on the output of the motor, which was 30 V. The state estimations are far from the actual values we measured as shown in Figure \ref{fig:c6om} and \ref{fig:c6olm}. The 6th order system keeps the pendulum centered around a position of $x=0$ much more consistently than the 4th order system in our tests. This is what we would think should happen since the 6th order system takes into account the small pendulum hanging down. However, note that we used the small angle approximation for the both pendulums, so if the small pendulum is swinging wildly, then our state estimates might not follow as close to reality as we would hope.
+
+\begin{figure}
+\centering
+\subfloat[Estimated]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Live_State_Estimates}
+	\label{fig:c6oe}
+}}
+\subfloat[Measured]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Live_Measured_Values}
+	\label{fig:c6om}
+}}
+\caption{4th Order With 30V Max Voltage}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Estimated]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Live_State_Estimates}
+	\label{fig:c6ole}
+}}
+\subfloat[Measured]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Live_Measured_Values}
+	\label{fig:c6olm}
+}}
+\caption{6th Order With 30V Max Voltage}
+\end{figure}
+
+In addition, we found that the program that is generally used to demo the inverted pendulum, which was created by Andrew Roth, multiplied the measured motor angle by $r_d$ in two places, which is the same as setting $r_d$ to be the square of what we would expect. When we made this alteration, both the 4th and 6th order system worked better. The correct value is $r_d = 0.0127$ m, but in this case we used $r_d = 0.00016129$ m. However, the system acted similarly when we used the correct radius and used $Maxvoltage = 30$ V instead of $Maxvoltage = 20$ V.
+
+\section{Future Work}
+\begin{itemize}
+\item Fix the UFIR state estimates, resolving why the algorithm depends on $inv(A*F*A')$ which is a problem since all of our $A$ matrices are non-invertible. An alternative is using the Octave package called ALS, which uses a Kalman filter and provides a method of determining the variances. However, in theory the UFIR will outperform the Kalman filter in the majority of cases.
+\item We could verify that the system parameters we are using are correct. For example, we could measure the velocity of the motor when we spin the motor at a certain velocity by an external force, which would allow us to check the motor's $K$ value.
+\item Instead of verifying system parameters, we could also do system identification to determine all the system parameters by providing white noise as the input and doing a best fit.
+\item While it won't necessarily provide any improvement, it would be fairly simple to take the PID in State-Space form equations to test a PID controller with our existing code.
+\item We could try getting the small pendulum to stay up while the longer one hangs down, or we could work more on getting both pendulums to stay up simultaneously.
+\end{itemize}
 
 \end{document}
