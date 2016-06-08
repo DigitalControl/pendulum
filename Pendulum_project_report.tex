@@ -672,12 +672,12 @@ Figure \ref{fig:c4oe} and \ref{fig:c4om} use the voltage level we were given. Th
 \begin{figure}
 \centering
 \subfloat[Estimated]{{
-	\includegraphics[width=0.5\linewidth]{4th_Order_Live_State_Estimate}
-	\label{fig:c4oe}
+	\includegraphics[width=0.5\linewidth]{4th_Order_Live_State_Estimates}
+	\label{fig:c6oe}
 }}
 \subfloat[Measured]{{
 	\includegraphics[width=0.5\linewidth]{4th_Order_Live_Measured_Values}
-	\label{fig:c4om}
+	\label{fig:c6om}
 }}
 \caption{4th Order With 30V Max Voltage}
 \end{figure}
@@ -687,16 +687,107 @@ These graphs use the voltage level we measured (30V). The state estimations are 
 \centering
 \subfloat[Estimated]{{
 	\includegraphics[width=0.5\linewidth]{6th_Order_Live_State_Estimates}
-	\label{fig:c4oe}
+	\label{fig:c6ole}
 }}
 \subfloat[Measured]{{
 	\includegraphics[width=0.5\linewidth]{6th_Order_Live_Measured_Values}
-	\label{fig:c4om}
+	\label{fig:c6olm}
 }}
 \caption{6th Order With 30V Max Voltage}
 \end{figure}
 
 The 6th order system also has bad state estimations compared to our results, but it stayed inverted much better than our 4th order system.
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_State_Esimates_Discrete}
+	\label{fig:4osmed}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_State_Esimates_Discrete}
+	\label{fig:6osed}
+}}
+\caption{Discrete: All State Estimations}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_All_States_Measured_Discrete}
+	\label{fig:4oasmd}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_All_States_Measured_Discrete}
+	\label{fig:6oasmd}
+}}
+\caption{Discrete: All States Measured}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Step_Response_with_LQR_Control}
+	\label{fig:4osrwc}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Step_Response_with_LQR_Control}
+	\label{fig:6osrwc}
+}}
+\caption{Step Response with LQR Control}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Step_Response_with_Observer-Based_State-Feedback_Control}
+	\label{fig:4osrwsfc}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Step_Response_with_Observer-Based_State-Feedback_Control}
+	\label{fig:6osrwsfc}
+}}
+\caption{Step Response with Observer Based State Feedback Control}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Step_Response_with_Precompensation_and_LQR_Control}
+	\label{fig:4osrwpc}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Step_Response_with_Precompensation_and_LQR_Control}
+	\label{fig:6osrwpc}
+}}
+\caption{Step Response with Precompensation and LQR Control}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_UFIR_State_Estimates_Discrete}
+	\label{fig:4ufir}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_UFIR_State_Estimates_Discrete}
+	\label{fig:6ufir}
+}}
+\caption{Descrete: UFIR State Estimates}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[4th Order]{{
+	\includegraphics[width=0.5\linewidth]{4th_Order_Voltage_Output}
+	\label{fig:4ovo}
+}}
+\subfloat[6th Order]{{
+	\includegraphics[width=0.5\linewidth]{6th_Order_Voltage_Output}
+	\label{fig:6ovo}
+}}
+\caption{Descrete: UFIR State Estimates}
+\end{figure}
 
 \section{Future Work}
 Future work for this pendulum includes using a UFIR or kalman filter to eliminate error from noise. Currently, the Pendulum works (with the wrong radius value), but it does have some noise causing it to rock back and forth. A kalman filter should help quite efficiently, however error matrices have to be found through tests which is difficult. There is another way to calculate the error matrices through iteration and there is an octave package called ALS which is supposed to help find them. The UFIR method is more complex, making more work for the computer running the program. However, it works significantly than the original kalman filter, unless the error matrices are exact in which case the kalman filter is slightly better. We have spent time trying to get both methods to work without success, however we're fairly certain that if we had more time we could get at least one of the methods to work. Once the UFIR or kalman filter is added successfully, it should not be hard to adapt the code so that both the tall and short pendulums stay up.
