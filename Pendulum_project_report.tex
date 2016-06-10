@@ -39,9 +39,7 @@ ENGR 352}
 \maketitle
 
 \clearpage
-
 \tableofcontents
-
 \pagebreak
 
 \section{PID Controller}
@@ -331,27 +329,28 @@ Force (Max) & 3N & 2.929N & 2.97N\\
 \section{LQR State Space Controller}
 \subsection{4th Order}
 \subsubsection{State-Space Modeling}
-Below is the free-body diagram of the inverted pendulum and cart
+Figure \ref{fig:4thOrder} shows the free-body diagrams of the inverted pendulum, cart, and motor.
 
 \begin{figure}[!htb]
 \centering
-\includegraphics{pendulumfbd}
-\caption{Source: \href{http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=SystemModeling}{Inverted Pendulum: System Modeling}}
+\includegraphics[width=0.95\linewidth]{System4thOrder}
+\caption{4th Order System}
+\label{fig:4thOrder}
 \end{figure}
 
-Summation of carts forces in the horizontal direction
+Summation of carts forces in the horizontal direction:
 \begin{equation} 
 \label{eqn1}
 F = M\ddot{x}+b\dot{x} + N
 \end{equation}
 
-Summation of the pendulum forces in the horizontal direction
+Summation of the pendulum forces in the horizontal direction, where $\phi = \theta - \pi$:
 \begin{equation} 
 \label{eqn2}
 N = m\ddot{x}+m l \ddot{\phi} cos(\phi)-m l \dot{\phi}^2sin(\phi)
 \end{equation}
 
-Substituting \ref{eqn2} into \ref{eqn1}
+Substituting \ref{eqn2} into \ref{eqn1}:
 \begin{equation} 
 \label{eqn3}
 F = M\ddot{x}+b\dot{x} + m\ddot{x}+m l \ddot{\phi} cos(\phi)-m l \dot{\phi}^2sin(\phi)
@@ -558,9 +557,6 @@ By replacing the state space $C$ matrix with $C_n$, $\bar{N}$ can be calculated.
 \caption{Adding the observer, \\ Source: \href{http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=ControlStateSpace}{Inverted Pendulum: State-Space Methods for Controller Design}}
 \end{figure}
 
-
-\clearpage
-
 The speed of convergence depends on the poles of the estimator. Since we are going to use the estimation before the actual event occurs, we want the estimation to converge must faster. Because of this we want the poles of our estimator to be at least four times faster than the slowest controller pole. If the estimator poles are too fast it can cause error in the measurement, so usually the poles of the estimator should not be more than 10 times larger than the smallest controller pole. Also, the estimator poles should be close together. The current poles of our C matrix are listed below. Placing the estimator poles P at [-30, -31, -32, -33] was found to work after several trials. Note: we did not place all the estimator poles in the same position because the Octave \textit{place} function used to find L does not support that.
 \begin{enumerate}
   \item  -50.8860 +50.1382i
@@ -607,16 +603,48 @@ e\\
 \end{bmatrix} r
 \end{equation}
 
+Then, to allow us to use this observer when actually using the pendulum, we needed to derive a non-closed-loop continuous state-space model that we could discretize and then run iteratively at our sample rate. By coming up with new A, B, C, and D matrices, we used the \textit{c2d} command in Octave to do this.
+
+\begin{equation*}
+\dot{\hat{x}} = A \hat{x} + B u + L(y - \hat{y})
+\end{equation*}
+\begin{equation*}
+y = C \hat{x} + D u
+\end{equation*}
+\begin{equation*}
+\implies \dot{\hat{x}} = A \hat{x} + \begin{bmatrix}
+B & L
+\end{bmatrix} \begin{bmatrix}
+u \\
+y - \hat{y}
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+y = C \hat{x} + \begin{bmatrix}
+D & 0 & 0
+\end{bmatrix} \begin{bmatrix}
+u \\
+y - \hat{y}
+\end{bmatrix}
+\end{equation*}
+
 This state space model successfully keeps the pendulum up and the cart centered on the track. However, there is some noise which is not accounted for that causes the pendulum to oscillate more than it should. Also, originally this model only works with the wrong radius value for the motor which we used from a previous model that worked. However, after measuring the PWM input provided to the motor, we discovered the signal ranged from -30V to 30V instead of -20V to 20V like we were told. Once we made this change, the inverted pendulum worked with the correct radius.
 
 \subsection{6th Order}
-Our 6th order system takes account of the angle of the long pendulum and the position of the cart just like the 4th order system, but also the position of the short pendulum. We did this to see if it would eliminate some of the faulty state estimates we were having which caused our pendulum to oscillate. Also, these equations could be used to make both pendulums stay up.
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.95\linewidth]{System6thOrder}
+\caption{6th Order System}
+\label{fig:6thOrder}
+\end{figure}
 
-We derived the equations almost exactly like the 4th order equations, except that there was another pendulum. The equations that we derived which are equivalent to \ref{eqn6b}, \ref{eqn3b}, and \ref{eqn9} are shown below
+Our 6th order system takes account of the angle of the long pendulum and the position of the cart just like the 4th order system, but also the position of the short pendulum. We did this to see if it would eliminate some of the faulty state estimates we were having which caused our pendulum to oscillate. Also, with only a modification to what small angle approximations we make, the equations could be used to make both pendulums stay up. This system is shown in \ref{fig:6thOrder}.
+
+We derived the equations almost exactly like the 4th order equations, except that there was another pendulum. The equations that we derived which are equivalent to \ref{eqn6b}, \ref{eqn3b}, and \ref{eqn9}:
 
 \begin{equation} 
 \label{eqn6th1}
-(m_{p1} l_1We^2+J_1) \ddot{\theta_1}-m_{p1} g l_1 \theta_1 = m_{p1} l_1 \ddot{x}
+(m_{p1} l_1^2+J_1) \ddot{\theta_1}-m_{p1} g l_1 \theta_1 = m_{p1} l_1 \ddot{x}
 \end{equation}
 
 \begin{equation} 
@@ -654,15 +682,330 @@ p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_{p1} m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1 
 
 and 
 
-\begin{multline*} 
+\begin{multline}
 \label{p2}
  p_2 = (M_c l_1^2 l_2^2 m_{p1}m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1+M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2})
-\end{multline*}
+\end{multline}
 
 After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order when using the wrong voltage and radius. We are not sure why this is -- the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it. However, the oscillation decreased with this model using the correct values.
 
 \subsection{8th Order}
-We derived 8th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 7 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. 
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.95\linewidth]{System8thOrder}
+\caption{8th Order System}
+\label{fig:8thOrder}
+\end{figure}
+
+We derived 8th order equations which include the springiness of the wire which moves the cart only to discover that the matrix had a rank of 7 meaning that the state space equations were not controllable. This is because when modeling the movement of the wire as a spring, the position of the cart is not known. This system is shown in Figure \ref{fig:8thOrder}.
+
+We started off with the motor equations:
+\begin{equation}
+J_d \ddot{\theta}_m + b_m \dot{\theta}_m = K_m i
+\label{eqn:8th1}
+\end{equation}
+\begin{equation}
+L \dot{i} + R i = V - K_m \dot{\theta}_m
+\label{eqn:8th2}
+\end{equation}
+\begin{equation}
+T = K_m i
+\label{eqn:8th3}
+\end{equation}
+
+Equation for the cart:
+\begin{equation*}
+\rightarrow \sum{F} = m a
+\end{equation*}
+\begin{equation*}
+\implies -b_c \dot{x} - N_1 - N_2 + K_s (r_d \theta_m - x) = M_c \ddot{x}
+\end{equation*}
+
+\begin{equation}
+\implies M_c \ddot{x} + b_c \dot{x} + K_s x - K_s r_d \theta_m + N_1 + N_2 = 0
+\label{eqn:8th4}
+\end{equation}
+
+For each pendulum:
+\begin{equation*}
+\rightarrow \sum{F} = ma
+\end{equation*}
+\begin{equation}
+\implies N_1 = m_{p1} \ddot{x} + m_{p1} l_1 \ddot{\phi}_1 cos(\phi_1) - m_{p1} l_1 \dot{\phi}_1^2 sin(\phi_1)
+\label{eqn:8th5}
+\end{equation}
+and \begin{equation}
+\implies N_2 = m_{p2} \ddot{x} + m_{p2} l_2 \ddot{\phi}_2 cos(\phi_2) - m_{p2} l_2 \dot{\phi}_2^2 sin(\phi_2)
+\label{eqn:8th6}
+\end{equation}
+
+Plugging equation \ref{eqn:8th5} and \ref{eqn:8th6} into \ref{eqn:8th4}, where $F = K_s ( r_d \theta_m - x )$:
+\begin{equation*}
+\begin{split}
+M_c \ddot{x} + b_c \dot{x} + m_{p1} \ddot{x} + m_{p1} l_1 \ddot{\phi}_1 cos(\phi_1) - m_{p1} l_1 \dot{\phi}_1^2 sin(\phi_1) + \\
+m_{p2} \ddot{x} + m_{p2} l_2 \ddot{\phi}_2 cos(\phi_2) - m_{p2} l_2 \dot{\phi}_2^2 sin(\phi_2) = F
+\end{split}
+\end{equation*}
+
+\begin{equation}
+\begin{split}
+\implies (M_c + m_{p1} + m_{p2}) \ddot{x} + b_c \dot{x} + m_{p1} l_1 \ddot{\phi}_1 cos(\phi_1) - m_{p1} l_1 \dot{\phi}_1^2 sin(\phi_1) + \\
+m_{p2} l_2 \ddot{\phi}_2 cos(\phi_2) - m_{p2} l_2 \dot{\phi}_2^2 sin(\phi_2) = F
+\end{split}
+\label{eqn:8th7}
+\end{equation}
+
+For each pendulum,
+\begin{equation}
+P_1 sin(\phi_1) + N_1 cos(\phi_1) - m_{p1} g sin(\phi_1) = m_{p1} l_1 \ddot{\phi}_1 + m_{p1} \ddot{x} cos(\phi_1)
+\label{eqn:8th8}
+\end{equation}
+
+\begin{equation}
+P_2 sin(\phi_2) + N_2 cos(\phi_2) - m_{p2} g sin(\phi_2) = m_{p2} l_2 \ddot{\phi}_2 + m_{p2} \ddot{x} cos(\phi_2)
+\label{eqn:8th9}
+\end{equation}
+
+and moments:
+\begin{equation}
+-P_1 l_1 sin(\phi_1) - N_1 l_1 cos(\phi_1) = J_1 \ddot{\phi}_1
+\label{eqn:8th10}
+\end{equation}
+%\begin{equation*}
+%\implies -l_1 ( P_1 sin(\phi_1) + N_1 cos(\phi_1) = J_1 \ddot{\phi}_1
+%\end{equation*}
+%\begin{equation*}
+%\implies P_1 sin(\phi_1) + N_1 cos(\phi_1) = - (J_1/l_1) \ddot{\phi}_1
+%\end{equation*}
+
+\begin{equation}
+-P_2 l_2 sin(\phi_2) - N_2 l_2 cos(\phi_2) = J_2 \ddot{\phi}_2
+\label{eqn:8th11}
+\end{equation}
+%\begin{equation*}
+%\implies -l_2 ( P_2 sin(\phi_2) + N_2 cos(\phi_2) = J_2 \ddot{\phi}_2
+%\end{equation*}
+%\begin{equation*}
+%\implies P_2 sin(\phi_2) + N_2 cos(\phi_2) = - (J_2/l_2) \ddot{\phi}_2
+%\end{equation*}
+
+Plugging equation \ref{eqn:8th10} into \ref{eqn:8th8}, we get:
+\begin{equation*}
+\implies - (J_1 / l_1) \ddot{\phi}_1 - m_{p1} g sin(\phi_1) = m_{p1} l_1 \ddot{\phi}_1 + m_{p1} \ddot{x} cos(\phi_1)
+\end{equation*}
+\begin{equation*}
+\implies (m_{p1} l_1 + (J_1 / l_1)) \ddot{\phi}_1 + m_{p1} g sin(\phi_1) = -m_{p1} \ddot{x} cos(\phi_1)
+\end{equation*}
+\begin{equation}
+\implies (m_{p1} l_1^2 + J_1) \ddot{\phi}_1 + m_{p1} g l_1 sin(\phi_1) = -m_{p1} l_1 \ddot{x} cos(\phi_1)
+\label{eqn:8th12}
+\end{equation}
+
+And, similarly, plugging \ref{eqn:8th11} into \ref{eqn:8th9}, we get:
+\begin{equation}
+\implies (m_{p2} l_2^2 + J_2) \ddot{\phi}_2 + m_{p2} g l_2 sin(\phi_2) = -m_{p2} l_2 \ddot{x} cos(\phi_2)
+\label{eqn:8th13}
+\end{equation}
+
+Applying small angle approximations, where $\phi_1 = \pi + \theta_1$, first for the long pendulum, where we want it to stay up:
+\begin{equation*}
+cos(\phi_1) = cos(\pi + \theta_1) \approx -1
+\end{equation*}
+\begin{equation*}
+sin(\phi_1) = sin(\pi + \theta_1) \approx - \theta_1
+\end{equation*}
+\begin{equation*}
+\dot{\phi}_1^2 = \dot{\theta}_1^2 \approx 0
+\end{equation*}
+
+And then for the short pendulum, where $\phi_2 = \theta_2$, since we want it to hang down:
+\begin{equation*}
+cos(\phi_2) = cos(\theta_2) \approx 1 - \theta_2^2 / 2 \approx 1
+\end{equation*}
+\begin{equation*}
+sin(\phi_2) = sin(\theta_2) \approx \theta_2
+\end{equation*}
+\begin{equation*}
+\dot{\phi}_2^2 = \dot{\theta}_2^2 \approx 0
+\end{equation*}
+
+Plugging all of these small angle approximations into equations \ref{eqn:8th12}, \ref{eqn:8th13}, and \ref{eqn:8th7}:
+\begin{equation*}
+(m_{p1} l_1^2 + J_1) \ddot{\theta}_1 + m_{p1} g l_1 (-\theta_1) = -m_{p1} l_1 \ddot{x} (-1)
+\end{equation*}
+\begin{equation}
+\implies (m_{p1} l_1^2 + J_1) \ddot{\theta}_1 - m_{p1} g l_1 \theta_1 = m_{p1} l_1 \ddot{x}
+\label{eqn:8th14}
+\end{equation}
+
+\begin{equation*}
+(m_{p2} l_2^2 + J_2) \ddot{\theta}_2 + m_{p2} g l_2 (-\theta_2) = -m_{p2} l_2 \ddot{x} (-1)
+\end{equation*}
+\begin{equation}
+\implies (m_{p2} l_2^2 + J_2) \ddot{\theta}_2 - m_{p2} g l_2 \theta_2 = m_{p2} l_2 \ddot{x}
+\label{eqn:8th15}
+\end{equation}
+
+\begin{equation}
+(M_c + m_{p1} + m_{p2}) \ddot{x} + b_c \dot{x} - m_{p1} l_1 \ddot{\theta}_1 + m_{p2} l_2 \ddot{\theta}_2 = F
+\label{eqn:8th16}
+\end{equation}
+
+If $L = 0$ in equations \ref{eqn:8th1}, \ref{eqn:8th2}, and \ref{eqn:8th3}, then:
+\begin{equation*}
+J_d \ddot{\theta}_m + b_m \dot{\theta}_m = K_m i
+\end{equation*}
+\begin{equation*}
+R i = V - K_m \dot{\theta}_m
+\end{equation*}
+\begin{equation*}
+\implies i = (1/R) V - (K_m/R) \dot{\theta}_m
+\end{equation*}
+\begin{equation*}
+\implies J_d \ddot{\theta}_m + b_m \dot{\theta}_m = (K_m/R) V - (K_m^2/R) \dot{\theta}_m
+\end{equation*}
+\begin{equation}
+\implies J_d \ddot{\theta}_m + (b_m + K_m^2/R) \dot{\theta}_m - (K_m/R) V = 0
+\label{eqn:8th20}
+\end{equation}
+
+Let our states be:
+
+\begin{equation*}
+\vec{x} = \begin{bmatrix}
+x & \dot{x} & \theta_1 & \dot{\theta}_1 & \theta_2 & \dot{\theta}_2 & \theta_m & \dot{\theta}_m
+\end{bmatrix} '
+\end{equation*}
+
+Now, using equations \ref{eqn:8th14}, \ref{eqn:8th15}, \ref{eqn:8th16}, and \ref{eqn:8th20} to solve for $\ddot{\theta}_m$, $\ddot{\theta}_1$, $\ddot{\theta}_2$, $\ddot{x}$, etc. for state space using Maple, we get the following, where $p = M_c l_1^2 l_2^2 m_{p1} m_{p2}+J_1 M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2}$:
+
+\begin{equation*}
+A(:,1:4) = \begin{bmatrix}
+0 & 1 & 0 & 0 \\
+
+\begin{split}
+-(-K_s l_1^2 l_2^2 m_{p1} m_{p2} \\ -J_1 K_s l_2^2 m_{p2} \\ -J_2 K_s l_1^2 m_{p1} \\ -J_1 J_2 K_s)/p
+\end{split}
+&
+\begin{split}
+-(b_c l_1^2 l_2^2 m_{p1} m_{p2} \\ +J_1 b_c l_2^2 m_{p2} \\ +J_2 b_c l_1^2 m_{p1} \\ +J_1 J_2 b_c)/p
+\end{split}
+&
+\begin{split}
+-(-g l_1^2 l_2^2 m_{p1}^2 m_{p2} \\ -J_2 g l_1^2 m_{p1}^2)/p
+\end{split}
+&
+0 \\
+
+0 & 0 & 0 & 1 \\
+
+\begin{split}
+-(-K_s l_2^2 m_{p2} \\ -J_2 K_s) l_1 m_{p1}/p
+\end{split}
+&
+\begin{split}
+-(b_c l_2^2 m_{p2} \\ +J_2 b_c) l_1 m_{p1}/p
+\end{split}
+&
+\begin{split}
+-(-M_c g l_2^2 m_{p2} \\ -g l_2^2 m_{p1} m_{p2} \\ -J_2 M_c g-J_2 g m_{p1} \\ -J_2 g m_{p2}) l_1 m_{p1}/p
+\end{split}
+&
+0 \\
+
+0 & 0 & 0 & 0 \\
+
+\begin{split}
+m_{p2} l_2 (-K_s l_1^2 m_{p1} \\ -J_1 K_s)/p
+\end{split}
+&
+\begin{split}
+m_{p2} l_2 (b_c l_1^2 m_{p1} \\ +J_1 b_c)/p
+\end{split}
+&
+-m_{p2} l_2 g l_1^2 m_{p1}^2/p
+&
+0 \\
+
+0 & 0 & 0 & 0 \\
+
+0 & 0 & 0 & 0 \\
+\end{bmatrix}
+\end{equation*}
+
+and
+\begin{equation*}
+A(:,5:8) = \begin{bmatrix}
+0 & 0 & 0 & 0 \\
+
+\begin{split}
+-(-g l_1^2 l_2^2 m_{p1} m_{p2}^2 \\ -J_1 g l_2^2 m_{p2}^2)/p
+\end{split}
+&
+0
+&
+\begin{split}
+-(K_s l_1^2 l_2^2 m_{p1} m_{p2} r_d \\ +J_1 K_s l_2^2 m_{p2} r_d \\ +J_2 K_s l_1^2 m_{p1} r_d \\ +J_1 J_2 K_s r_d)/p
+\end{split}
+&
+0 \\
+
+0 & 0 & 0 & 0 \\
+
+g l_2^2 m_{p2}^2 l_1 m_{p1}/p
+&
+0
+&
+\begin{split}
+-(K_s l_2^2 m_{p2} r_d \\ +J_2 K_s r_d) l_1 m_{p1}/p
+\end{split}
+&
+0 \\
+
+0 & 1 & 0 & 0 \\
+
+\begin{split}
+m_{p2} l_2 (-M_c g l_1^2 m_{p1} \\ -g l_1^2 m_{p1} m_{p2} \\ -J_1 M_c g-J_1 g m_{p1} \\ -J_1 g m_{p2})/p
+\end{split}
+&
+0
+&
+\begin{split}
+m_{p2} l_2 (K_s l_1^2 m_{p1} r_d \\ +J_1 K_s r_d)/p
+\end{split}
+&
+0 \\
+
+0 & 0 & 0 & 1 \\
+
+0 & 0 & 0 &
+\begin{split}
+-(K_m^2+ R b_m) \\ /(J_d R)
+\end{split} \\
+\end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+B =  \begin{bmatrix}
+0 & 0 & 0 & 0 & 0 & 0 & 0 & K_m/(J_d R)
+\end{bmatrix} '
+\end{equation*}
+
+\begin{equation*}
+C = \begin{bmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}
+\end{equation*}
+
+\begin{equation*}
+D = \begin{bmatrix}
+0 \\
+0
+\end{bmatrix}
+\end{equation*}
+
+However, the rank of the controllability and observability matrices is 7, not 8. Thus this system is neither controllable nor observable, and we couldn't actually create a controller for this system.
 
 \section{Results}
 
