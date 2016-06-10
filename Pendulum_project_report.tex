@@ -328,7 +328,7 @@ Below is the free-body diagram of the inverted pendulum and cart
 \begin{figure}[!htb]
 \centering
 \includegraphics{pendulumfbd}
-\caption{Source: http://ctms.engin.umich.edu/}
+\caption{Source: \href{http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=SystemModeling}{Inverted Pendulum: System Modeling}}
 \end{figure}
 
 Summation of carts forces in the horizontal direction
@@ -531,20 +531,23 @@ C_n = \begin{bmatrix}
 By replacing the state space $C$ matrix with $C_n$, $\bar{N}$ can be calculated. We used the \textit{rscale} function provided by \href{http://ctms.engin.umich.edu/CTMS/index.php?aux=Extras_rscale}{Control Tutorials for Matlab \& Simulink} to calculate $\bar{N}$. $\bar{N}$ is a scale factor that eliminates the steady-state error of a system to a step input. It should be noted that $\bar{N}$ only works for single input systems, which is why we could use it to only eliminate the steady state error in the carts position. Once $\bar{N}$ is calculated, the state-space equation uses the corrected A matrix, B $\bar{N}$, C, and D for the A, B, C, and D matrices respectively.
  
  \subsubsection{Adding an Observer-Based Estimator}
- Previous work assumes full-state feedback, which means that x, $\dot{x}$, $\theta$, and $\dot{\theta}$ are all being measure. However, only x and $\theta$ are being measured so we must add observer based control. Below are the previous block diagram, and the updated block diagram with the observer-based estimator.
+ Previous work assumes full-state feedback, which means that x, $\dot{x}$, $\theta$, and $\dot{\theta}$ are all being measure. However, only x and $\theta$ are being measured so we must add observer based control. Figure \ref{fig:bd} is the previous block diagram, and Figure \ref{fig:bd2} is the updated block diagram with the observer-based estimator.
 
-\begin{figure}[!htb]
+\begin{figure}
+\begin{minipage}[c]{0.45\textwidth}
 \centering
-  \includegraphics[width=.7\linewidth]{blockd}
-  \caption{Original}
-  \label{bd}
-  \end{figure}
-
-\begin{figure}[!htb]
-\centering
-  \includegraphics[width=.6\linewidth]{observer_blockd}
-  \caption{With Precompensator}
-  \label{bd2}
+\subfloat[Without Observer]{{
+	\includegraphics[width=1.0\linewidth]{blockd}
+	\label{fig:bd}
+}}
+\end{minipage}
+\begin{minipage}[c]{0.45\textwidth}
+\subfloat[With Observer]{{
+	\includegraphics[width=1.0\linewidth]{observer_blockd}
+	\label{fig:bd2}
+}}
+\end{minipage}
+\caption{Adding the observer, \\ Source: \href{http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=ControlStateSpace}{Inverted Pendulum: State-Space Methods for Controller Design}}
 \end{figure}
 
 
@@ -810,6 +813,14 @@ In addition, we found that the program that is generally used to demo the invert
 \item Instead of verifying system parameters, we could also do system identification to determine all the system parameters by providing white noise as the input and doing a best fit.
 \item While it won't necessarily provide any improvement, it would be fairly simple to take the \href{https://github.com/floft/PIDinStateSpace}{PID in State-Space form} equations to test a PID controller with our existing code.
 \item We could try getting the short pendulum to stay up while the long one hangs down, or we could work more on getting both pendulums to stay up simultaneously.
+\end{itemize}
+
+\section{References}
+\begin{itemize}
+\item \href{https://www.researchgate.net/publication/233854533_A_Kalman-like_FIR_estimator_ignoring_noise_and_initial_conditions}{A Kalman-like FIR estimator ignoring noise and initial conditions}
+\item \href{http://engagedscholarship.csuohio.edu/cgi/viewcontent.cgi?article=1214&context=enece_facpub}{Iterative Unbiased FIR State Estimation: A Review of Algorithms}
+\item \href{http://jbrwww.che.wisc.edu/software/als/index.html}{ALS Octave Package}
+\item \href{http://jbrwww.che.wisc.edu/tech-reports/twmcc-2007-02.pdf}{Explanation of Autocovariance Least-Squares (ALS) Method}
 \end{itemize}
 
 \end{document}
