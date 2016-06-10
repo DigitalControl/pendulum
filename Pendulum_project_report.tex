@@ -344,7 +344,7 @@ Summation of carts forces in the horizontal direction:
 F = M\ddot{x}+b\dot{x} + N
 \end{equation}
 
-Summation of the pendulum forces in the horizontal direction, where $\phi = \theta - \pi$:
+Summation of the pendulum forces in the horizontal direction:
 \begin{equation} 
 \label{eqn2}
 N = m\ddot{x}+m l \ddot{\phi} cos(\phi)-m l \dot{\phi}^2sin(\phi)
@@ -403,25 +403,43 @@ F = (M+m)\ddot{x}+b\dot{x} -m l \ddot{\theta}
 (I+m l^2)\ddot{\theta} - m g l\theta = m l \ddot{x}
 \end{equation}
 
-Motor Equations
+Motor Equations:
 \begin{equation} 
 \label{eqn7}
-L i + R i = V - k_m\dot{\theta}
+L i + R i = V - K_m\dot{\theta_m}
 \end{equation}
 
 \begin{equation} 
 \label{eqn8}
-\tau = k_m*i
+T = K_m*i
 \end{equation}
-To arrive at state space equations add \ref{eqn7} and \ref{eqn8} into \ref{eqn3b} and \ref{eqn6b}. Note: L = 0.
+\begin{equation}
+F = T/r
+\label{eqn:4thF}
+\end{equation}
 
-Plugging \ref{eqn8} into \ref{eqn7} leads to 
-\begin{equation} 
+Solving equation \ref{eqn7} for $i$ after setting $L = 0$, then plugging this into equation \ref{eqn8} and then into \ref{eqn:4thF}, we get:
+%F = \frac{R K_m}{r(V-K_m\dot{\theta_m})}
+\begin{equation}
 \label{eqn9}
-F = \frac{R k_m}{r(V-k_m\dot{\theta})}
+F = \frac{K_m(V - K_m\dot{\theta_m})}{r R}
 \end{equation}
 
-Finally, plugging \ref{eqn9} into \ref{eqn3b} and \ref{eqn6b} and solving for $\ddot{x}$ and $\ddot{\theta}$ leads to the state space equations below
+To relate $\theta_m$ and $x$, we can say:
+
+\begin{equation}
+x = \theta_m r
+\label{eqn:4thx}
+\end{equation}
+
+Plugging equation \ref{eqn:4thx} into \ref{eqn9}:
+
+\begin{equation}
+F = \frac{K_m}{r R} V - \frac{K_m^2}{r^2 R} \dot{x}
+\label{eqn:4thFFinal}
+\end{equation}
+
+Finally, plugging \ref{eqn:4thFFinal} into \ref{eqn3b} and \ref{eqn6b} and solving for $\ddot{x}$ and $\ddot{\theta}$ leads to the state space equations below
 
 \begin{equation}
 \label{ss1}
@@ -470,16 +488,16 @@ x\\
 \end{equation}
 
 \subsubsection{Poles, Stability, and Observability}
-Now that the state-space equations are found, the poles of the model are equal to the eigen values of the A matrix. The original Poles are shown below:
+Now that the state-space equations are found, the poles of the model are equal to the eigenvalues of the $A$ matrix. The original Poles are shown below:
 \begin{enumerate}
   \item   0.00000 + 0.00000i
   \item -9.9916 + 0.00000i
   \item -4.9981 + 0.00000i
   \item 5.1345 + 0.00000i
 \end{enumerate}
-Because one of the poles is positive, the system is unstable. We will fix this with a controlled matrix A in the next section.
+Because one of the poles is positive, the system is unstable. We will fix this with a controlled matrix $A$ in the next section.
 
-If the rank of the controllability matrix shown below equals the number of states the system (n) is made up of, then the system is controllable. In our case the rank of R equals 4 so our system is controllable. This means that with our controller, we can make the system reach any state.
+If the rank of the controllability matrix shown below equals the number of states ($n$) the system is made up of, then the system is controllable. In our case the rank of $R$ equals 4 so our system is controllable. This means that with our controller, we can make the system reach any state.
 
 \begin{equation} 
 \label{ctrb}
@@ -489,7 +507,7 @@ R = \begin{bmatrix}
 	\end{bmatrix}
 \end{equation}
  
- If the rank of the observability matrix shown below equals the number of states the system is made up of, then the system is observable. In our case the rank of O equals 4 so our system is observable. This means that in any possible situation, the current state of our system can be determined using only the inputs and outputs.
+ If the rank of the observability matrix shown below equals the number of states the system is made up of, then the system is observable. In our case the rank of $O$ equals 4 so our system is observable. This means that in any possible situation, the current state of our system can be determined using only the inputs and outputs.
  
  \begin{equation} 
 \label{obsv}
@@ -503,7 +521,7 @@ O = \begin{bmatrix}
 \end{equation}
 
 \subsubsection{LQR Controller}
-A linear-quadratic regulator (LQR) weights factors depending on their importance using the n by n Q matrix, while minimizing another factor using the variable R. In our case, the weighted factors were the position of the cart (x) and the angle of the pendulum ($\theta$). Also, the factor that we minimized is the velocity of the cart. A good starting point for Q is C'C evenly weighting the factors. However, we care much more about the pendulum staying vertical than we do the position staying at 0 m. Because of this, after some tests we weighted x at 1000 and $\theta$ at 100,000. leaving the Q matrix below. Also, a good place to start the limiting factor is 1, but we change R = 0.1.
+A linear-quadratic regulator (LQR) weights factors depending on their importance using the n by n Q matrix, while minimizing another factor using the variable R. In our case, the weighted factors were the position of the cart ($x$) and the angle of the pendulum ($\theta$). Also, the factor that we minimized is the velocity of the cart. A good starting point for $Q$ is $C'C$ evenly weighting the factors. However, we care much more about the pendulum staying vertical than we do the position staying at 0 m. Because of this, after some tests we weighted $x$ at $1000$ and $\theta$ at $100,000$. leaving the $Q$ matrix below. Also, a good place to start the limiting factor is $1$, but we change $R = 0.1$.
 
  \begin{equation} 
 \label{q}
@@ -516,7 +534,7 @@ Q = \begin{bmatrix}
 	\end{bmatrix}
 \end{equation}
 
-In LQR controllers, the state-feedback control gains vector k is used to move the poles in the system. It can be calculated by minimizing the cost function J. We used Octave's LQR function to calculate our k vector. Once calculated, the corrected A matrix can be calculated using the equation below.
+In LQR controllers, the state-feedback control gains vector $k$ is used to move the poles in the system. It can be calculated by minimizing the cost function $J$. We used Octave's LQR function to calculate our $k$ vector. Once calculated, the corrected $A$ matrix $A_c$ can be calculated using the equation below.
 
 \begin{equation}
 \label{ac}
@@ -634,7 +652,7 @@ This state space model successfully keeps the pendulum up and the cart centered 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.95\linewidth]{System8thOrder}
-\caption{8th Order System}
+\caption{8th Order System. Note the changes in notation from the 4th order model to more closely match the parameters in our Octave script. There's so many parameters we didn't want to make a mistake when entering our equations into Octave.}
 \label{fig:8thOrder}
 \end{figure}
 
