@@ -11,6 +11,8 @@
 % Allow \href{http://url}{name}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{float}
+
 \hypersetup{
     colorlinks=true,
     linkcolor={red!50!black},
@@ -43,6 +45,34 @@ ENGR 352}
 \pagebreak
 
 \section{PID Controller}
+The derivations below are based on the following diagrams
+
+\begin{figure}[H]
+\centering
+\subfloat[Pendulum System]{{
+	\includegraphics[width=0.5\linewidth]{Inverted Pendulum Diagram}
+	\label{fig:ipd}
+}}
+	\subfloat[Pendulum KD]{{
+	\includegraphics[width=0.5\linewidth]{Pendulum KD}
+	\label{fig:pkd}
+}}
+\caption{Pendulum Diagrams}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\subfloat[Cart FBD]{{
+	\includegraphics[width=0.5\linewidth]{Cart FBD}
+	\label{fig:cfbd}
+}}
+	\subfloat[Pendulum FBD]{{
+	\includegraphics[width=0.5\linewidth]{Pendulum FBD}
+	\label{fig:pfbd}
+}}
+\caption{Free Body Diagrams}
+\end{figure}
+
 \subsection{Transfer Function of $\theta$ / F Without Friction Derivation}
 Below is the derivation of the transfer function with an input of F and an output of $\theta$.
 
@@ -121,7 +151,9 @@ Simplifying \ref{eqn3} leads to
 Equation \ref{eqntf1} is the transfer function of $\theta$ / F without friction.
 
 \subsection{Transfer Function X / $\theta$ Derivation}
-
+We are deriving this transfer function so that we can plot the position of the cart as the system respondsto the input impulse properly.
+\\
+\\
 Using \ref{eqn1l}
 
 \begin{equation} 
@@ -238,8 +270,14 @@ Equation \ref{eqn9f} is the transfer function of $\theta$ / F with friction.
 
 \begin{figure}[!htb]
     \centering
+    \includegraphics[scale=0.7]{Block Diagram of Controlled Pendulum}
+    \caption{ Block Diagram of the Controlled Pendulum}
+\end{figure} 
+
+\begin{figure}[!htb]
+    \centering
     \includegraphics[scale=0.6]{1}
-    \caption{ Rlocus of TF with PID Controller}
+    \caption{ Rlocus of TF with PID Controller (varying the proportional controller)}
 \end{figure} 
 
 \begin{figure}[!htb]
