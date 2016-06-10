@@ -521,7 +521,7 @@ O = \begin{bmatrix}
 \end{equation}
 
 \subsubsection{LQR Controller}
-A linear-quadratic regulator (LQR) weights factors depending on their importance using the n by n Q matrix, while minimizing another factor using the variable R. In our case, the weighted factors were the position of the cart ($x$) and the angle of the pendulum ($\theta$). Also, the factor that we minimized is the velocity of the cart. A good starting point for $Q$ is $C'C$ evenly weighting the factors. However, we care much more about the pendulum staying vertical than we do the position staying at 0 m. Because of this, after some tests we weighted $x$ at $1000$ and $\theta$ at $100,000$. leaving the $Q$ matrix below. Also, a good place to start the limiting factor is $1$, but we change $R = 0.1$.
+A linear-quadratic regulator (LQR) weights factors depending on their importance using the $n$x$n$ $Q$ matrix, while minimizing another factor using the variable $R$. According to \href{http://ctms.engin.umich.edu/CTMS/index.php?example=InvertedPendulum&section=ControlStateSpace}{Inverted Pendulum: State-Space Methods for Controller Design}, a good starting point is $Q$ = $C$'$C$ and $R = 1$. In this case, because of our $C$ matrix, we will be weighting two factors: the position of the cart ($x$) and the angle of the pendulum ($\theta$). However, we care much more about the pendulum staying vertical than we do the position staying at 0 m. Because of this, after some tests we weighted $x$ at $1000$ and $\theta$ at $100,000$, giving us the $Q$ matrix below. To allow the force exerted on the cart to be greater, we decreased $R$ to be $0.1$.
 
  \begin{equation} 
 \label{q}
@@ -534,7 +534,9 @@ Q = \begin{bmatrix}
 	\end{bmatrix}
 \end{equation}
 
-In LQR controllers, the state-feedback control gains vector $k$ is used to move the poles in the system. It can be calculated by minimizing the cost function $J$. We used Octave's LQR function to calculate our $k$ vector. Once calculated, the corrected $A$ matrix $A_c$ can be calculated using the equation below.
+We could also have experimented more with the $Q$ matrix, maybe starting out with $I_4$ rather than $C$'$C$, weighting all of our states rather than just 2 of them and then adjusting all 4 of these weightings. This is future work that could be done.
+
+In LQR controllers, the state-feedback control gains vector $k$ is used to move the poles in the system. It can be calculated by minimizing the cost function $J$. We used Octave's LQR function to calculate our $k$ vector. Once calculated, the corrected $A$ matrix $A_c$ can be calculated:
 
 \begin{equation}
 \label{ac}
@@ -1199,6 +1201,7 @@ In addition, we found that the program that is generally used to demo the invert
 
 \section{Future Work}
 \begin{itemize}
+\item Experiment with the $Q$ matrix for LQR trying weighting all of the states instead of just $x$ and $\theta$.
 \item Fix the UFIR state estimates. This requires figuring out why the algorithm depends on $inv(A*F*A')$, which is a problem since all of our $A$ matrices are non-invertible. An alternative is using the Octave package called ALS, which uses a Kalman filter and provides a method to determine the variances. However, in theory, the UFIR will outperform the Kalman filter in the majority of cases; though, it is more computationally intensive.
 \item We could verify that the system parameters we are using are correct. For example, we could measure the velocity of the motor when we spin the motor at a certain velocity by an external force, which would allow us to check the motor's $K$ value.
 \item Instead of verifying system parameters, we could also do system identification to determine all the system parameters by providing white noise as the input and doing a best fit.
