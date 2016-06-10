@@ -630,65 +630,6 @@ y - \hat{y}
 
 This state space model successfully keeps the pendulum up and the cart centered on the track. However, there is some noise which is not accounted for that causes the pendulum to oscillate more than it should. Also, originally this model only works with the wrong radius value for the motor which we used from a previous model that worked. However, after measuring the PWM input provided to the motor, we discovered the signal ranged from -30V to 30V instead of -20V to 20V like we were told. Once we made this change, the inverted pendulum worked with the correct radius.
 
-\subsection{6th Order}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.95\linewidth]{System6thOrder}
-\caption{6th Order System}
-\label{fig:6thOrder}
-\end{figure}
-
-Our 6th order system takes account of the angle of the long pendulum and the position of the cart just like the 4th order system, but also the position of the short pendulum. We did this to see if it would eliminate some of the faulty state estimates we were having which caused our pendulum to oscillate. Also, with only a modification to what small angle approximations we make, the equations could be used to make both pendulums stay up. This system is shown in \ref{fig:6thOrder}.
-
-We derived the equations almost exactly like the 4th order equations, except that there was another pendulum. The equations that we derived which are equivalent to \ref{eqn6b}, \ref{eqn3b}, and \ref{eqn9}:
-
-\begin{equation} 
-\label{eqn6th1}
-(m_{p1} l_1^2+J_1) \ddot{\theta_1}-m_{p1} g l_1 \theta_1 = m_{p1} l_1 \ddot{x}
-\end{equation}
-
-\begin{equation} 
-\label{eqn6th2}
-(m_{p2} l_2^2+J_2) \ddot{\theta_2}+m_{p2} g l_2 \theta_2 = -m_{p2} l_2 \ddot{x}
-\end{equation}
-
-\begin{equation} 
-\label{eqn6th3}
-(M_c+m_{p1}+m_{p2}) \ddot{x}+b_c \dot{x}-m_{p1} l_1 \ddot{\theta_1}+m_{p2} l_2 \ddot{\theta_2} = \frac{Km V}{R r d}-\frac{Km^2 \dot{x}}{R r d^2}
-\end{equation}
-Any variable with subscript 1 represents the long pendulum and subscript 2 the short pendulum. All other variables are the same as stated previously. Note that $\theta_2$ is zero when pointing straight down. By solving these equations for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in Maple we found
-
-\begin{multline} 
-\label{eqn6th4}
-\ddot{x} = (-(R b_c l_1^2 l_2^2 m_{p1} m_{p2} r_d^2+J_1 R b_c l_2^2 m_{p2} r_d^2+J_2 R b_c l_1^2 m_{p1} r_d^2+K_m^2 l_1^2 l_2^2*m_{p1} m_{p2}+J_1 J_2 R b_c r_d^2+\\J_1 K_m^2 l_2^2 m_{p2}+J_2 K_m^2 l_1^2 m_{p1}+J_1 J_2 K_m^2)/p_1)\dot{x} -((-R g l_1^2 l_2^2 m_{p1}^2 m_{p2} r_d^2-J_2 R g l_1^2 m_{p1}^2 r_d^2)/p_1)\theta_1 \\-((R g l_1^2 l_2^2 m_{p1} m_{p2}^2 r_d^2+J_1 R g l_2^2 m_{p2}^2 r_d^2)/p_1 \theta_2 -(-K_m l_1^2 l_2^2 m_{p1} m_{p2} r_d-J_1 K_m l_2^2 m_{p2} r_d-J_2 K_m l_1^2 m_{p1} r_d-\\J_1 J_2 K_m r_d) V/p_1
-\end{multline}
-
-\begin{multline} 
-\label{eqn6th5}
-\ddot{\theta_1} = -(R b_c l_2^2 m_{p2} r_d^2+J_2 R b_c r_d^2+K_m^2*l_2^2*m_{p2}+J_2*K_m^2)*l_1*m_{p1} \dot{x}/p_1 -\\(-M_c R g l_2^2 m_{p2} r_d^2-R g l_2^2 m_{p1} m_{p2} r_d^2-2 R g l_2^2 m_{p2}^2 r_d^2-J_2 M_c R g r_d^2-J_2 R g m_{p1} r_d^2-J_2 R g m_{p2} r_d^2) l_1 m_{p1} \theta_1 /p_1-\\g l_2^2 m_{p2}^2 l_1 m_{p1} \theta_2/p_1-(-K_m l_2^2 m_{p2} r_d-J_2 K_m r_d) l_1 m_{p1} V/p_1
-\end{multline}
-
-\begin{multline} 
-\label{eqn6th6}
-\ddot{\theta_2} = -m_{p2} l_2 (R b_c l_1^2 m_{p1} r_d^2+J_1 R b_c r_d^2+K_m^2 l_1^2 m_{p1}+J_1 K_m^2)\dot{x}/p_1 +m_{p2} l_2 g l_1^2 m{p1}^2 \theta_1/p_2 - \\m_{p2} l_2 (-M_c R g l_1^2 m_{p1} r_d^2-R g l_1^2 m_{p1} m_{p2} r_d^2-J_1 M_c R g r_d^2-J_1 R g m_{p1} r_d^2-J_1 R g m_{p2} r_d^2) \theta_2/p_1 + \\m_{p2} l_2 (-K_m l_1^2 m_{p1} r_d-J_1 K_m r_d)/p_1
-\end{multline}
-
-where 
-
-\begin{multline} 
-\label{p1}
-p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_{p1} m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1 M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2}))
-\end{multline}
-
-and 
-
-\begin{multline}
-\label{p2}
- p_2 = (M_c l_1^2 l_2^2 m_{p1}m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1+M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2})
-\end{multline}
-
-After plugging these equations into state space form and actually running it on the pendulum, we had more oscillation than on the 4th order when using the wrong voltage and radius. We are not sure why this is -- the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it. However, the oscillation decreased with this model using the correct values.
-
 \subsection{8th Order}
 \begin{figure}[!htb]
 \centering
@@ -858,9 +799,10 @@ J_d \ddot{\theta}_m + b_m \dot{\theta}_m = K_m i
 \begin{equation*}
 R i = V - K_m \dot{\theta}_m
 \end{equation*}
-\begin{equation*}
+\begin{equation}
 \implies i = (1/R) V - (K_m/R) \dot{\theta}_m
-\end{equation*}
+\label{eqn:i}
+\end{equation}
 \begin{equation*}
 \implies J_d \ddot{\theta}_m + b_m \dot{\theta}_m = (K_m/R) V - (K_m^2/R) \dot{\theta}_m
 \end{equation*}
@@ -1006,6 +948,86 @@ D = \begin{bmatrix}
 \end{equation*}
 
 However, the rank of the controllability and observability matrices is 7, not 8. Thus this system is neither controllable nor observable, and we couldn't actually create a controller for this system.
+
+\subsection{6th Order}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.95\linewidth]{System6thOrder}
+\caption{6th Order System}
+\label{fig:6thOrder}
+\end{figure}
+
+Since the 8th order doesn't work, we decided to go with a 6th order system that is like the 4th order system but also takes into account the short pendulum angle. We did this to see if it would eliminate some of the faulty state estimates we were having with the 4th order system, which seemed to be causing our pendulum to oscillate. Also, with only a modification to what small angle approximations we make, the equations can be used to make both pendulums stay up. The case where both pendulums are up is shown in Figure \ref{fig:6thOrder}. The only change for making the short pendulum hang down is defining $\theta_2 = \phi_2$ rather than $\theta_2 = \pi + \phi_2$. We will derive this latter case, where the short pendulum is hanging down.
+
+Similar to equations \ref{eqn:8th14}, \ref{eqn:8th15}, and \ref{eqn:8th16}, we have:
+
+\begin{equation} 
+\label{eqn6th1}
+(m_{p1} l_1^2+J_1) \ddot{\theta_1}-m_{p1} g l_1 \theta_1 = m_{p1} l_1 \ddot{x}
+\end{equation}
+
+\begin{equation} 
+\label{eqn6th2}
+(m_{p2} l_2^2+J_2) \ddot{\theta_2}+m_{p2} g l_2 \theta_2 = -m_{p2} l_2 \ddot{x}
+\end{equation}
+
+\begin{equation} 
+\label{eqn6th3}
+(M_c+m_{p1}+m_{p2}) \ddot{x}+b_c \dot{x}-m_{p1} l_1 \ddot{\theta_1}+m_{p2} l_2 \ddot{\theta_2} = F
+\end{equation}
+
+Finally, let us find the force $F$ in terms of the DC motor equations:
+
+\begin{equation*}
+F = T / r
+\end{equation*}
+\begin{equation*}
+T = K_m i
+\end{equation*}
+\begin{equation*}
+\implies F = (K_m / r_d) i
+\end{equation*}
+
+Then plugging in Equation \ref{eqn:i} for $i$, we get:
+\begin{equation}
+F = (K_m/r_d)((1/R)V - K_m/(R r_d) \dot{x}) = K_m/(R r_d) V - K_m^2 / (R r_d^2) \dot{x}
+\label{eqn:F}
+\end{equation}
+
+By solving equations \ref{eqn6th1}, \ref{eqn6th2}, \ref{eqn6th3}, and \ref{eqn:F} for $\ddot{x}$, $\ddot{\theta_1}$, and $\ddot{\theta_2}$ in Maple we found:
+
+\begin{multline} 
+\label{eqn6th4}
+\ddot{x} = (-(R b_c l_1^2 l_2^2 m_{p1} m_{p2} r_d^2+J_1 R b_c l_2^2 m_{p2} r_d^2+J_2 R b_c l_1^2 m_{p1} r_d^2+K_m^2 l_1^2 l_2^2*m_{p1} m_{p2}+J_1 J_2 R b_c r_d^2+\\J_1 K_m^2 l_2^2 m_{p2}+J_2 K_m^2 l_1^2 m_{p1}+J_1 J_2 K_m^2)/p_1)\dot{x} -((-R g l_1^2 l_2^2 m_{p1}^2 m_{p2} r_d^2-J_2 R g l_1^2 m_{p1}^2 r_d^2)/p_1)\theta_1 \\-((R g l_1^2 l_2^2 m_{p1} m_{p2}^2 r_d^2+J_1 R g l_2^2 m_{p2}^2 r_d^2)/p_1 \theta_2 -(-K_m l_1^2 l_2^2 m_{p1} m_{p2} r_d-J_1 K_m l_2^2 m_{p2} r_d-J_2 K_m l_1^2 m_{p1} r_d-\\J_1 J_2 K_m r_d) V/p_1
+\end{multline}
+
+\begin{multline} 
+\label{eqn6th5}
+\ddot{\theta_1} = -(R b_c l_2^2 m_{p2} r_d^2+J_2 R b_c r_d^2+K_m^2*l_2^2*m_{p2}+J_2*K_m^2)*l_1*m_{p1} \dot{x}/p_1 -\\(-M_c R g l_2^2 m_{p2} r_d^2-R g l_2^2 m_{p1} m_{p2} r_d^2-2 R g l_2^2 m_{p2}^2 r_d^2-J_2 M_c R g r_d^2-J_2 R g m_{p1} r_d^2-J_2 R g m_{p2} r_d^2) l_1 m_{p1} \theta_1 /p_1-\\g l_2^2 m_{p2}^2 l_1 m_{p1} \theta_2/p_1-(-K_m l_2^2 m_{p2} r_d-J_2 K_m r_d) l_1 m_{p1} V/p_1
+\end{multline}
+
+\begin{multline} 
+\label{eqn6th6}
+\ddot{\theta_2} = -m_{p2} l_2 (R b_c l_1^2 m_{p1} r_d^2+J_1 R b_c r_d^2+K_m^2 l_1^2 m_{p1}+J_1 K_m^2)\dot{x}/p_1 +m_{p2} l_2 g l_1^2 m{p1}^2 \theta_1/p_2 - \\m_{p2} l_2 (-M_c R g l_1^2 m_{p1} r_d^2-R g l_1^2 m_{p1} m_{p2} r_d^2-J_1 M_c R g r_d^2-J_1 R g m_{p1} r_d^2-J_1 R g m_{p2} r_d^2) \theta_2/p_1 + \\m_{p2} l_2 (-K_m l_1^2 m_{p1} r_d-J_1 K_m r_d)/p_1
+\end{multline}
+
+where 
+
+\begin{multline} 
+\label{p1}
+p_1 = (R r_d^2 (M_c l_1^2 l_2^2 m_{p1} m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1 M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2}))
+\end{multline}
+
+and 
+
+\begin{multline}
+\label{p2}
+ p_2 = (M_c l_1^2 l_2^2 m_{p1}m_{p2}+2 l_1^2 l_2^2 m_{p1} m_{p2}^2+J_1+M_c l_2^2 m_{p2}+J_1 l_2^2 m_{p1} m_{p2}+\\2 J_1 l_2^2 m_{p2}^2+J_2 M_c l_1^2 m_{p1}+J_2 l_1^2 m_{p1} m_{p2}+J_1 J_2 M_c+J_1 J_2 m_{p1}+J_1 J_2 m_{p2})
+\end{multline}
+
+We did similarly for the case where both pendulums are up. However, we will not show those equations since they resemble those above, and we put into the Octave code.
+
+After rewriting these equations in state space form and actually running it on the pendulum, we had more oscillation than on the 4th order when using the wrong voltage and radius. We are not sure why this is -- the 6th order model should have better results than the 4th order model. Possible explanations include our 6th order model not being tuned as well as our 4th order or that there is more error in our small pendulum model than if we just ignore it. However, the oscillation decreased with this model using the correct values.
 
 \section{Results}
 
